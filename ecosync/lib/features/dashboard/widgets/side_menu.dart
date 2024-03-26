@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../controller/menu_controller.dart';
+
+class SideMenu extends StatelessWidget {
+  const SideMenu({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          const DrawerHeader(
+            child: Text("EcoSync"),
+          ),
+          DrawerListTile(
+            title: "Home",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(0);
+            },
+          ),
+          DrawerListTile(
+            title: "Manage User",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(1);
+            },
+          ),
+          DrawerListTile(
+            title: "Manage Roles",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(2);
+            },
+          ),
+          DrawerListTile(
+            title: "Manage Vehicles",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(3);
+            },
+          ),
+          DrawerListTile(
+            title: "Manage STS",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(4);
+            },
+          ),
+          DrawerListTile(
+            title: "Waste Collection",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(5);
+            },
+          ),
+          DrawerListTile(
+            title: "Waste Disposal",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(6);
+            },
+          ),
+          DrawerListTile(
+            title: "Billings",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(7);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DrawerListTile extends StatelessWidget {
+  const DrawerListTile({
+    Key? key,
+    required this.title,
+    required this.press,
+    required this.icon,
+  }) : super(key: key);
+
+  final String title;
+  final IconData icon;
+  final VoidCallback press;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: press,
+      leading: Icon(icon),
+      title: Text(title),
+    );
+  }
+}
