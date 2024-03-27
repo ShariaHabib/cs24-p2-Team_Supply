@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../constants/constants.dart';
+import '../controller/user_controller.dart';
 import '../widget/widgets.dart';
 
 class ManageUsers extends StatefulWidget {
@@ -13,6 +15,12 @@ class ManageUsers extends StatefulWidget {
 
 class _ManageUsersState extends State<ManageUsers> {
   final TextEditingController _search = TextEditingController();
+
+  @override
+  void initState() {
+    // context.read<GetUsersController>().getData(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,11 @@ class _ManageUsersState extends State<ManageUsers> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            const UserTableView()
+            // context.watch<GetUsersController>().loading
+            //     ? SizedBox()
+            //     : UserTableView(
+            //         users: context.watch<GetUsersController>().data,
+            //       ),
           ],
         ),
       ),
