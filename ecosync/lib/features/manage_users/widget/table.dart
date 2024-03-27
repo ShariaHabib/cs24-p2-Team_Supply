@@ -49,7 +49,13 @@ class _UserTableViewState extends State<UserTableView> {
       .toList();
 
   List<DataRow> getRows(List<User> users) => users.map((User user) {
-        final cells = [user.userId, user..userName, user.userRole, ""];
+        final cells = [
+          user.userId,
+          user.email,
+          user.userName,
+          user.userRole,
+          ""
+        ];
 
         return DataRow(cells: getCells(cells));
       }).toList();

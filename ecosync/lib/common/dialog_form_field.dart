@@ -1,4 +1,3 @@
-import 'package:ecosync/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_dropdown_button.dart';

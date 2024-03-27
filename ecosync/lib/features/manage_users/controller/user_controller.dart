@@ -12,7 +12,9 @@ class GetUsersController with ChangeNotifier {
   getData(context) async {
     loading = true;
     String? token = await const FlutterSecureStorage().read(key: 'token');
-    data = await GetUserLogic.getUser(token ?? '').then((value) => value.userList);
+    data =
+        await GetUserLogic.getUser(token ?? '').then((value) => value.userList);
+    print(data);
     loading = false;
     notifyListeners();
   }

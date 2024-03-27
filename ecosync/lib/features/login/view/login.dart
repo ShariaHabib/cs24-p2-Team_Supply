@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                settings: RouteSettings(name: "/Page1"),
+                                // settings: RouteSettings(name: "/Page1"),
                                 builder: (context) => Dashboard()));
                       },
                     ),

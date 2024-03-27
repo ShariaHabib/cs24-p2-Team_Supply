@@ -27,7 +27,7 @@ class UserListResponse {
   factory UserListResponse.fromMap(Map<String, dynamic> map) {
     return UserListResponse(
       userList: List<User>.from(
-        (map['userList'] as List<int>).map<User>(
+        (map['userList'] as List<dynamic>).map<User>(
           (x) => User.fromMap(x as Map<String, dynamic>),
         ),
       ),

@@ -9,10 +9,12 @@ class LoginLogic {
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": '*'
+        "Access-Control-Allow-Origin": '*',
+        "Access-Control-Allow-Credentials": "true",
       };
       String body = LoginModel(email: email, password: password).toJson();
-      http.Response resp = await http.post(
+
+      var resp = await http.post(
         Uri.parse(API_LOGIN),
         headers: headers,
         body: body,

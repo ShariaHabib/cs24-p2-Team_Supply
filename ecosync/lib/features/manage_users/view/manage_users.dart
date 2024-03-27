@@ -18,12 +18,13 @@ class _ManageUsersState extends State<ManageUsers> {
 
   @override
   void initState() {
-    // context.read<GetUsersController>().getData(context);
+    context.read<GetUsersController>().getData(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    GetUsersController ctr = context.watch<GetUsersController>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -43,11 +44,11 @@ class _ManageUsersState extends State<ManageUsers> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            // context.watch<GetUsersController>().loading
-            //     ? SizedBox()
-            //     : UserTableView(
-            //         users: context.watch<GetUsersController>().data,
-            //       ),
+            ctr.loading
+                ? CircularProgressIndicator()
+                : UserTableView(
+                    users: context.watch<GetUsersController>().data,
+                  ),
           ],
         ),
       ),

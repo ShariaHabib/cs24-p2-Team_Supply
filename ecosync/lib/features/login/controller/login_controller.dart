@@ -19,10 +19,9 @@ class LoginController with ChangeNotifier {
       await const FlutterSecureStorage().write(key: 'token', value: data.token);
     }
     Timer(
-      const Duration(seconds: 15),
+      const Duration(minutes: 60),
       () async {
         await const FlutterSecureStorage().deleteAll();
-        print("HI AMI ACHI");
         showDialog(
           barrierDismissible: false,
           context: navigatorKey.currentContext!,
