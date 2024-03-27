@@ -4,17 +4,24 @@ import '../constants/constants.dart';
 import '../models/models.dart';
 
 class LoginLogic {
-  static Future<dynamic> login(String email, String password) async {
+  static Future<LoginResponse> login(String email, String password) async {
+    late LoginResponse data;
     try {
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": '*'
+      };
       String body = LoginModel(email: email, password: password).toJson();
-
       http.Response resp = await http.post(
         Uri.parse(API_LOGIN),
+        headers: headers,
         body: body,
       );
-      print(resp);
+      data = LoginResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
+      data = LoginResponse(message: "", token: "", userId: "");
     }
+    return data;
   }
 }

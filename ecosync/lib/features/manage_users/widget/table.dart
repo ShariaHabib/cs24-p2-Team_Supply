@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/models.dart';
+
 class UserTableView extends StatefulWidget {
-  const UserTableView({super.key});
+  const UserTableView({super.key, required this.users});
+  final List<User> users;
 
   @override
   State<UserTableView> createState() => _UserTableViewState();
 }
 
 class _UserTableViewState extends State<UserTableView> {
-  // late List<User> users;
   int? sortColumnIndex;
   bool isAscending = false;
 
@@ -24,32 +26,18 @@ class _UserTableViewState extends State<UserTableView> {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
-          border: TableBorder.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          ),
-          dividerThickness: 0.5,
-          sortAscending: isAscending,
-          sortColumnIndex: sortColumnIndex,
-          headingRowHeight: 40,
-          headingRowColor: MaterialStatePropertyAll(
-              Theme.of(context).colorScheme.surfaceVariant),
-          columns: getColumns(columns),
-          rows: const [
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ]),
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ])
-          ]),
+        border: TableBorder.all(
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+        ),
+        dividerThickness: 0.5,
+        sortAscending: isAscending,
+        sortColumnIndex: sortColumnIndex,
+        headingRowHeight: 40,
+        headingRowColor: MaterialStatePropertyAll(
+            Theme.of(context).colorScheme.surfaceVariant),
+        columns: getColumns(columns),
+        rows: getRows(widget.users),
+      ),
     );
   }
 
@@ -60,11 +48,11 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  // List<DataRow> getRows(List<User> users) => users.map((User user) {
-  //       final cells = [user.firstName, user.lastName, user.age];
+  List<DataRow> getRows(List<User> users) => users.map((User user) {
+        final cells = [user.userId, user..userName, user.userRole, ""];
 
-  //       return DataRow(cells: getCells(cells));
-  //     }).toList();
+        return DataRow(cells: getCells(cells));
+      }).toList();
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();
