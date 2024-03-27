@@ -31,7 +31,7 @@ class _ManageSTSState extends State<ManageSTS> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CustomDialog();
+                    return const CustomDialog();
                   });
             }),
             const SizedBox(height: kDefaultPadding),

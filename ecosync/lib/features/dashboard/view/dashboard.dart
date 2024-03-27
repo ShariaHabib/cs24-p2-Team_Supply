@@ -25,13 +25,13 @@ class Dashboard extends StatelessWidget {
               child: IndexedStack(
                 index: context.watch<MenuAppController>().currentSelection,
                 children: const [
-                  Home(),
-                  ManageUsers(),
+                  // Home(),
+                  // ManageUsers(),
                   ManageRoles(),
-                  ManageVehicles(),
-                  ManageSTS(),
-                  WasteCollection(),
-                  WasteDispose()
+                  // ManageVehicles(),
+                  // ManageSTS(),
+                  // WasteCollection(),
+                  // WasteDispose()
                 ],
               ),
             ),
