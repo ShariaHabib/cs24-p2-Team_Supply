@@ -7,11 +7,11 @@ import '../models/models.dart';
 class RegisterVehicleLogic {
   static Future<RegistGeneralResponse> registerVehicle(
       {required String token,
-      required int capacity,
+      required String capacity,
       required String vechileNumber,
       required String vehicleType,
-      required int fuelCapacityLoaded,
-      required int fuelCapacityUnloaded}) async {
+      required String fuelCapacityLoaded,
+      required String fuelCapacityUnloaded}) async {
     late RegistGeneralResponse data;
     try {
       Map<String, String> headers = {
@@ -24,9 +24,9 @@ class RegisterVehicleLogic {
       String body = Vehicle(
         vehicle_number: vechileNumber,
         vehicle_type: vehicleType,
-        capacity: capacity,
-        fuel_cost_loaded: fuelCapacityLoaded,
-        fuel_cost_unloaded: fuelCapacityUnloaded,
+        capacity: int.parse(capacity),
+        fuel_cost_loaded: int.parse(fuelCapacityLoaded),
+        fuel_cost_unloaded: int.parse(fuelCapacityUnloaded),
       ).toJson();
 
       print(body);
@@ -36,7 +36,7 @@ class RegisterVehicleLogic {
         headers: headers,
         body: body,
       );
-
+      print(resp.body);
       data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {
       print(e);

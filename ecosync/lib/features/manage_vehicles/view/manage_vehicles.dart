@@ -18,13 +18,13 @@ class _ManageVehiclesState extends State<ManageVehicles> {
   final TextEditingController _search = TextEditingController();
   @override
   void initState() {
-    context.read<GetVehiclesController>().getData(context);
+    // context.read<GetVehiclesController>().getData(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    GetVehiclesController ctr = context.watch<GetVehiclesController>();
+    // GetVehiclesController ctr = context.watch<GetVehiclesController>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -40,15 +40,15 @@ class _ManageVehiclesState extends State<ManageVehicles> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CustomDialog();
+                    return const CustomDialog();
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            ctr.loading
-                ? const Center(child: CircularProgressIndicator())
-                : UserTableView(
-                    vehicles: context.watch<GetVehiclesController>().data,
-                  )
+            // ctr.loading
+            //     ? const Center(child: CircularProgressIndicator())
+            //     : UserTableView(
+            //         vehicles: context.watch<GetVehiclesController>().data,
+            //       )
           ],
         ),
       ),

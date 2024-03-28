@@ -1,3 +1,4 @@
+import 'package:ecosync/features/login/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -81,7 +82,8 @@ class SideMenu extends StatelessWidget {
             icon: Icons.logout,
             press: () {
               context.read<LogoutController>().logout(context);
-              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Login()));
             },
           ),
         ],

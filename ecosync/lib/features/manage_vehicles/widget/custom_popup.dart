@@ -94,9 +94,9 @@ class _CustomDialogState extends State<CustomDialog> {
                       await context.read<RegistVehicleController>().registData(
                           context,
                           _vehicleNumber.text,
-                          int.parse(_vehicleCapacity.text),
-                          int.parse(_loadedFuelCost.text),
-                          int.parse(_unloadedFuelCost.text),
+                          _vehicleCapacity.text,
+                          _loadedFuelCost.text,
+                          _unloadedFuelCost.text,
                           _vehicleType.text);
                       if (!ctrRegist.loading &&
                           ctrRegist.success &&

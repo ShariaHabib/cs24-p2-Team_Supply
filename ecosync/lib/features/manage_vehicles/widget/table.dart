@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
-import '../../../common/custom_delete_dialog.dart';
 
 class UserTableView extends StatefulWidget {
-  UserTableView({super.key, required this.vehicles});
-  List<Vehicle> vehicles;
+  const UserTableView({super.key, required this.vehicles});
+  final List<Vehicle> vehicles;
 
   @override
   State<UserTableView> createState() => _UserTableViewState();
 }
 
 class _UserTableViewState extends State<UserTableView> {
-  // late List<User> users;
   int? sortColumnIndex;
   bool isAscending = false;
 
