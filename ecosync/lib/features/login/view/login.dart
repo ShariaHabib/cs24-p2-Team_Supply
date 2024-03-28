@@ -20,6 +20,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    LoginController ctl = context.watch<LoginController>();
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -52,15 +53,21 @@ class _LoginState extends State<Login> {
                       buttonText: "login",
                       filledColor: Theme.of(context).colorScheme.primary,
                       buttonTextColor: Theme.of(context).colorScheme.onPrimary,
-                      onPressed: () async {
-                        await context
-                            .read<LoginController>()
-                            .getPostData(_email.text, _password.text, context);
+                      onPressed: () {
+                        ctl.getPostData(_email.text, _password.text, context);
+                        // if (!ctl.loading) {
+                        //   if (ctl.success) {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                // settings: RouteSettings(name: "/Page1"),
-                                builder: (context) => Dashboard()));
+                          context,
+                          MaterialPageRoute(
+                            // settings: RouteSettings(name: "/Page1"),
+                            builder: (context) => const Dashboard(),
+                          ),
+                        );
+                        //     } else {}
+                        //   } else {
+                        //     const Center(child: CircularProgressIndicator());
+                        //   }
                       },
                     ),
                     const SizedBox(height: kDefaultPadding),
@@ -81,25 +88,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-
-// AlertDialog(
-//   icon: Stack(
-//     clipBehavior: Clip.none,
-//     alignment: Alignment.center,
-//     children: [
-//       Positioned(
-//         top: -10,
-//         child: Image.network(
-//             "https://i.imgur.com/2yaf2wb.png",
-//             width: 150,
-//             height: 150),
-//       )
-//     ],
-//   ),
-//   title: Text("Password reset link sent"),
-  // content: Text(
-  //   "Successful password reset link sent to email:\n\"blabla@gmail.com\"\nplease follow the email password reset instruction",
-  //   textAlign: TextAlign.center,
-  // ),
-// );

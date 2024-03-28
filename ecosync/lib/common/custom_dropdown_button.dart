@@ -13,12 +13,11 @@ class CustomDropDownButton extends StatefulWidget {
 }
 
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
-  late Map<String, String> list;
   late String dropdownValue;
 
   @override
   void initState() {
-    dropdownValue = list.entries.first.key;
+    dropdownValue = widget.data.entries.first.key;
     super.initState();
   }
 
@@ -37,7 +36,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           borderRadius: BorderRadius.circular(0),
           isExpanded: true,
           value: dropdownValue,
-          items: list.entries.map<DropdownMenuItem<String>>((emtry) {
+          items: widget.data.entries.map<DropdownMenuItem<String>>((emtry) {
             return DropdownMenuItem<String>(
               value: emtry.key,
               child: Text(emtry.value),

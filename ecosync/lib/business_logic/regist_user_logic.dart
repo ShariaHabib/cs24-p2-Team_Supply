@@ -15,8 +15,12 @@ class RegistUserLogic {
         'Authorization': token
       };
 
-      String body =
-          User(email: email, userName: userName, userRole: userRole).toJson();
+      String body = User(
+              email: email,
+              userName: userName,
+              userRole: userRole,
+              password: password)
+          .toJson();
 
       http.Response resp = await http.post(
         Uri.parse(API_GET_USERS),
@@ -26,7 +30,7 @@ class RegistUserLogic {
       data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = RegistGeneralResponse(message: "", success: false);
+      data = RegistGeneralResponse(message: e.toString(), success: false);
     }
     return data;
   }

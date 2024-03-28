@@ -6,15 +6,17 @@ import '../../../models/models.dart';
 
 class RegistUserController with ChangeNotifier {
   late RegistGeneralResponse data;
+  late bool success;
 
   bool loading = false;
 
-  getData(context, userName, email, password, userRole) async {
+  registData(context, userName, email, password, userRole) async {
     loading = true;
+    notifyListeners();
     String? token = await const FlutterSecureStorage().read(key: 'token');
     data = await RegistUserLogic.registUser(
         token ?? '', userName, email, password, userRole);
-    print(data);
+    success = true;
     loading = false;
     notifyListeners();
   }

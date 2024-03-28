@@ -9,12 +9,14 @@ import '../../../models/models.dart';
 
 class LoginController with ChangeNotifier {
   late LoginResponse data;
+  late bool success;
 
   bool loading = false;
 
   getPostData(email, password, context) async {
     loading = true;
     data = await LoginLogic.login(email, password);
+    success = data.success;
     if (data.token.isNotEmpty) {
       await const FlutterSecureStorage().write(key: 'token', value: data.token);
     }

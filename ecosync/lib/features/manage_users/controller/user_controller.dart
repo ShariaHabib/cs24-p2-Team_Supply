@@ -6,6 +6,7 @@ import '../../../models/models.dart';
 
 class GetUsersController with ChangeNotifier {
   late List<User> data;
+  //  late bool success;
 
   bool loading = false;
 

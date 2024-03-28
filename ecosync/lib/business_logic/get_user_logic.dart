@@ -17,6 +17,7 @@ class GetUserLogic {
         Uri.parse(API_GET_USERS),
         headers: headers,
       );
+      print(resp.body);
       data = UserListResponse.fromJson(resp.body);
     } catch (e) {
       print(e);

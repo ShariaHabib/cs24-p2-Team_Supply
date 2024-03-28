@@ -22,7 +22,7 @@ class LoginLogic {
       data = LoginResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = LoginResponse(message: "", token: "", userId: "", success: false);
+      data = LoginResponse(message: e.toString(), token: "", userId: "", success: false);
     }
     return data;
   }

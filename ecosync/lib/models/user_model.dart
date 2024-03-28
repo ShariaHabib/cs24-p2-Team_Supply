@@ -5,11 +5,13 @@ class User {
   final String email;
   final String userName;
   final String userRole;
+  final String? password;
   User({
     this.userId,
     required this.email,
     required this.userName,
     required this.userRole,
+    this.password,
   });
 
   User copyWith({
@@ -17,12 +19,14 @@ class User {
     String? email,
     String? userName,
     String? userRole,
+    String? password,
   }) {
     return User(
       userId: userId ?? this.userId,
       email: email ?? this.email,
       userName: userName ?? this.userName,
       userRole: userRole ?? this.userRole,
+      password: password ?? this.password,
     );
   }
 
@@ -32,15 +36,17 @@ class User {
       'email': email,
       'user_name': userName,
       'user_role': userRole,
+      'password': password,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      userId: map['user_id'] as String,
+      userId: map['user_id'] != null ? map['user_id'] as String : null,
       email: map['email'] as String,
       userName: map['user_name'] as String,
       userRole: map['user_role'] as String,
+      password: map['password'] != null ? map['password'] as String : null,
     );
   }
 
@@ -51,7 +57,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(user_id: $userId, email: $email, user_name: $userName, user_role: $userRole)';
+    return 'User(userId: $userId, email: $email, userName: $userName, userRole: $userRole, password: $password)';
   }
 
   @override
@@ -61,7 +67,8 @@ class User {
     return other.userId == userId &&
         other.email == email &&
         other.userName == userName &&
-        other.userRole == userRole;
+        other.userRole == userRole &&
+        other.password == password;
   }
 
   @override
@@ -69,6 +76,7 @@ class User {
     return userId.hashCode ^
         email.hashCode ^
         userName.hashCode ^
-        userRole.hashCode;
+        userRole.hashCode ^
+        password.hashCode;
   }
 }
