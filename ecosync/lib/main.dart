@@ -1,3 +1,4 @@
+import 'package:ecosync/features/manage_users/controller/update_user_controller.dart';
 import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:ecosync/features/dashboard/controller/logout_controller.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => LogoutController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UpdateUsersController(),
         ),
       ],
       child: const MyApp(),

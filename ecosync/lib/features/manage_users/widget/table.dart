@@ -68,7 +68,7 @@ class _UserTableViewState extends State<UserTableView> {
             Text(user.userName),
           ),
           DataCell(
-            Text(user.email),
+            Text(user.email ?? ""),
           ),
           DataCell(ctr2.loading
               ? const CircularProgressIndicator()
@@ -101,7 +101,7 @@ class _UserTableViewState extends State<UserTableView> {
                 context: context,
                 builder: (context) {
                   return EditUser(
-                    email: user.email,
+                    email: user.email ?? "",
                     userId: user.userId ?? "",
                     userName: user.userName,
                   );
@@ -140,11 +140,11 @@ class _UserTableViewState extends State<UserTableView> {
       widget.users.sort((user1, user2) =>
           compareString(ascending, user1.userName, user2.userName));
     } else if (columnIndex == 2) {
-      widget.users.sort(
-          (user1, user2) => compareString(ascending, user1.email, user2.email));
+      widget.users.sort((user1, user2) =>
+          compareString(ascending, user1.email ?? "", user2.email ?? ""));
     } else if (columnIndex == 3) {
       widget.users.sort((user1, user2) =>
-          compareString(ascending, user1.userRole, user2.userRole));
+          compareString(ascending, user1.userRole ?? "", user2.userRole ?? ""));
     }
     setState(() {
       sortColumnIndex = columnIndex;
