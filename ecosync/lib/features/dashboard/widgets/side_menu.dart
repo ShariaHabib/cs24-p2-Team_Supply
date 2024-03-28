@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/logout_controller.dart';
 import '../controller/menu_controller.dart';
 
 class SideMenu extends StatelessWidget {
@@ -70,6 +71,17 @@ class SideMenu extends StatelessWidget {
             icon: Icons.home,
             press: () {
               context.read<MenuAppController>().controlSelection(7);
+            },
+          ),
+          SizedBox(
+            height: 100,
+          ),
+          DrawerListTile(
+            title: "Logout",
+            icon: Icons.logout,
+            press: () {
+              context.read<LogoutController>().logout(context);
+              Navigator.pop(context);
             },
           ),
         ],

@@ -40,7 +40,7 @@ class _ManageUsersState extends State<ManageUsers> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CustomDialog();
+                    return const CustomDialog();
                   });
             }),
             const SizedBox(height: kDefaultPadding),

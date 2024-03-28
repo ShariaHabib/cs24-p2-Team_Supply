@@ -13,6 +13,7 @@ class DialogFormFiled extends StatefulWidget {
     this.isDropDown,
     this.isDateTime,
     this.data,
+    this.readOnly,
   });
 
   final TextEditingController controller;
@@ -21,6 +22,7 @@ class DialogFormFiled extends StatefulWidget {
   final bool? isDropDown;
   final bool? isDateTime;
   final Map<String, String>? data;
+  final bool? readOnly;
   @override
   State<DialogFormFiled> createState() => _DialogFormFiledState();
 }
@@ -48,7 +50,10 @@ class _DialogFormFiledState extends State<DialogFormFiled> {
           Expanded(
             flex: 5,
             child: CustomTextField(
-                controller: widget.controller, hintText: widget.hintText ?? ""),
+              controller: widget.controller,
+              hintText: widget.hintText ?? "",
+              readOnly: widget.readOnly ?? false,
+            ),
           ),
         if (widget.isDateTime == true)
           Expanded(

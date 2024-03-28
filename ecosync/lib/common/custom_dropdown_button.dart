@@ -29,6 +29,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
 
   @override
   Widget build(BuildContext context) {
+    print(dropdownValue);
     return InputDecorator(
       decoration: const InputDecoration(
         border: OutlineInputBorder(),
@@ -50,7 +51,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           }).toList(),
           onChanged: (String? value) {
             widget.controller.text = widget.data[value] ?? "";
-            widget.onChange!(value);
+            if (widget.onChange != null) widget.onChange!(value);
             setState(() {
               dropdownValue = value!;
             });

@@ -1,4 +1,5 @@
 import 'package:ecosync/common/common.dart';
+import 'package:ecosync/features/manage_users/widget/edit_user_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -84,18 +85,28 @@ class _UserTableViewState extends State<UserTableView> {
                   },
                 )),
           DataCell(
-            _buildActionButtons(user.userId, ctr),
+            _buildActionButtons(user, ctr),
           ),
         ];
 
         return DataRow(cells: cells);
       }).toList();
-  Widget _buildActionButtons(userId, DeleteUserController ctr) {
+  Widget _buildActionButtons(User user, DeleteUserController ctr) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return EditUser(
+                    email: user.email,
+                    userId: user.userId ?? "",
+                    userName: user.userName,
+                  );
+                });
+          },
           icon: const Icon(Icons.edit),
           color: Theme.of(context).colorScheme.primary,
         ),
@@ -104,7 +115,7 @@ class _UserTableViewState extends State<UserTableView> {
             customDeleteDialog(context, () async {
               await context
                   .read<DeleteUserController>()
-                  .deleteData(context, userId);
+                  .deleteData(context, user.userId);
 
               if (!ctr.loading && ctr.success && context.mounted) {
                 customResponseDialog(context, "User Deleted Successfully", "");
