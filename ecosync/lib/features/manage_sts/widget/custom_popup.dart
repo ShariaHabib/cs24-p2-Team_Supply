@@ -35,7 +35,7 @@ class _CustomDialogState extends State<CustomDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Vehicle Registration",
+                  "STS Registration",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 IconButton(
