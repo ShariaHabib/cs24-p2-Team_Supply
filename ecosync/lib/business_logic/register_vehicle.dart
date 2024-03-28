@@ -20,6 +20,7 @@ class RegisterVehicleLogic {
         "Access-Control-Allow-Credentials": "true",
         'Authorization': token
       };
+
       String body = Vehicle(
         vehicle_number: vechileNumber,
         vehicle_type: vehicleType,
@@ -27,6 +28,7 @@ class RegisterVehicleLogic {
         fuel_cost_loaded: fuelCapacityLoaded,
         fuel_cost_unloaded: fuelCapacityUnloaded,
       ).toJson();
+
       print(body);
 
       http.Response resp = await http.post(
