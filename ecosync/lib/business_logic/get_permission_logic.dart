@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 import '../models/models.dart';
 
-class RegisterVehicleLogic {
-  static Future<RegistGeneralResponse> registerVehicle(String token) async {
-    late RegistGeneralResponse data;
+class GetPermissionListLogic {
+  static Future<PermissionListModel> getPermissions(String token) async {
+    late PermissionListModel data;
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
@@ -13,14 +13,14 @@ class RegisterVehicleLogic {
         "Access-Control-Allow-Credentials": "true",
         'Authorization': token
       };
-      http.Response resp = await http.post(
-        Uri.parse(API_REGIST_VEHICLE),
+      http.Response resp = await http.get(
+        Uri.parse(API_GET_PERMISSIONS),
         headers: headers,
       );
-      data = RegistGeneralResponse.fromJson(resp.body);
+      data = PermissionListModel.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = RegistGeneralResponse(message: "", success: false);
+      data = PermissionListModel(data: [], success: false);
     }
     return data;
   }
