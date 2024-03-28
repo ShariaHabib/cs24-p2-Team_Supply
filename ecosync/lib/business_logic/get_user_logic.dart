@@ -20,7 +20,7 @@ class GetUserLogic {
       data = UserListResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = UserListResponse(userList: []);
+      data = UserListResponse(userList: [], success: false);
     }
     return data;
   }

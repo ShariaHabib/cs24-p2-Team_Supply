@@ -5,8 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:ecosync/models/role.model.dart';
 
 class RoleListResponse {
+  final bool success;
   final List<Role> roleList;
   RoleListResponse({
+    required this.success,
     required this.roleList,
   });
 
@@ -14,6 +16,7 @@ class RoleListResponse {
     List<Role>? roleList,
   }) {
     return RoleListResponse(
+      success: success,
       roleList: roleList ?? this.roleList,
     );
   }
@@ -26,6 +29,7 @@ class RoleListResponse {
 
   factory RoleListResponse.fromMap(Map<String, dynamic> map) {
     return RoleListResponse(
+      success: map['success'] as bool,
       roleList: List<Role>.from(
         (map['roleList'] as List<dynamic>).map<Role>(
           (x) => Role.fromMap(x as Map<String, dynamic>),

@@ -4,18 +4,22 @@ class LoginResponse {
   final String message;
   final String userId;
   final String token;
+  final bool success;
   LoginResponse({
+    required this.success,
     required this.message,
     required this.userId,
     required this.token,
   });
 
   LoginResponse copyWith({
+    bool? success,
     String? message,
     String? userId,
     String? token,
   }) {
     return LoginResponse(
+      success: success ?? this.success,
       message: message ?? this.message,
       userId: userId ?? this.userId,
       token: token ?? this.token,
@@ -24,6 +28,7 @@ class LoginResponse {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'success': success,
       'message': message,
       'user_id': userId,
       'token': token,
@@ -32,6 +37,7 @@ class LoginResponse {
 
   factory LoginResponse.fromMap(Map<String, dynamic> map) {
     return LoginResponse(
+      success: map['success'] as bool,
       message: map['message'] as String,
       userId: map['user_id'] as String,
       token: map['token'] as String,
@@ -45,7 +51,7 @@ class LoginResponse {
 
   @override
   String toString() =>
-      'LoginResponse(message: $message, user_id: $userId, token: $token)';
+      'LoginResponse(message: $message, user_id: $userId, token: $token, success: $success)';
 
   @override
   bool operator ==(covariant LoginResponse other) {

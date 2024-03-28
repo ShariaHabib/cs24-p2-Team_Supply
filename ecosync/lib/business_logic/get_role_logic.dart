@@ -20,7 +20,7 @@ class GetRoleLogic {
       data = RoleListResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = RoleListResponse(roleList: []);
+      data = RoleListResponse(roleList: [], success: false);
     }
     return data;
   }
