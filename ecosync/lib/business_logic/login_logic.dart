@@ -13,7 +13,6 @@ class LoginLogic {
         "Access-Control-Allow-Credentials": "true",
       };
       String body = LoginModel(email: email, password: password).toJson();
-
       var resp = await http.post(
         Uri.parse(API_LOGIN),
         headers: headers,
