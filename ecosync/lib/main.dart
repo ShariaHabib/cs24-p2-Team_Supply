@@ -1,3 +1,4 @@
+import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,8 @@ import 'features/dashboard/view/dashboard.dart';
 import 'features/login/controller/login_controller.dart';
 import 'features/login/view/login.dart';
 import 'features/manage_users/controller/controller.dart';
+import 'features/manage_vehicles/controller/delete_vehicle_controller.dart';
+import 'features/manage_vehicles/controller/regist_vehicle.dart';
 import 'themes/theme.dart';
 
 void main() {
@@ -30,6 +33,15 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => DeleteUserController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RegistVehicleController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetVehiclesController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DeleteVehicleController(),
         ),
       ],
       child: const MyApp(),

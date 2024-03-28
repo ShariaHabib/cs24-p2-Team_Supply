@@ -1,5 +1,7 @@
 import 'package:ecosync/constants/constants.dart';
+import 'package:ecosync/features/manage_vehicles/controller/regist_vehicle.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 
@@ -19,8 +21,17 @@ class _CustomDialogState extends State<CustomDialog> {
   final TextEditingController _unloadedFuelCost = TextEditingController();
   final TextEditingController _vehicleType = TextEditingController();
 
+  Map<String, String> data = {
+    "Open Truck": "Open Truck",
+    "Dump Truck": "Dump Truck",
+    "Compactor": "Compactor",
+    "Container Carrier": "Container Carrier"
+  };
   @override
   Widget build(BuildContext context) {
+    RegistVehicleController ctrRegist =
+        context.watch<RegistVehicleController>();
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -70,6 +81,7 @@ class _CustomDialogState extends State<CustomDialog> {
               controller: _vehicleType,
               prefixText: "Vechicle Type",
               isDropDown: true,
+              data: data,
             ),
             const SizedBox(height: kDefaultPadding * 2),
             Row(
@@ -78,7 +90,21 @@ class _CustomDialogState extends State<CustomDialog> {
                 Expanded(
                   flex: 2,
                   child: CustomFilledButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context.read<RegistVehicleController>().registData(
+                          context,
+                          _vehicleNumber.text,
+                          int.parse(_vehicleCapacity.text),
+                          int.parse(_loadedFuelCost.text),
+                          int.parse(_unloadedFuelCost.text),
+                          _vehicleType.text);
+                      if (!ctrRegist.loading &&
+                          ctrRegist.success &&
+                          context.mounted) {
+                        customResponseDialog(context, "Registration Successful",
+                            "Please ask the user to check their mail");
+                      }
+                    },
                     buttonText: "Register",
                     filledColor: Theme.of(context).colorScheme.primary,
                     buttonTextColor: Theme.of(context).colorScheme.onPrimary,

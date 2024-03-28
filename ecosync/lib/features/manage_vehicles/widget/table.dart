@@ -1,7 +1,14 @@
+import 'package:ecosync/features/manage_vehicles/controller/delete_vehicle_controller.dart';
+import 'package:ecosync/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../common/common.dart';
+import '../../../common/custom_delete_dialog.dart';
 
 class UserTableView extends StatefulWidget {
-  const UserTableView({super.key});
+  UserTableView({super.key, required this.vehicles});
+  List<Vehicle> vehicles;
 
   @override
   State<UserTableView> createState() => _UserTableViewState();
@@ -17,10 +24,18 @@ class _UserTableViewState extends State<UserTableView> {
     super.initState();
   }
 
-  final columns = ['User Id', 'User Name', 'Email', 'Role', ''];
+  final columns = [
+    'Vehicle Number',
+    'Vehicle Capacity',
+    'Fuel Capacity Loaded',
+    'Fuel Capacity Unloaded',
+    'Vehicle Type',
+    ''
+  ];
 
   @override
   Widget build(BuildContext context) {
+    DeleteVehicleController ctr = context.watch<DeleteVehicleController>();
     return SizedBox(
       width: double.infinity,
       child: DataTable(
@@ -34,22 +49,7 @@ class _UserTableViewState extends State<UserTableView> {
           headingRowColor: MaterialStatePropertyAll(
               Theme.of(context).colorScheme.surfaceVariant),
           columns: getColumns(columns),
-          rows: const [
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ]),
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ])
-          ]),
+          rows: getRows(widget.vehicles, ctr)),
     );
   }
 
@@ -60,11 +60,59 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  // List<DataRow> getRows(List<User> users) => users.map((User user) {
-  //       final cells = [user.firstName, user.lastName, user.age];
+  List<DataRow> getRows(List<Vehicle> vehicles, DeleteVehicleController ctr) =>
+      vehicles.map((Vehicle vehicle) {
+        final cells = [
+          DataCell(
+            Text(vehicle.vehicle_number, style: const TextStyle(fontSize: 10)),
+          ),
+          DataCell(
+            Text(vehicle.capacity.toString()),
+          ),
+          DataCell(
+            Text(vehicle.fuel_cost_loaded.toString()),
+          ),
+          DataCell(
+            Text(vehicle.fuel_cost_unloaded.toString()),
+          ),
+          DataCell(
+            Text(vehicle.vehicle_type),
+          ),
+          DataCell(
+            _buildActionButtons(vehicle.vehicle_number, ctr),
+          ),
+        ];
 
-  //       return DataRow(cells: getCells(cells));
-  //     }).toList();
+        return DataRow(cells: cells);
+      }).toList();
+
+  Widget _buildActionButtons(userId, DeleteVehicleController ctr) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.edit),
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        IconButton(
+          onPressed: () {
+            customDeleteDialog(context, () async {
+              await context
+                  .read<DeleteVehicleController>()
+                  .deleteData(context, userId);
+
+              if (!ctr.loading && ctr.success && context.mounted) {
+                customResponseDialog(context, "User Deleted Successfully", "");
+              }
+            });
+          },
+          icon: const Icon(Icons.delete_forever),
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ],
+    );
+  }
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();

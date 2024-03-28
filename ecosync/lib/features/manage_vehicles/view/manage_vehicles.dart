@@ -1,4 +1,7 @@
+import 'package:ecosync/business_logic/business_logic.dart';
+import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../constants/constants.dart';
@@ -13,9 +16,15 @@ class ManageVehicles extends StatefulWidget {
 
 class _ManageVehiclesState extends State<ManageVehicles> {
   final TextEditingController _search = TextEditingController();
+  @override
+  void initState() {
+    context.read<GetVehiclesController>().getData(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    GetVehiclesController ctr = context.watch<GetVehiclesController>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -35,7 +44,11 @@ class _ManageVehiclesState extends State<ManageVehicles> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            const UserTableView()
+            ctr.loading
+                ? const Center(child: CircularProgressIndicator())
+                : UserTableView(
+                    vehicles: context.watch<GetVehiclesController>().data,
+                  )
           ],
         ),
       ),
