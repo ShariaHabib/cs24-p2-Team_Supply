@@ -4,7 +4,7 @@ import '../constants/constants.dart';
 import '../models/models.dart';
 
 class DeleteUserLogic {
-  static Future<RegistGeneralResponse> deleteVehicle(
+  static Future<RegistGeneralResponse> deleteUser(
       String token, String userId) async {
     late RegistGeneralResponse data;
     try {
@@ -18,10 +18,13 @@ class DeleteUserLogic {
         Uri.parse(API_DELETE_USER + userId),
         headers: headers,
       );
+      print("\n\n\n\n\n\n");
+      print(resp.body.toString());
+      print("\n\n\n\n\n\n");
       data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = RegistGeneralResponse(message: "", success: false);
+      data = RegistGeneralResponse(message: e.toString(), success: false);
     }
     return data;
   }

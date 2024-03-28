@@ -1,6 +1,9 @@
+import 'package:ecosync/common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/models.dart';
+import '../controller/controller.dart';
 
 class UserTableView extends StatefulWidget {
   const UserTableView({super.key, required this.users});
@@ -23,9 +26,11 @@ class _UserTableViewState extends State<UserTableView> {
 
   @override
   Widget build(BuildContext context) {
+    DeleteUserController ctr = context.watch<DeleteUserController>();
     return SizedBox(
       width: double.infinity,
       child: DataTable(
+        columnSpacing: 0,
         border: TableBorder.all(
           color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
         ),
@@ -36,7 +41,7 @@ class _UserTableViewState extends State<UserTableView> {
         headingRowColor: MaterialStatePropertyAll(
             Theme.of(context).colorScheme.surfaceVariant),
         columns: getColumns(columns),
-        rows: getRows(widget.users),
+        rows: getRows(widget.users, ctr),
       ),
     );
   }
@@ -48,20 +53,57 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  List<DataRow> getRows(List<User> users) => users.map((User user) {
+  List<DataRow> getRows(List<User> users, DeleteUserController ctr) =>
+      users.map((User user) {
         final cells = [
-          user.userId,
-          user.email,
-          user.userName,
-          user.userRole,
-          ""
+          DataCell(
+            Text(user.userId.toString(), style: const TextStyle(fontSize: 10)),
+          ),
+          DataCell(
+            Text(user.userName),
+          ),
+          DataCell(
+            Text(user.email),
+          ),
+          DataCell(
+            Text(user.userRole),
+          ),
+          DataCell(
+            _buildActionButtons(user.userId, ctr),
+          ),
         ];
 
-        return DataRow(cells: getCells(cells));
+        return DataRow(cells: cells);
       }).toList();
+  Widget _buildActionButtons(userId, DeleteUserController ctr) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        IconButton(
+          onPressed: () {
+            
+          },
+          icon: const Icon(Icons.edit),
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        IconButton(
+          onPressed: () {
+            customDeleteDialog(context, () async {
+              await context
+                  .read<DeleteUserController>()
+                  .deleteData(context, userId);
 
-  List<DataCell> getCells(List<dynamic> cells) =>
-      cells.map((data) => DataCell(Text('$data'))).toList();
+              if (!ctr.loading && ctr.success && context.mounted) {
+                customResponseDialog(context, "User Deleted Successfully", "");
+              }
+            });
+          },
+          icon: const Icon(Icons.delete_forever),
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ],
+    );
+  }
 
   int compareString(bool ascending, String value1, String value2) =>
       ascending ? value1.compareTo(value2) : value2.compareTo(value1);

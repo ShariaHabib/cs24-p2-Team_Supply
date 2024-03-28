@@ -1,4 +1,3 @@
-import 'package:ecosync/features/login/view/login.dart';
 import 'package:ecosync/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -15,13 +14,14 @@ class LoginController with ChangeNotifier {
 
   getPostData(email, password, context) async {
     loading = true;
+    notifyListeners();
     data = await LoginLogic.login(email, password);
     success = data.success;
     if (data.token.isNotEmpty) {
       await const FlutterSecureStorage().write(key: 'token', value: data.token);
     }
     Timer(
-      const Duration(minutes: 60),
+      const Duration(minutes: 20),
       () async {
         await const FlutterSecureStorage().deleteAll();
         showDialog(

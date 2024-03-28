@@ -19,10 +19,12 @@ class LoginLogic {
         headers: headers,
         body: body,
       );
+      print(resp.body);
       data = LoginResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = LoginResponse(message: e.toString(), token: "", userId: "", success: false);
+      data = LoginResponse(
+          message: e.toString(), token: "", userId: "", success: false);
     }
     return data;
   }

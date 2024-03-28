@@ -28,6 +28,9 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => RegistUserController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => DeleteUserController(),
+        ),
       ],
       child: const MyApp(),
     ),

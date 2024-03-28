@@ -49,27 +49,30 @@ class _LoginState extends State<Login> {
                       isSecured: true,
                     ),
                     const SizedBox(height: kDefaultPadding),
-                    CustomFilledButton(
-                      buttonText: "login",
-                      filledColor: Theme.of(context).colorScheme.primary,
-                      buttonTextColor: Theme.of(context).colorScheme.onPrimary,
-                      onPressed: () {
-                        ctl.getPostData(_email.text, _password.text, context);
-                        // if (!ctl.loading) {
-                        //   if (ctl.success) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            // settings: RouteSettings(name: "/Page1"),
-                            builder: (context) => const Dashboard(),
+                    ctl.loading
+                        ? CircularProgressIndicator()
+                        : CustomFilledButton(
+                            buttonText: "login",
+                            filledColor: Theme.of(context).colorScheme.primary,
+                            buttonTextColor:
+                                Theme.of(context).colorScheme.onPrimary,
+                            onPressed: () async {
+                              await ctl.getPostData(
+                                  _email.text, _password.text, context);
+
+                              if (!ctl.loading &&
+                                  ctl.success &&
+                                  context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    // settings: RouteSettings(name: "/Page1"),
+                                    builder: (context) => const Dashboard(),
+                                  ),
+                                );
+                              } else {}
+                            },
                           ),
-                        );
-                        //     } else {}
-                        //   } else {
-                        //     const Center(child: CircularProgressIndicator());
-                        //   }
-                      },
-                    ),
                     const SizedBox(height: kDefaultPadding),
                     CustomFilledButton(
                         buttonText: "Forget Password",

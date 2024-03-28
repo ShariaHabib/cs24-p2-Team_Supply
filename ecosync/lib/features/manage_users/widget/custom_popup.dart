@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
-import '../../../models/models.dart';
 import '../controller/controller.dart';
 
 class CustomDialog extends StatefulWidget {
@@ -92,24 +91,14 @@ class _CustomDialogState extends State<CustomDialog> {
                                 .read<RegistUserController>()
                                 .registData(context, _userName.text,
                                     _email.text, _password.text, _role.text);
-                            if (!ctrRegist.loading && ctrRegist.success) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Password reset link sent"),
-                                      content: Text(
-                                        "Successful password reset link sent to email:\n\"blabla@gmail.com\"\nplease follow the email password reset instruction",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      actions: [
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(Icons.abc))
-                                      ],
-                                    );
-                                  });
-                            }
+                            if (!ctrRegist.loading &&
+                                ctrRegist.success &&
+                                context.mounted) {
+                              customResponseDialog(
+                                  context,
+                                  "Registration Successful",
+                                  "Please ask the user to check their mail");
+                            } else {}
                           },
                           buttonText: "Register",
                           filledColor: Theme.of(context).colorScheme.primary,
