@@ -1,38 +1,38 @@
 import 'dart:convert';
-
-import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ecosync/models/vehicle_model.dart';
 
 class VehicleListResponse {
   final bool success;
-  final List<Vehicle> vehicleList;
+  final List<Vehicle> vehiclesList;
   VehicleListResponse({
     required this.success,
-    required this.vehicleList,
+    required this.vehiclesList,
   });
 
   VehicleListResponse copyWith({
     bool? success,
-    List<Vehicle>? vehicleList,
+    List<Vehicle>? vehiclesList,
   }) {
     return VehicleListResponse(
       success: success ?? this.success,
-      vehicleList: vehicleList ?? this.vehicleList,
+      vehiclesList: vehiclesList ?? this.vehiclesList,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'success': success,
-      'vehicleList': vehicleList.map((x) => x.toMap()).toList(),
+      'vehiclesList': vehiclesList.map((x) => x.toMap()).toList(),
     };
   }
 
   factory VehicleListResponse.fromMap(Map<String, dynamic> map) {
+    print(map['vehiclesList'].runtimeType);
     return VehicleListResponse(
       success: map['success'] as bool,
-      vehicleList: List<Vehicle>.from(
-        (map['vehicleList'] as List<int>).map<Vehicle>(
+      vehiclesList: List<Vehicle>.from(
+        (map['vehiclesList'] as List<dynamic>).map<Vehicle>(
           (x) => Vehicle.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -46,17 +46,5 @@ class VehicleListResponse {
 
   @override
   String toString() =>
-      'VehicleListResponse(success: $success, vehicleList: $vehicleList)';
-
-  @override
-  bool operator ==(covariant VehicleListResponse other) {
-    if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return other.success == success &&
-        listEquals(other.vehicleList, vehicleList);
-  }
-
-  @override
-  int get hashCode => success.hashCode ^ vehicleList.hashCode;
+      'VehicleListResponse(success: $success, vehiclesList: $vehiclesList)';
 }

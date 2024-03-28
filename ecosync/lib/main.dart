@@ -1,3 +1,5 @@
+import 'package:ecosync/features/manage_roles/controller/delete_rbac_roles_controller.dart';
+import 'package:ecosync/features/manage_roles/controller/rbac_roles_controller.dart';
 import 'package:ecosync/features/manage_users/controller/update_user_controller.dart';
 import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:ecosync/features/dashboard/controller/logout_controller.dart';
@@ -53,6 +55,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => UpdateUsersController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RbacRoleController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DeleteRbacController(),
         ),
       ],
       child: const MyApp(),

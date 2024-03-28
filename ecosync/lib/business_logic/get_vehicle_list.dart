@@ -12,14 +12,16 @@ class GetVehicleListLogic {
         "Access-Control-Allow-Credentials": "true",
         'Authorization': token
       };
+      print("EJHANEEEEEE______________");
       http.Response resp = await http.get(
         Uri.parse(API_GET_VEHICLE),
         headers: headers,
       );
+      print(resp.body);
       data = VehicleListResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = VehicleListResponse(vehicleList: [], success: false);
+      data = VehicleListResponse(vehiclesList: [], success: false);
     }
     return data;
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../constants/constants.dart';
+import '../controller/rbac_roles_controller.dart';
 import '../widget/widgets.dart';
 
 class ManageRoles extends StatefulWidget {
@@ -13,6 +15,12 @@ class ManageRoles extends StatefulWidget {
 
 class _ManageRolesState extends State<ManageRoles> {
   final TextEditingController _role = TextEditingController();
+
+  @override
+  void initState() {
+    context.read<RbacRoleController>().getRbacRoles(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,9 @@ class _ManageRolesState extends State<ManageRoles> {
                   });
             }),
             const SizedBox(height: kDefaultPadding * 0.5),
-            const UserTableView(),
+            RoleTableView(
+              roles: context.watch<RbacRoleController>().data.roleList,
+            ),
             const SizedBox(height: kDefaultPadding * 2),
             Text("Permissions",
                 style: Theme.of(context).textTheme.headlineMedium),

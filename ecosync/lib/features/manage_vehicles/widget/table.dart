@@ -84,7 +84,7 @@ class _UserTableViewState extends State<UserTableView> {
         return DataRow(cells: cells);
       }).toList();
 
-  Widget _buildActionButtons(userId, DeleteVehicleController ctr) {
+  Widget _buildActionButtons(vechicleNumber, DeleteVehicleController ctr) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -98,7 +98,7 @@ class _UserTableViewState extends State<UserTableView> {
             customDeleteDialog(context, () async {
               await context
                   .read<DeleteVehicleController>()
-                  .deleteData(context, userId);
+                  .deleteData(context, vechicleNumber);
 
               if (!ctr.loading && ctr.success && context.mounted) {
                 customResponseDialog(context, "User Deleted Successfully", "");

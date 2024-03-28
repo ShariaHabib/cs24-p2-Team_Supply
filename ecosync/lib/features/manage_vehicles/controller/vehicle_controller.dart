@@ -14,7 +14,7 @@ class GetVehiclesController with ChangeNotifier {
     loading = true;
     String? token = await const FlutterSecureStorage().read(key: 'token');
     List<Vehicle> out = await GetVehicleListLogic.getVehicleList(token ?? '')
-        .then((value) => value.vehicleList);
+        .then((value) => value.vehiclesList);
     data = out;
     loading = false;
     notifyListeners();
