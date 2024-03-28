@@ -4,16 +4,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../business_logic/business_logic.dart';
 import '../../../models/models.dart';
 
-class GetUsersController with ChangeNotifier {
-  late List<User> data;
+class RegistUserController with ChangeNotifier {
+  late RegistGeneralResponse data;
 
   bool loading = false;
 
-  getData(context) async {
+  getData(context, userName, email, password, userRole) async {
     loading = true;
     String? token = await const FlutterSecureStorage().read(key: 'token');
-    var x = await GetUserLogic.getUser(token ?? '');
-    data = x.userList;
+    data = await RegistUserLogic.registUser(
+        token ?? '', userName, email, password, userRole);
     print(data);
     loading = false;
     notifyListeners();

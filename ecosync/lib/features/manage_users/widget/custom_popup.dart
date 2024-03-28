@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
-import '../controller/role_controller.dart';
+import '../../../models/models.dart';
+import '../controller/controller.dart';
 
 class CustomDialog extends StatefulWidget {
   const CustomDialog({
@@ -15,6 +16,7 @@ class CustomDialog extends StatefulWidget {
 }
 
 class _CustomDialogState extends State<CustomDialog> {
+  final TextEditingController _userName = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _role = TextEditingController();
@@ -27,6 +29,11 @@ class _CustomDialogState extends State<CustomDialog> {
   @override
   Widget build(BuildContext context) {
     GetRolesController ctr = context.watch<GetRolesController>();
+
+    Map<String, String> roles = {};
+    for (Role x in ctr.data) {
+      roles[x.roleName] = x.roleName;
+    }
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -53,6 +60,11 @@ class _CustomDialogState extends State<CustomDialog> {
             ),
             const SizedBox(height: kDefaultPadding * 2),
             DialogFormFiled(
+                controller: _userName,
+                prefixText: "User Name",
+                hintText: "User Name"),
+            const SizedBox(height: kDefaultPadding),
+            DialogFormFiled(
                 controller: _email, prefixText: "Email", hintText: "Email"),
             const SizedBox(height: kDefaultPadding),
             DialogFormFiled(
@@ -61,10 +73,10 @@ class _CustomDialogState extends State<CustomDialog> {
                 hintText: "Password"),
             const SizedBox(height: kDefaultPadding),
             ctr.loading
-                ? const CircularProgressIndicator()
+                ? const Center(child: CircularProgressIndicator())
                 : DialogFormFiled(
                     controller: _role,
-                    roles: ctr.data,
+                    data: roles,
                     prefixText: "Role",
                     isDropDown: true,
                   ),
@@ -75,7 +87,14 @@ class _CustomDialogState extends State<CustomDialog> {
                 Expanded(
                   flex: 2,
                   child: CustomFilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<RegistUserController>().getData(
+                          context,
+                          _userName.text,
+                          _email.text,
+                          _password.text,
+                          _role.text);
+                    },
                     buttonText: "Register",
                     filledColor: Theme.of(context).colorScheme.primary,
                     buttonTextColor: Theme.of(context).colorScheme.onPrimary,

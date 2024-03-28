@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/models.dart';
 import 'custom_dropdown_button.dart';
 import 'custom_text_field.dart';
 
@@ -13,7 +12,7 @@ class DialogFormFiled extends StatefulWidget {
     this.hintText,
     this.isDropDown,
     this.isDateTime,
-    this.roles,
+    this.data,
   });
 
   final TextEditingController controller;
@@ -21,7 +20,7 @@ class DialogFormFiled extends StatefulWidget {
   final String? hintText;
   final bool? isDropDown;
   final bool? isDateTime;
-  final List<Role>? roles;
+  final Map<String, String>? data;
   @override
   State<DialogFormFiled> createState() => _DialogFormFiledState();
 }
@@ -41,7 +40,7 @@ class _DialogFormFiledState extends State<DialogFormFiled> {
           Expanded(
               flex: 5,
               child: CustomDropDownButton(
-                roles: widget.roles ?? [],
+                data: widget.data ?? {},
                 controller: widget.controller,
               )),
         if (widget.isDropDown == null && widget.isDateTime == null)

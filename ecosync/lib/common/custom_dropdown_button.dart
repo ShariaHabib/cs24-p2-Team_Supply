@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
-import '../models/models.dart';
 
 class CustomDropDownButton extends StatefulWidget {
   const CustomDropDownButton(
-      {super.key, required this.controller, required this.roles});
+      {super.key, required this.controller, required this.data});
   final TextEditingController controller;
-  final List<Role> roles;
+  final Map<String, String> data;
 
   @override
   State<CustomDropDownButton> createState() => _CustomDropDownButtonState();
 }
 
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
-  late Map<int, String> list;
-  late int dropdownValue;
+  late Map<String, String> list;
+  late String dropdownValue;
 
   @override
   void initState() {
-    Map<int, String> li = {};
-    for (Role x in widget.roles) {
-      li[x.roleId] = x.roleName;
-    }
-    list = li;
     dropdownValue = list.entries.first.key;
     super.initState();
   }
@@ -36,20 +30,20 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
         contentPadding: EdgeInsets.symmetric(vertical: 0),
       ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<int>(
+        child: DropdownButton<String>(
           padding:
               const EdgeInsets.symmetric(horizontal: kDefaultPadding * 0.5),
           focusColor: Colors.transparent,
           borderRadius: BorderRadius.circular(0),
           isExpanded: true,
           value: dropdownValue,
-          items: list.entries.map<DropdownMenuItem<int>>((emtry) {
-            return DropdownMenuItem<int>(
+          items: list.entries.map<DropdownMenuItem<String>>((emtry) {
+            return DropdownMenuItem<String>(
               value: emtry.key,
               child: Text(emtry.value),
             );
           }).toList(),
-          onChanged: (int? value) {
+          onChanged: (String? value) {
             widget.controller.text = value.toString();
             setState(() {
               dropdownValue = value!;
