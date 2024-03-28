@@ -4,9 +4,15 @@ import '../constants/constants.dart';
 
 class CustomDropDownButton extends StatefulWidget {
   const CustomDropDownButton(
-      {super.key, required this.controller, required this.data});
+      {super.key,
+      required this.controller,
+      required this.data,
+      required this.initialentry,
+      this.onChange});
   final TextEditingController controller;
   final Map<String, String> data;
+  final String initialentry;
+  final Function? onChange;
 
   @override
   State<CustomDropDownButton> createState() => _CustomDropDownButtonState();
@@ -17,7 +23,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
 
   @override
   void initState() {
-    dropdownValue = widget.data.entries.last.key;
+    dropdownValue = widget.initialentry;
     super.initState();
   }
 
@@ -43,7 +49,8 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
             );
           }).toList(),
           onChanged: (String? value) {
-            widget.controller.text = value.toString();
+            widget.controller.text = widget.data[value] ?? "";
+            widget.onChange!(value);
             setState(() {
               dropdownValue = value!;
             });

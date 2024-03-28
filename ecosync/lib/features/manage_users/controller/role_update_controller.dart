@@ -4,20 +4,18 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../business_logic/business_logic.dart';
 import '../../../models/models.dart';
 
-class GetRolesController with ChangeNotifier {
-  Map<String, String> data = {};
+class RoleUpdateController with ChangeNotifier {
+  late RegistGeneralResponse data;
+  late bool success;
 
   bool loading = false;
-  // late bool success;
 
-  getData(context) async {
+  updateData(context, roleId, userId) async {
     loading = true;
+    notifyListeners();
     String? token = await const FlutterSecureStorage().read(key: 'token');
-    List<Role> out =
-        await GetRoleLogic.getRole(token ?? '').then((value) => value.roleList);
-    for (Role x in out) {
-      data[x.roleId.toString()] = x.roleName ?? "";
-    }
+    data = await UpadateRolesLogic.updateRole(token ?? '', roleId, userId);
+    success = data.success;
     loading = false;
     notifyListeners();
   }

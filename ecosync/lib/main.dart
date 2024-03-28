@@ -31,6 +31,9 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => DeleteUserController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => RoleUpdateController(),
+        ),
       ],
       child: const MyApp(),
     ),

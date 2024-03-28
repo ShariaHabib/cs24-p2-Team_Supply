@@ -41,6 +41,7 @@ class _DialogFormFiledState extends State<DialogFormFiled> {
               flex: 5,
               child: CustomDropDownButton(
                 data: widget.data ?? {},
+                initialentry: widget.data?.entries.last.key ?? "",
                 controller: widget.controller,
               )),
         if (widget.isDropDown == null && widget.isDateTime == null)

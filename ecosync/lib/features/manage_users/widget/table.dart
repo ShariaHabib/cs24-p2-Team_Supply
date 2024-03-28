@@ -16,10 +16,12 @@ class UserTableView extends StatefulWidget {
 class _UserTableViewState extends State<UserTableView> {
   int? sortColumnIndex;
   bool isAscending = false;
+  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    context.read<GetRolesController>().getData(context);
   }
 
   final columns = ['User Id', 'User Name', 'Email', 'Role', ''];
@@ -27,6 +29,7 @@ class _UserTableViewState extends State<UserTableView> {
   @override
   Widget build(BuildContext context) {
     DeleteUserController ctr = context.watch<DeleteUserController>();
+    GetRolesController ctr2 = context.watch<GetRolesController>();
     return SizedBox(
       width: double.infinity,
       child: DataTable(
@@ -41,7 +44,7 @@ class _UserTableViewState extends State<UserTableView> {
         headingRowColor: MaterialStatePropertyAll(
             Theme.of(context).colorScheme.surfaceVariant),
         columns: getColumns(columns),
-        rows: getRows(widget.users, ctr),
+        rows: getRows(widget.users, ctr, ctr2),
       ),
     );
   }
@@ -53,7 +56,8 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  List<DataRow> getRows(List<User> users, DeleteUserController ctr) =>
+  List<DataRow> getRows(List<User> users, DeleteUserController ctr,
+          GetRolesController ctr2) =>
       users.map((User user) {
         final cells = [
           DataCell(
@@ -65,9 +69,20 @@ class _UserTableViewState extends State<UserTableView> {
           DataCell(
             Text(user.email),
           ),
-          DataCell(
-            Text(user.userRole),
-          ),
+          DataCell(ctr2.loading
+              ? const CircularProgressIndicator()
+              : CustomDropDownButton(
+                  controller: controller,
+                  data: ctr2.data,
+                  initialentry: ctr2.data.entries
+                      .firstWhere((element) => element.value == user.userRole)
+                      .key,
+                  onChange: (roleId) async {
+                    await context
+                        .read<RoleUpdateController>()
+                        .updateData(context, roleId, user.userId);
+                  },
+                )),
           DataCell(
             _buildActionButtons(user.userId, ctr),
           ),
@@ -80,9 +95,7 @@ class _UserTableViewState extends State<UserTableView> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IconButton(
-          onPressed: () {
-            
-          },
+          onPressed: () {},
           icon: const Icon(Icons.edit),
           color: Theme.of(context).colorScheme.primary,
         ),

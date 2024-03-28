@@ -1,3 +1,4 @@
+// import 'package:http/browser_client.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/constants.dart';
@@ -14,6 +15,8 @@ class DeleteUserLogic {
         "Access-Control-Allow-Credentials": "true",
         'Authorization': token
       };
+
+      // BrowserClient
       http.Response resp = await http.delete(
         Uri.parse(API_DELETE_USER + userId),
         headers: headers,
