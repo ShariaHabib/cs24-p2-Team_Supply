@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 import '../models/vehicle_list_response.dart';
 
-class GetVehicleList {
+class GetVehicleListLogic {
   static Future<VehicleListResponse> getVehicleList(String token) async {
     late VehicleListResponse data;
     try {

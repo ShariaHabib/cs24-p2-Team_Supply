@@ -7,3 +7,5 @@ export './role_list_response_model.dart';
 export './vehicle_model.dart';
 
 export './regist_general_model.dart';
+export './permission_model.dart';
+export './permission_list_response.dart';
