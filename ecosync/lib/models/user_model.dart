@@ -2,15 +2,15 @@ import 'dart:convert';
 
 class User {
   final String? userId;
-  final String email;
+  final String? email;
   final String userName;
-  final String userRole;
+  final String? userRole;
   final String? password;
   User({
     this.userId,
-    required this.email,
+    this.email,
     required this.userName,
-    required this.userRole,
+    this.userRole,
     this.password,
   });
 

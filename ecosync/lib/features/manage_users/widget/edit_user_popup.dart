@@ -1,5 +1,7 @@
 import 'package:ecosync/constants/constants.dart';
+import 'package:ecosync/features/manage_users/controller/update_user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 
@@ -34,6 +36,7 @@ class _EditUserState extends State<EditUser> {
 
   @override
   Widget build(BuildContext context) {
+    UpdateUsersController ctrRegist = context.watch<UpdateUsersController>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -91,7 +94,14 @@ class _EditUserState extends State<EditUser> {
                 Expanded(
                   flex: 2,
                   child: CustomFilledButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context
+                          .read<UpdateUsersController>()
+                          .updateData(context, _userName.text, _userId.text);
+                      if (!ctrRegist.loading && context.mounted) {
+                        customResponseDialog(context, "Update Successful", "");
+                      }
+                    },
                     buttonText: "Update",
                     filledColor: Theme.of(context).colorScheme.primary,
                     buttonTextColor: Theme.of(context).colorScheme.onPrimary,
