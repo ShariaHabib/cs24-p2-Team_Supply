@@ -45,7 +45,7 @@ class _ManageUsersState extends State<ManageUsers> {
             }),
             const SizedBox(height: kDefaultPadding),
             ctr.loading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : UserTableView(
                     users: context.watch<GetUsersController>().data,
                   ),

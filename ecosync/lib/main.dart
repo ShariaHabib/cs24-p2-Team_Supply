@@ -7,6 +7,7 @@ import 'features/dashboard/controller/menu_controller.dart';
 import 'features/dashboard/view/dashboard.dart';
 import 'features/login/controller/login_controller.dart';
 import 'features/login/view/login.dart';
+import 'features/manage_users/controller/role_controller.dart';
 import 'themes/theme.dart';
 
 void main() {
@@ -21,6 +22,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => GetUsersController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetRolesController(),
         ),
       ],
       child: const MyApp(),

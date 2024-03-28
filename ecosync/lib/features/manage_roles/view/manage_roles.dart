@@ -50,11 +50,9 @@ class _ManageRolesState extends State<ManageRoles> {
               ),
               child: Row(
                 children: [
-                  Expanded(
-                      flex: 2, child: CustomDropDownButton(controller: _role)),
-                  const Spacer(
-                    flex: 2,
-                  ),
+                  // Expanded(
+                  //     flex: 2, child: CustomDropDownButton(controller: _role)),
+                  const Spacer(flex: 2),
                   Expanded(
                     flex: 1,
                     child: CustomFilledButton(

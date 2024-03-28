@@ -68,14 +68,17 @@ class _UserTableViewState extends State<UserTableView> {
 
   void onSort(int columnIndex, bool ascending) {
     if (columnIndex == 0) {
-      // users.sort((user1, user2) =>
-      // compareString(ascending, user1.firstName, user2.firstName));
+      widget.users.sort((user1, user2) =>
+          compareString(ascending, user1.userId, user2.userId));
     } else if (columnIndex == 1) {
-      // users.sort((user1, user2) =>
-      //     compareString(ascending, user1.lastName, user2.lastName));
+      widget.users.sort((user1, user2) =>
+          compareString(ascending, user1.userName, user2.userName));
     } else if (columnIndex == 2) {
-      // users.sort((user1, user2) =>
-      //     compareString(ascending, '${user1.age}', '${user2.age}'));
+      widget.users.sort(
+          (user1, user2) => compareString(ascending, user1.email, user2.email));
+    } else if (columnIndex == 3) {
+      widget.users.sort((user1, user2) =>
+          compareString(ascending, user1.userRole, user2.userRole));
     }
     setState(() {
       sortColumnIndex = columnIndex;

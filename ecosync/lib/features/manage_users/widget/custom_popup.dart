@@ -1,7 +1,9 @@
 import 'package:ecosync/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
+import '../controller/role_controller.dart';
 
 class CustomDialog extends StatefulWidget {
   const CustomDialog({
@@ -16,9 +18,15 @@ class _CustomDialogState extends State<CustomDialog> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _role = TextEditingController();
+  @override
+  void initState() {
+    context.read<GetRolesController>().getData(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    GetRolesController ctr = context.watch<GetRolesController>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -52,11 +60,14 @@ class _CustomDialogState extends State<CustomDialog> {
                 prefixText: "Password",
                 hintText: "Password"),
             const SizedBox(height: kDefaultPadding),
-            DialogFormFiled(
-              controller: _role,
-              prefixText: "Password",
-              isDropDown: true,
-            ),
+            ctr.loading
+                ? const CircularProgressIndicator()
+                : DialogFormFiled(
+                    controller: _role,
+                    roles: ctr.data,
+                    prefixText: "Role",
+                    isDropDown: true,
+                  ),
             const SizedBox(height: kDefaultPadding * 2),
             Row(
               children: [
