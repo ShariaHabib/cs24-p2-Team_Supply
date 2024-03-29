@@ -95,8 +95,11 @@ class _UserProfileState extends State<UserProfile> {
                                     context, _userName.text, _userId.text);
                             if (!ctrRegist.loading && context.mounted) {
                               customResponseDialog(
-                                  context, "Update Successful", "",
-                                  isProfile: true);
+                                      context, "Update Successful", "",
+                                      isProfile: true)
+                                  .then((value) => context
+                                      .read<UserProfileController>()
+                                      .getUserData(context));
                             }
                           },
                           buttonText: "Update",
