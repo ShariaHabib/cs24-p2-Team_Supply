@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:ecosync/models/models.dart';
 
 class RbacRolesModel {
   final int role_id;
   final String role_name;
-  final List<String> permissions;
+  final List<PermissionModel> permissions;
+
   RbacRolesModel({
     required this.role_id,
     required this.role_name,
@@ -15,7 +16,7 @@ class RbacRolesModel {
   RbacRolesModel copyWith({
     int? role_id,
     String? role_name,
-    List<String>? permissions,
+    List<PermissionModel>? permissions, //
   }) {
     return RbacRolesModel(
       role_id: role_id ?? this.role_id,
@@ -25,20 +26,23 @@ class RbacRolesModel {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'role_id': role_id,
       'role_name': role_name,
-      'permissions': permissions,
+      'permissions': permissions.map((x) => x.toMap()).toList(),
     };
   }
 
   factory RbacRolesModel.fromMap(Map<String, dynamic> map) {
     return RbacRolesModel(
-        role_id: map['role_id'] as int,
-        role_name: map['role_name'] as String,
-        permissions: List<String>.from(
-          (map['permissions'] as List<String>),
-        ));
+      role_id: map['role_id'] as int,
+      role_name: map['role_name'] as String,
+      permissions: List<PermissionModel>.from(
+        (map['permissions'] as List<dynamic>).map(
+          (x) => PermissionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
   }
 
   String toJson() => json.encode(toMap());
@@ -49,17 +53,4 @@ class RbacRolesModel {
   @override
   String toString() =>
       'RbacRolesModel(role_id: $role_id, role_name: $role_name, permissions: $permissions)';
-
-  @override
-  bool operator ==(covariant RbacRolesModel other) {
-    if (identical(this, other)) return true;
-
-    return other.role_id == role_id &&
-        other.role_name == role_name &&
-        listEquals(other.permissions, permissions);
-  }
-
-  @override
-  int get hashCode =>
-      role_id.hashCode ^ role_name.hashCode ^ permissions.hashCode;
 }

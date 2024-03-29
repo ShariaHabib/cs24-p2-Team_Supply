@@ -39,7 +39,7 @@ class RbacRolesResponse {
       success: map['success'] as bool,
       message: map['message'] != null ? map['message'] as String : null,
       roleList: List<RbacRolesModel>.from(
-        (map['roleList'] as List<int>).map<RbacRolesModel>(
+        (map['roleList'] as List<dynamic>).map<RbacRolesModel>(
           (x) => RbacRolesModel.fromMap(x as Map<String, dynamic>),
         ),
       ),

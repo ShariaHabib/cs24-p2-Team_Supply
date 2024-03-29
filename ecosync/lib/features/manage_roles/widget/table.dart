@@ -3,10 +3,8 @@ import 'package:ecosync/models/rbac_roles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/common.dart';
-
 class RoleTableView extends StatefulWidget {
-  RoleTableView({super.key, required this.roles});
+  const RoleTableView({super.key, required this.roles});
 
   final List<RbacRolesModel> roles;
   @override
@@ -14,7 +12,6 @@ class RoleTableView extends StatefulWidget {
 }
 
 class _RoleTableViewState extends State<RoleTableView> {
-  // late List<role> users;
   int? sortColumnIndex;
   bool isAscending = false;
 
@@ -31,13 +28,14 @@ class _RoleTableViewState extends State<RoleTableView> {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
-        columnSpacing: 0,
+        columnSpacing: 30,
         border: TableBorder.all(
           color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
         ),
         dividerThickness: 0.5,
         sortAscending: isAscending,
         sortColumnIndex: sortColumnIndex,
+        dataRowMaxHeight: 100,
         headingRowHeight: 40,
         headingRowColor: MaterialStatePropertyAll(
             Theme.of(context).colorScheme.surfaceVariant),
@@ -61,12 +59,17 @@ class _RoleTableViewState extends State<RoleTableView> {
       roles.map((RbacRolesModel role) {
         final cells = [
           DataCell(
-            Text(role.role_id.toString(), style: const TextStyle(fontSize: 10)),
+            Text(role.role_id.toString()),
           ),
           DataCell(
             Text(role.role_name),
           ),
-          DataCell(Text(role.permissions.join(", "))),
+          DataCell(SingleChildScrollView(
+              child: SizedBox(
+                  width: 350,
+                  child: Text(role.permissions
+                      .map((permission) => permission.permission_name)
+                      .join(', '))))),
           DataCell(
             _buildActionButtons(role, ctr),
           ),

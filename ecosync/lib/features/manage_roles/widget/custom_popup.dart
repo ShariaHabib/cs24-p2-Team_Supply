@@ -14,7 +14,6 @@ class CustomDialog extends StatefulWidget {
 
 class _CustomDialogState extends State<CustomDialog> {
   final TextEditingController _roleName = TextEditingController();
-  final TextEditingController _password = TextEditingController();
   final TextEditingController _roleId = TextEditingController();
 
   @override

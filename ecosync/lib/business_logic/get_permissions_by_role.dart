@@ -1,12 +1,13 @@
-import 'package:ecosync/models/rbac_roles_response.dart';
+import 'package:ecosync/models/permission_list_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/constants.dart';
 import '../models/models.dart';
 
-class GetRbacRolesLogic {
-  static Future<RbacRolesResponse> getRbacRole(String token) async {
-    late RbacRolesResponse data;
+class GetPermissionByRoleListLogic {
+  static Future<PermissionListModel> getPermissions(
+      String token, String roleId) async {
+    late PermissionListModel data;
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
@@ -15,13 +16,15 @@ class GetRbacRolesLogic {
         'Authorization': token
       };
       http.Response resp = await http.get(
-        Uri.parse(API_GET_RBAC_ROLES),
+        Uri.parse('$API_GET_PERMISSIONS/$roleId'),
         headers: headers,
       );
-      data = RbacRolesResponse.fromJson(resp.body);
+      // print(resp.body);
+      data = PermissionListModel.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = RbacRolesResponse(roleList: [], success: false, message: "");
+      data =
+          PermissionListModel(permissionList: [], success: false, message: "");
     }
     return data;
   }

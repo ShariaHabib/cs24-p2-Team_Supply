@@ -11,6 +11,8 @@ import 'features/dashboard/controller/menu_controller.dart';
 import 'features/dashboard/view/dashboard.dart';
 import 'features/login/controller/login_controller.dart';
 import 'features/login/view/login.dart';
+import 'features/manage_roles/controller/get_permission_by_role.dart';
+import 'features/manage_roles/controller/get_permission_controller.dart';
 import 'features/manage_users/controller/controller.dart';
 import 'features/manage_vehicles/controller/delete_vehicle_controller.dart';
 import 'features/manage_vehicles/controller/regist_vehicle.dart';
@@ -61,6 +63,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => DeleteRbacController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PermissionController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PermissionByRoleController(),
         ),
       ],
       child: const MyApp(),

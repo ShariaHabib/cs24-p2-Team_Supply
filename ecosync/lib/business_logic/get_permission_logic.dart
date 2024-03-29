@@ -1,3 +1,4 @@
+import 'package:ecosync/models/permission_list_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/constants.dart';
@@ -20,7 +21,8 @@ class GetPermissionListLogic {
       data = PermissionListModel.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = PermissionListModel(data: [], success: false);
+      data =
+          PermissionListModel(permissionList: [], success: false, message: "");
     }
     return data;
   }

@@ -37,6 +37,7 @@ class _UserTableViewState extends State<UserTableView> {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
+          columnSpacing: 20,
           border: TableBorder.all(
             color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
           ),
@@ -62,7 +63,7 @@ class _UserTableViewState extends State<UserTableView> {
       vehicles.map((Vehicle vehicle) {
         final cells = [
           DataCell(
-            Text(vehicle.vehicle_number, style: const TextStyle(fontSize: 10)),
+            Text(vehicle.vehicle_number),
           ),
           DataCell(
             Text(vehicle.capacity.toString()),
