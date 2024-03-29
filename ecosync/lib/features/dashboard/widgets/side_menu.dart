@@ -74,6 +74,13 @@ class SideMenu extends StatelessWidget {
               context.read<MenuAppController>().controlSelection(7);
             },
           ),
+          DrawerListTile(
+            title: "Profile",
+            icon: Icons.home,
+            press: () {
+              context.read<MenuAppController>().controlSelection(8);
+            },
+          ),
           SizedBox(
             height: 100,
           ),

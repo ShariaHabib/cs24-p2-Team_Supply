@@ -16,6 +16,7 @@ import 'features/manage_roles/controller/get_permission_controller.dart';
 import 'features/manage_users/controller/controller.dart';
 import 'features/manage_vehicles/controller/delete_vehicle_controller.dart';
 import 'features/manage_vehicles/controller/regist_vehicle.dart';
+import 'features/profile/controller/get_user_profile_controller.dart';
 import 'themes/theme.dart';
 
 void main() {
@@ -69,6 +70,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => PermissionByRoleController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProfileController(),
         ),
       ],
       child: const MyApp(),

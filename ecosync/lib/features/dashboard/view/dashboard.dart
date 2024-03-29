@@ -51,6 +51,9 @@ class Dashboard extends StatelessWidget {
                     case 6:
                       selectedWidget = const WasteDispose();
                       break;
+                    case 8:
+                      selectedWidget = const UserProfile();
+                      break;
                     default:
                       selectedWidget = Container(); // or any default widget
                       break;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:http/http.dart' as http;
 
@@ -8,6 +9,7 @@ class UpdatePermissionLogic {
   static Future<RegistGeneralResponse> updatePermissions(
       String token, String roleId, List<int> permissionList) async {
     late RegistGeneralResponse data;
+
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
