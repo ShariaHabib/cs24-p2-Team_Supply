@@ -1,5 +1,9 @@
 import 'package:ecosync/features/manage_roles/controller/delete_rbac_roles_controller.dart';
 import 'package:ecosync/features/manage_roles/controller/rbac_roles_controller.dart';
+import 'package:ecosync/features/manage_sts/controller/create_sts_controller.dart';
+import 'package:ecosync/features/manage_sts/controller/delete_sts_controller.dart';
+import 'package:ecosync/features/manage_sts/controller/get_sts_controller.dart';
+import 'package:ecosync/features/manage_sts/controller/update_sts_controller.dart';
 import 'package:ecosync/features/manage_users/controller/update_user_controller.dart';
 import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:ecosync/features/dashboard/controller/logout_controller.dart';
@@ -73,6 +77,18 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => UserProfileController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DeleteSTSController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UpdateSTSController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetSTScontroller(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RegistSTSController(),
         ),
       ],
       child: const MyApp(),

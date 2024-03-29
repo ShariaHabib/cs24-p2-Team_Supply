@@ -1,10 +1,11 @@
+import 'package:ecosync/models/get_sts_response_model.dart';
 import 'package:http/http.dart' as http;
-import '../constants/constants.dart';
-import '../models/vehicle_list_response.dart';
 
-class GetVehicleListLogic {
-  static Future<VehicleListResponse> getVehicleList(String token) async {
-    late VehicleListResponse data;
+import '../constants/constants.dart';
+
+class GetSTSlogic {
+  static Future<GetSTSResponse> getSTS(String token) async {
+    late GetSTSResponse data;
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
@@ -13,14 +14,14 @@ class GetVehicleListLogic {
         'Authorization': token
       };
       http.Response resp = await http.get(
-        Uri.parse(API_GET_VEHICLE),
+        Uri.parse(API_GET_STS),
         headers: headers,
       );
       print(resp.body);
-      data = VehicleListResponse.fromJson(resp.body);
+      data = GetSTSResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = VehicleListResponse(vehiclesList: [], success: false);
+      data = GetSTSResponse(stsList: [], success: false);
     }
     return data;
   }

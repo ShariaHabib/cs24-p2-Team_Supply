@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../constants/constants.dart';
+import '../controller/get_sts_controller.dart';
 import '../widget/widgets.dart';
 
 class ManageSTS extends StatefulWidget {
@@ -15,7 +17,14 @@ class _ManageSTSState extends State<ManageSTS> {
   final TextEditingController _search = TextEditingController();
 
   @override
+  void initState() {
+    context.read<GetSTScontroller>().getData(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    GetSTScontroller ctr = context.watch<GetSTScontroller>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -35,7 +44,13 @@ class _ManageSTSState extends State<ManageSTS> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            const UserTableView()
+            ctr.loading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : STSTableView(
+                    sts: context.watch<GetSTScontroller>().data,
+                  )
           ],
         ),
       ),

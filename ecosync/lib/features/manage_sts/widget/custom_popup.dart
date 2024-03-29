@@ -78,7 +78,16 @@ class _CustomDialogState extends State<CustomDialog> {
                 Expanded(
                   flex: 2,
                   child: CustomFilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // context.read<>().addSTS(
+                      //       context,
+                      //       wardNo: int.tryParse(_wardNo.text),
+                      //       capacity: int.tryParse(_capacity.text),
+                      //       latitude: double.tryParse(_latitude.text),
+                      //       longitude: double.tryParse(_longitude.text),
+                      //       manager: _manager.text,
+                      //     );
+                    },
                     buttonText: "Register",
                     filledColor: Theme.of(context).colorScheme.primary,
                     buttonTextColor: Theme.of(context).colorScheme.onPrimary,

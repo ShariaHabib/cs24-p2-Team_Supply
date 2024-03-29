@@ -1,10 +1,12 @@
 import 'package:http/http.dart' as http;
-import '../constants/constants.dart';
-import '../models/vehicle_list_response.dart';
 
-class GetVehicleListLogic {
-  static Future<VehicleListResponse> getVehicleList(String token) async {
-    late VehicleListResponse data;
+import '../constants/constants.dart';
+import '../models/models.dart';
+
+class DeleteSTSLogic {
+  static Future<RegistGeneralResponse> deleteSTS(
+      String token, String wardNo) async {
+    late RegistGeneralResponse data;
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
@@ -12,15 +14,16 @@ class GetVehicleListLogic {
         "Access-Control-Allow-Credentials": "true",
         'Authorization': token
       };
-      http.Response resp = await http.get(
-        Uri.parse(API_GET_VEHICLE),
+      print(token);
+      http.Response resp = await http.delete(
+        Uri.parse(API_DELETE_STS + wardNo),
         headers: headers,
       );
       print(resp.body);
-      data = VehicleListResponse.fromJson(resp.body);
+      data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = VehicleListResponse(vehiclesList: [], success: false);
+      data = RegistGeneralResponse(message: "", success: false);
     }
     return data;
   }
