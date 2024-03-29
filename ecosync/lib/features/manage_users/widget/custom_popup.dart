@@ -95,9 +95,12 @@ class _CustomDialogState extends State<CustomDialog> {
                                 ctrRegist.success &&
                                 context.mounted) {
                               customResponseDialog(
-                                  context,
-                                  "Registration Successful",
-                                  "Please ask the user to check their mail");
+                                      context,
+                                      "Registration Successful",
+                                      "Please ask the user to check their mail")
+                                  .then((value) => context
+                                      .read<GetUsersController>()
+                                      .getData(context));
                             } else {}
                           },
                           buttonText: "Register",

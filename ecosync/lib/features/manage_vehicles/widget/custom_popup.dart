@@ -1,6 +1,8 @@
 import 'package:ecosync/constants/constants.dart';
 import 'package:ecosync/features/manage_vehicles/controller/regist_vehicle.dart';
+import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
@@ -31,7 +33,6 @@ class _CustomDialogState extends State<CustomDialog> {
   Widget build(BuildContext context) {
     RegistVehicleController ctrRegist =
         context.watch<RegistVehicleController>();
-
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -101,8 +102,11 @@ class _CustomDialogState extends State<CustomDialog> {
                       if (!ctrRegist.loading &&
                           ctrRegist.success &&
                           context.mounted) {
-                        customResponseDialog(context, "Registration Successful",
-                            "Please ask the user to check their mail");
+                        customResponseDialog(
+                                context, "Vehicle Registration Successful", "")
+                            .then((value) => context
+                                .read<GetVehiclesController>()
+                                .getData(context));
                       }
                     },
                     buttonText: "Register",
