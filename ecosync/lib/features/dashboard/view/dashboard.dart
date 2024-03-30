@@ -8,19 +8,23 @@ import '../controller/menu_controller.dart';
 import '../widgets/widgets.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  const Dashboard({super.key, required this.roleId, required this.userName});
+  final int roleId;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: context.read<MenuAppController>().scaffoldKey,
-      drawer: const SideMenu(),
+      drawer: SideMenu(roleId: roleId),
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(
-              child: SideMenu(),
+            Expanded(
+              child: SideMenu(
+                roleId: roleId,
+              ),
             ),
             Expanded(
               flex: 4,
@@ -31,25 +35,39 @@ class Dashboard extends StatelessWidget {
                   Widget selectedWidget;
                   switch (currentSelection) {
                     case 0:
-                      selectedWidget = const Home();
+                      selectedWidget = Home(
+                        userName: userName,
+                      );
                       break;
                     case 1:
-                      selectedWidget = const ManageUsers();
+                      selectedWidget = ManageUsers(
+                        userName: userName,
+                      );
                       break;
                     case 2:
-                      selectedWidget = const ManageRoles();
+                      selectedWidget = ManageRoles(
+                        userName: userName,
+                      );
                       break;
                     case 3:
-                      selectedWidget = const ManageVehicles();
+                      selectedWidget = ManageVehicles(
+                        userName: userName,
+                      );
                       break;
                     case 4:
-                      selectedWidget = const ManageSTS();
+                      selectedWidget = ManageSTS(
+                        userName: userName,
+                      );
                       break;
                     case 5:
-                      selectedWidget = const WasteCollection();
+                      selectedWidget = WasteCollection(
+                        userName: userName,
+                      );
                       break;
                     case 6:
-                      selectedWidget = const WasteDispose();
+                      selectedWidget = WasteDispose(
+                        userName: userName,
+                      );
                       break;
                     case 8:
                       selectedWidget = const UserProfile();

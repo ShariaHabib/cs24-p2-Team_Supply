@@ -8,7 +8,8 @@ import '../controller/user_controller.dart';
 import '../widget/widgets.dart';
 
 class ManageUsers extends StatefulWidget {
-  const ManageUsers({super.key});
+  const ManageUsers({super.key, required this.userName});
+  final String userName;
 
   @override
   State<ManageUsers> createState() => _ManageUsersState();
@@ -32,7 +33,7 @@ class _ManageUsersState extends State<ManageUsers> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileCard(),
+            ProfileCard(userName: widget.userName),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding * 2),
             SearchBox(search: _search),

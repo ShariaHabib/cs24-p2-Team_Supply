@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: kDefaultPadding),
                     ctl.loading
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : CustomFilledButton(
                             buttonText: "login",
                             filledColor: Theme.of(context).colorScheme.primary,
@@ -69,7 +69,9 @@ class _LoginState extends State<Login> {
                                   context,
                                   MaterialPageRoute(
                                     // settings: RouteSettings(name: "/Page1"),
-                                    builder: (context) => const Dashboard(),
+                                    builder: (context) => Dashboard(
+                                        roleId: ctl.data.userInfo.role_id,
+                                        userName: ctl.data.userInfo.user_name),
                                   ),
                                 );
                               } else {}

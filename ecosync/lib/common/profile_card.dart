@@ -8,7 +8,9 @@ import '../features/login/controller/login_data_store.dart';
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
     Key? key,
+    required this.userName,
   }) : super(key: key);
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +36,9 @@ class ProfileCard extends StatelessWidget {
             children: [
               const Icon(Icons.catching_pokemon_sharp),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-                child: Text(context.read<LoginDataSave>().getData.user_name),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                child: Text(userName),
               ),
               const Icon(Icons.keyboard_arrow_down),
             ],

@@ -21,7 +21,10 @@ class LoginController with ChangeNotifier {
     success = data.success;
     if (data.token.isNotEmpty) {
       await const FlutterSecureStorage().write(key: 'token', value: data.token);
-      Provider.of<LoginDataSave>(context, listen: false).setData(data.userInfo);
+      await const FlutterSecureStorage()
+          .write(key: 'role_id', value: data.userInfo.role_id.toString());
+      await const FlutterSecureStorage()
+          .write(key: 'user_name', value: data.userInfo.user_name.toString());
     }
     Timer(
       const Duration(minutes: 20),

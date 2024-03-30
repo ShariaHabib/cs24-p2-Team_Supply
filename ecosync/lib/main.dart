@@ -103,6 +103,20 @@ void main() {
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
+  Future<Map<String, dynamic>?> getall() async {
+    late Map<String, dynamic> data;
+    String? x = await const FlutterSecureStorage().read(key: 'token');
+    String? y = await const FlutterSecureStorage().read(key: 'role_id');
+    String? z = await const FlutterSecureStorage().read(key: 'user_name');
+
+    if (x != null && y != null && z != null) {
+      data = {"token": x, "role_id": int.parse(y), "user_name": z};
+      return data;
+    } else {
+      return null;
+    }
+  }
+
   const MyApp({super.key});
 
   @override
@@ -118,11 +132,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       home: FutureBuilder(
-        future: const FlutterSecureStorage().read(key: 'token'),
-        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+        future: getall(),
+        builder: (BuildContext context,
+            AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+          print(snapshot.data);
           if (snapshot.connectionState == ConnectionState.done) {
             return snapshot.hasData && snapshot.data != null
-                ? const Dashboard()
+                ? Dashboard(
+                    roleId: snapshot.data!['role_id'] ?? '',
+                    userName: snapshot.data!['user_name'] ?? '',
+                  )
                 : const Login();
           } else {
             return const LinearProgressIndicator();

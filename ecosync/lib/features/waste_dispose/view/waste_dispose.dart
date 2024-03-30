@@ -6,7 +6,8 @@ import '../../../constants/constants.dart';
 import '../widget/widgets.dart';
 
 class WasteDispose extends StatefulWidget {
-  const WasteDispose({super.key});
+  const WasteDispose({super.key, required this.userName});
+  final String userName;
 
   @override
   State<WasteDispose> createState() => _WasteDisposeState();
@@ -23,7 +24,7 @@ class _WasteDisposeState extends State<WasteDispose> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileCard(),
+            ProfileCard(userName: widget.userName),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding * 2),
             SearchBox(search: _search),

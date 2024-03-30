@@ -11,7 +11,9 @@ import '../controller/menu_controller.dart';
 class SideMenu extends StatelessWidget {
   const SideMenu({
     Key? key,
+    required this.roleId,
   }) : super(key: key);
+  final int roleId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class SideMenu extends StatelessWidget {
           const DrawerHeader(
             child: Text("EcoSync"),
           ),
-          if (context.read<LoginDataSave>().getData.role_id == 1)
+          if (roleId == 1)
             DrawerListTile(
               title: "Home",
               icon: Icons.home,
@@ -29,15 +31,15 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(0);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1)
+          if (roleId == 1)
             DrawerListTile(
               title: "Manage User",
               icon: Icons.home,
               press: () {
-                context.read<MenuAppController>().controlSelection(1);
+                context.watch<MenuAppController>().controlSelection(1);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1)
+          if (roleId == 1)
             DrawerListTile(
               title: "Manage Roles",
               icon: Icons.home,
@@ -45,7 +47,7 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(2);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1)
+          if (roleId == 1)
             DrawerListTile(
               title: "Manage Vehicles",
               icon: Icons.home,
@@ -53,7 +55,7 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(3);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1)
+          if (roleId == 1)
             DrawerListTile(
               title: "Manage STS",
               icon: Icons.home,
@@ -61,8 +63,7 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(4);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1 ||
-              context.read<LoginDataSave>().getData.role_id == 2)
+          if (roleId == 1 || roleId == 2)
             DrawerListTile(
               title: "Waste Collection",
               icon: Icons.home,
@@ -70,8 +71,7 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(5);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1 ||
-              context.read<LoginDataSave>().getData.role_id == 3)
+          if (roleId == 1 || roleId == 3)
             DrawerListTile(
               title: "Waste Disposal",
               icon: Icons.home,
@@ -79,7 +79,7 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(6);
               },
             ),
-          if (context.read<LoginDataSave>().getData.role_id == 1)
+          if (roleId == 1)
             DrawerListTile(
               title: "Billings",
               icon: Icons.home,

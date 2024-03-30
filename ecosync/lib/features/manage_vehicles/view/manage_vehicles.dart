@@ -9,7 +9,8 @@ import '../../../constants/constants.dart';
 import '../widget/widgets.dart';
 
 class ManageVehicles extends StatefulWidget {
-  const ManageVehicles({super.key});
+  const ManageVehicles({super.key, required this.userName});
+  final String userName;
 
   @override
   State<ManageVehicles> createState() => _ManageVehiclesState();
@@ -32,7 +33,7 @@ class _ManageVehiclesState extends State<ManageVehicles> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileCard(),
+            ProfileCard(userName: widget.userName),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding * 2),
             SearchBox(search: _search),

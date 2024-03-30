@@ -8,8 +8,8 @@ import '../controller/get_sts_controller.dart';
 import '../widget/widgets.dart';
 
 class ManageSTS extends StatefulWidget {
-  const ManageSTS({super.key});
-
+  const ManageSTS({super.key, required this.userName});
+  final String userName;
   @override
   State<ManageSTS> createState() => _ManageSTSState();
 }
@@ -32,7 +32,7 @@ class _ManageSTSState extends State<ManageSTS> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileCard(),
+            ProfileCard(userName: widget.userName),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding * 2),
             SearchBox(search: _search),

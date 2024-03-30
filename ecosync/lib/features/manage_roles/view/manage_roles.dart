@@ -9,8 +9,8 @@ import '../controller/rbac_roles_controller.dart';
 import '../widget/widgets.dart';
 
 class ManageRoles extends StatefulWidget {
-  const ManageRoles({super.key});
-
+  const ManageRoles({super.key, required this.userName});
+  final String userName;
   @override
   State<ManageRoles> createState() => _ManageRolesState();
 }
@@ -35,7 +35,7 @@ class _ManageRolesState extends State<ManageRoles> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileCard(),
+            ProfileCard(userName: widget.userName),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding),
             Text("Roles", style: Theme.of(context).textTheme.headlineMedium),
