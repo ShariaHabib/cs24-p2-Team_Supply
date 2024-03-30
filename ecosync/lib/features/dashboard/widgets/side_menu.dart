@@ -4,6 +4,7 @@ import 'package:ecosync/features/login/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../login/controller/login_data_store.dart';
 import '../controller/logout_controller.dart';
 import '../controller/menu_controller.dart';
 
@@ -20,41 +21,46 @@ class SideMenu extends StatelessWidget {
           const DrawerHeader(
             child: Text("EcoSync"),
           ),
-          DrawerListTile(
-            title: "Home",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(0);
-            },
-          ),
-          DrawerListTile(
-            title: "Manage User",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(1);
-            },
-          ),
-          DrawerListTile(
-            title: "Manage Roles",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(2);
-            },
-          ),
-          DrawerListTile(
-            title: "Manage Vehicles",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(3);
-            },
-          ),
-          DrawerListTile(
-            title: "Manage STS",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(4);
-            },
-          ),
+          if (context.read<LoginDataSave>().getData.role_id == 1)
+            DrawerListTile(
+              title: "Home",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(0);
+              },
+            ),
+          if (context.read<LoginDataSave>().getData.role_id == 1)
+            DrawerListTile(
+              title: "Manage User",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(1);
+              },
+            ),
+          if (context.read<LoginDataSave>().getData.role_id == 1)
+            DrawerListTile(
+              title: "Manage Roles",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(2);
+              },
+            ),
+          if (context.read<LoginDataSave>().getData.role_id == 1)
+            DrawerListTile(
+              title: "Manage Vehicles",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(3);
+              },
+            ),
+          if (context.read<LoginDataSave>().getData.role_id == 1)
+            DrawerListTile(
+              title: "Manage STS",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(4);
+              },
+            ),
           DrawerListTile(
             title: "Waste Collection",
             icon: Icons.home,
@@ -69,13 +75,14 @@ class SideMenu extends StatelessWidget {
               context.read<MenuAppController>().controlSelection(6);
             },
           ),
-          DrawerListTile(
-            title: "Billings",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(7);
-            },
-          ),
+          if (context.read<LoginDataSave>().getData.role_id == 1)
+            DrawerListTile(
+              title: "Billings",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(7);
+              },
+            ),
           // DrawerListTile(
           //   title: "Profile",
           //   icon: Icons.home,

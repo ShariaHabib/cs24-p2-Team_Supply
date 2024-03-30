@@ -34,7 +34,7 @@ class ProfileCard extends StatelessWidget {
             children: [
               const Icon(Icons.catching_pokemon_sharp),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
+                padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
                 child: Text(context.read<LoginDataSave>().getData.user_name),
               ),
               const Icon(Icons.keyboard_arrow_down),
