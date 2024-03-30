@@ -21,3 +21,8 @@ const String API_DELETE_USER = "http://127.0.0.1:8000/users/";
 const String API_UPDATE_USER = "http://127.0.0.1:8000/users/";
 const String API_GET_WASTE_COLLECTION =
     "http://127.0.0.1:8000/waste/collection";
+
+const String API_RESET_INIT =
+    "http://127.0.0.1:8000/auth/reset-password/initiate";
+const String API_RESET_CONFIRM =
+    "http://127.0.0.1:8000/auth/reset-password/confirm";

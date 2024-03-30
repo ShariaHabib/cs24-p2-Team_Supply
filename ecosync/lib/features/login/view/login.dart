@@ -5,6 +5,7 @@ import 'package:ecosync/features/login/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../business_logic/auth_reset_password.dart';
 import '../../../common/common.dart';
 import '../../../constants/constants.dart';
 import '../widgets/widgets.dart';
@@ -79,17 +80,98 @@ class _LoginState extends State<Login> {
                           ),
                     const SizedBox(height: kDefaultPadding),
                     CustomFilledButton(
-                        buttonText: "Forget Password",
-                        buttonTextColor:
-                            Theme.of(context).colorScheme.onSecondaryContainer,
-                        filledColor:
-                            Theme.of(context).colorScheme.secondaryContainer,
-                        onPressed: () async {})
+                      buttonText: "Forget Password",
+                      buttonTextColor:
+                          Theme.of(context).colorScheme.onSecondaryContainer,
+                      filledColor:
+                          Theme.of(context).colorScheme.secondaryContainer,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const PasswordReset();
+                            });
+                      },
+                    )
                   ],
                 ),
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PasswordReset extends StatefulWidget {
+  const PasswordReset({
+    super.key,
+  });
+
+  @override
+  State<PasswordReset> createState() => _PasswordResetState();
+}
+
+class _PasswordResetState extends State<PasswordReset> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _token = TextEditingController();
+  final TextEditingController _newPassword = TextEditingController();
+  bool isPressed = false;
+  @override
+  Widget build(BuildContext context) {
+    return Dialog.fullscreen(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            !isPressed
+                ? SizedBox(
+                    width: 300,
+                    child: AuthTextField(
+                        hintText: "Email",
+                        labelText: "Email",
+                        prefixIcon: Icons.email,
+                        controller: _email))
+                : Column(
+                    children: [
+                      SizedBox(
+                          width: 300,
+                          child: AuthTextField(
+                              hintText: "Reset Token",
+                              labelText: "Reset Token",
+                              prefixIcon: Icons.token,
+                              controller: _token)),
+                      const SizedBox(
+                        height: kDefaultPadding,
+                      ),
+                      SizedBox(
+                          width: 300,
+                          child: AuthTextField(
+                              hintText: "New Password",
+                              labelText: "New Password",
+                              prefixIcon: Icons.lock,
+                              controller: _newPassword)),
+                    ],
+                  ),
+            const SizedBox(
+              height: kDefaultPadding,
+            ),
+            FilledButton(
+                onPressed: () async {
+                  if (!isPressed) {
+                    await ResetPasswordInitiate.reset(_email.text);
+                    setState(() {
+                      isPressed = true;
+                    });
+                  } else {
+                    await ResetPasswordConfirm.confirm(
+                        _token.text, _newPassword.text);
+                    if (context.mounted) Navigator.pop(context);
+                  }
+                },
+                child: const Text("OK"))
+          ],
         ),
       ),
     );
