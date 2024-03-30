@@ -1,10 +1,12 @@
 import 'package:ecosync/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 
 import '../../../business_logic/business_logic.dart';
 import '../../../models/models.dart';
+import 'login_data_store.dart';
 
 class LoginController with ChangeNotifier {
   late LoginResponse data;
@@ -19,6 +21,7 @@ class LoginController with ChangeNotifier {
     success = data.success;
     if (data.token.isNotEmpty) {
       await const FlutterSecureStorage().write(key: 'token', value: data.token);
+      Provider.of<LoginDataSave>(context, listen: false).setData(data.userInfo);
     }
     Timer(
       const Duration(minutes: 20),

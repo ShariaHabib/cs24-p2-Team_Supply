@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/profile_card.dart';
 import '../../features.dart';
+import '../../profile/view/user_profile.dart';
 import '../controller/menu_controller.dart';
 import '../widgets/widgets.dart';
 
@@ -26,8 +28,6 @@ class Dashboard extends StatelessWidget {
                 builder: (context) {
                   final currentSelection =
                       context.watch<MenuAppController>().currentSelection;
-
-                  // Render different widgets based on current selection
                   Widget selectedWidget;
                   switch (currentSelection) {
                     case 0:
@@ -55,7 +55,7 @@ class Dashboard extends StatelessWidget {
                       selectedWidget = const UserProfile();
                       break;
                     default:
-                      selectedWidget = Container(); // or any default widget
+                      selectedWidget = Container();
                       break;
                   }
 

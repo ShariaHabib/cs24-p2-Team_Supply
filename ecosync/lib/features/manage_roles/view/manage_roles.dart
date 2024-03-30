@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
+import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
 import '../../manage_users/controller/controller.dart';
 import '../controller/rbac_roles_controller.dart';
@@ -34,7 +35,7 @@ class _ManageRolesState extends State<ManageRoles> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: kDefaultPadding * 3),
+            const ProfileCard(),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding),
             Text("Roles", style: Theme.of(context).textTheme.headlineMedium),

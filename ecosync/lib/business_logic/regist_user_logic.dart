@@ -27,6 +27,7 @@ class RegistUserLogic {
         headers: headers,
         body: body,
       );
+      print(body);
       data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {
       print(e);

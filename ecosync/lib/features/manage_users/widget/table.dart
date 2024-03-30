@@ -7,8 +7,9 @@ import '../../../models/models.dart';
 import '../controller/controller.dart';
 
 class UserTableView extends StatefulWidget {
-  const UserTableView({super.key, required this.users});
+  const UserTableView({super.key, required this.users, required this.search});
   final List<User> users;
+  final TextEditingController search;
 
   @override
   State<UserTableView> createState() => _UserTableViewState();
@@ -22,13 +23,34 @@ class _UserTableViewState extends State<UserTableView> {
   @override
   void initState() {
     super.initState();
+    widget.search.addListener(_onSearchTextChanged);
     context.read<GetRolesController>().getData(context);
+  }
+
+  @override
+  void dispose() {
+    widget.search.removeListener(_onSearchTextChanged);
+    super.dispose();
+  }
+
+  void _onSearchTextChanged() {
+    setState(() {});
+  }
+
+  List<User> getFilteredUsers() {
+    final query = widget.search.text.toLowerCase();
+    return widget.users.where((user) {
+      return user.userName.toLowerCase().contains(query) ||
+          user.email!.toLowerCase().contains(query) ||
+          user.userId.toString().contains(query);
+    }).toList();
   }
 
   final columns = ['User Id', 'User Name', 'Email', 'Role', ''];
 
   @override
   Widget build(BuildContext context) {
+    final filteredUsers = getFilteredUsers();
     DeleteUserController ctr = context.watch<DeleteUserController>();
     GetRolesController ctr2 = context.watch<GetRolesController>();
     return SizedBox(
@@ -45,7 +67,7 @@ class _UserTableViewState extends State<UserTableView> {
         headingRowColor: MaterialStatePropertyAll(
             Theme.of(context).colorScheme.surfaceVariant),
         columns: getColumns(columns),
-        rows: getRows(widget.users, ctr, ctr2),
+        rows: getRows(filteredUsers, ctr, ctr2),
       ),
     );
   }

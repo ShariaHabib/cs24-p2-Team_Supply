@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
+import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
 import '../controller/user_controller.dart';
 import '../widget/widgets.dart';
@@ -31,7 +32,7 @@ class _ManageUsersState extends State<ManageUsers> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: kDefaultPadding * 2),
+            const ProfileCard(),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding * 2),
             SearchBox(search: _search),
@@ -48,6 +49,7 @@ class _ManageUsersState extends State<ManageUsers> {
                 ? const Center(child: CircularProgressIndicator())
                 : UserTableView(
                     users: context.watch<GetUsersController>().data,
+                    search: _search,
                   ),
           ],
         ),

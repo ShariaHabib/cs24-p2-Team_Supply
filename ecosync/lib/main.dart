@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'features/dashboard/controller/menu_controller.dart';
 import 'features/dashboard/view/dashboard.dart';
 import 'features/login/controller/login_controller.dart';
+import 'features/login/controller/login_data_store.dart';
 import 'features/login/view/login.dart';
 import 'features/manage_roles/controller/get_permission_by_role.dart';
 import 'features/manage_roles/controller/get_permission_controller.dart';
@@ -89,6 +90,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => RegistSTSController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginDataSave(),
         ),
       ],
       child: const MyApp(),

@@ -23,7 +23,10 @@ class LoginLogic {
     } catch (e) {
       print(e);
       data = LoginResponse(
-          message: e.toString(), token: "", userId: "", success: false);
+          message: e.toString(),
+          token: "",
+          userInfo: loginUser(role_id: 0, user_id: "", user_name: ""),
+          success: false);
     }
     return data;
   }

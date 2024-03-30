@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
+import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
 import '../widget/widgets.dart';
 
@@ -31,7 +32,7 @@ class _ManageVehiclesState extends State<ManageVehicles> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: kDefaultPadding * 2),
+            const ProfileCard(),
             const BodyTitle(),
             const SizedBox(height: kDefaultPadding * 2),
             SearchBox(search: _search),
@@ -48,6 +49,7 @@ class _ManageVehiclesState extends State<ManageVehicles> {
                 ? const Center(child: CircularProgressIndicator())
                 : UserTableView(
                     vehicles: context.watch<GetVehiclesController>().data,
+                    search: _search,
                   )
           ],
         ),

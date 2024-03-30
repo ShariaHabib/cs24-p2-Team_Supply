@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import '../../../common/common.dart';
 
 class UserTableView extends StatefulWidget {
-  const UserTableView({super.key, required this.vehicles});
+  const UserTableView(
+      {super.key, required this.vehicles, required this.search});
   final List<Vehicle> vehicles;
+  final TextEditingController search;
 
   @override
   State<UserTableView> createState() => _UserTableViewState();
@@ -20,6 +22,17 @@ class _UserTableViewState extends State<UserTableView> {
   @override
   void initState() {
     super.initState();
+    widget.search.addListener(_onSearchTextChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.search.removeListener(_onSearchTextChanged);
+    super.dispose();
+  }
+
+  void _onSearchTextChanged() {
+    setState(() {});
   }
 
   final columns = [
@@ -30,9 +43,27 @@ class _UserTableViewState extends State<UserTableView> {
     'Vehicle Type',
     ''
   ];
+  List<Vehicle> getFilteredVehicles() {
+    final query = widget.search.text.toLowerCase();
+    return widget.vehicles.where((vehicle) {
+      final vehicleNumber = vehicle.vehicle_number.toLowerCase();
+      final vehicleType = vehicle.vehicle_type.toLowerCase();
+      final capacity = vehicle.capacity.toString().toLowerCase();
+      final fuelCostLoaded = vehicle.fuel_cost_loaded.toString().toLowerCase();
+      final fuelCostUnloaded =
+          vehicle.fuel_cost_unloaded.toString().toLowerCase();
+
+      return vehicleNumber.contains(query) ||
+          vehicleType.contains(query) ||
+          capacity.contains(query) ||
+          fuelCostLoaded.contains(query) ||
+          fuelCostUnloaded.contains(query);
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final filteredVehicles = getFilteredVehicles();
     DeleteVehicleController ctr = context.watch<DeleteVehicleController>();
     return SizedBox(
       width: double.infinity,
@@ -48,7 +79,7 @@ class _UserTableViewState extends State<UserTableView> {
           headingRowColor: MaterialStatePropertyAll(
               Theme.of(context).colorScheme.surfaceVariant),
           columns: getColumns(columns),
-          rows: getRows(widget.vehicles, ctr)),
+          rows: getRows(filteredVehicles, ctr)),
     );
   }
 

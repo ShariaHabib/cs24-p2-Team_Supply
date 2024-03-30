@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../common/profile_card.dart';
+import '../../../constants/constants.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -17,8 +20,16 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Text("Home"),
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        child: const Column(
+          children: [
+            ProfileCard(),
+            Text("Home"),
+          ],
+        ),
+      ),
     );
   }
 }
