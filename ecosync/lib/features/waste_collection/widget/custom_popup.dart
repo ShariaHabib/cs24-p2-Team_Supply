@@ -98,7 +98,11 @@ class _CustomDialogState extends State<CustomDialog> {
                                   .then((value) => context
                                       .read<WasteCollectionController>()
                                       .getData(context));
-                            } else {}
+                            } else {
+                              customResponseDialog(context, "Data Added Failed",
+                                  ctr.data.message,
+                                  isError: true);
+                            }
                           },
                           buttonText: "Register",
                           filledColor: Theme.of(context).colorScheme.primary,

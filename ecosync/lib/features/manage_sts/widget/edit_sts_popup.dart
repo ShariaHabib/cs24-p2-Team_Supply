@@ -124,6 +124,10 @@ class _EditUserState extends State<EditSTS> {
                             .then((value) => context
                                 .read<GetSTScontroller>()
                                 .getData(context));
+                      } else {
+                        customResponseDialog(
+                            context, "Update Failed", ctrRegist.data.message,
+                            isError: true);
                       }
                     },
                     buttonText: "Update",

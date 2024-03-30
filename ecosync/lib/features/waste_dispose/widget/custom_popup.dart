@@ -101,6 +101,12 @@ class _CustomDialogState extends State<CustomDialog> {
                                   .then((value) => context
                                       .read<GetWaasteDisposeController>()
                                       .getData(context));
+                            } else {
+                              customResponseDialog(
+                                  context,
+                                  "Vehicle Registration Failed",
+                                  ctrRegist.data.message,
+                                  isError: true);
                             }
                           },
                           buttonText: "Register",

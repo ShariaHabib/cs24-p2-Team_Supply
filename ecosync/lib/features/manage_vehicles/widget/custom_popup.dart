@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecosync/constants/constants.dart';
 import 'package:ecosync/features/manage_vehicles/controller/regist_vehicle.dart';
 import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
@@ -112,6 +114,10 @@ class _CustomDialogState extends State<CustomDialog> {
                                   .then((value) => context
                                       .read<GetVehiclesController>()
                                       .getData(context));
+                            } else {
+                              customResponseDialog(context,
+                                  "Registration Failed", ctrRegist.data.message,
+                                  isError: true);
                             }
                           },
                           buttonText: "Register",

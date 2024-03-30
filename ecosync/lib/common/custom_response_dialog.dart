@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../features/dashboard/controller/menu_controller.dart';
 import 'custom_filled_button.dart';
 
 Future<dynamic> customResponseDialog(
     BuildContext context, String title, String body,
-    {bool isProfile = false}) {
+    {bool isProfile = false, bool isError = false}) {
   return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
-          icon: const Icon(
-            Icons.check_circle,
-            color: Colors.green,
-            size: 50,
-          ),
+          icon: isError
+              ? const Icon(
+                  Icons.error,
+                  color: Colors.red,
+                  size: 50,
+                )
+              : const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 50,
+                ),
           title: Text(title),
           content: Text(
             body,
@@ -24,7 +28,7 @@ Future<dynamic> customResponseDialog(
           actions: [
             CustomFilledButton(
                 onPressed: () {
-                  if (isProfile == true) {
+                  if (isProfile == true || isError == true) {
                     Navigator.of(context).pop();
                   } else {
                     Navigator.of(context).pop();

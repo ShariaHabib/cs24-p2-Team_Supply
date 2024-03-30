@@ -134,6 +134,8 @@ class _UserTableViewState extends State<UserTableView> {
 
               if (!ctr.loading && ctr.success && context.mounted) {
                 customResponseDialog(context, "User Deleted Successfully", "");
+              } else {
+                customResponseDialog(context, "User Deleted Successfully", "");
               }
             });
           },

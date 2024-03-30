@@ -119,6 +119,10 @@ class _CustomDialogState extends State<CustomDialog> {
                                   .then((value) => context
                                       .read<GetSTScontroller>()
                                       .getData(context));
+                            } else {
+                              customResponseDialog(context,
+                                  "Registration Failed", ctr2.data.message,
+                                  isError: true);
                             }
                           },
                           buttonText: "Register",
