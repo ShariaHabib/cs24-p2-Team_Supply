@@ -8,6 +8,7 @@ import '../../../constants/constants.dart';
 import '../../../models/models.dart';
 import '../controller/get_permission_by_role.dart';
 import '../controller/get_permission_controller.dart';
+import '../controller/rbac_roles_controller.dart';
 
 class PermissionCheckBox extends StatefulWidget {
   const PermissionCheckBox({super.key, required this.roleId});
@@ -117,7 +118,6 @@ class _NewWidgetState extends State<NewWidget> {
                         .where((entry) => entry.value == true)
                         .map((entry) => entry.key)
                         .toList());
-                print("SUCCESS");
               },
             ),
             Text(widget.ctr.data.permissionList[index].permission_name),

@@ -37,7 +37,6 @@ class _UserTableViewState extends State<UserTableView> {
 
   final columns = [
     'Vehicle Number',
-    'STS ID',
     'Vehicle Capacity',
     'Fuel Capacity Loaded',
     'Fuel Capacity Unloaded',
@@ -96,9 +95,6 @@ class _UserTableViewState extends State<UserTableView> {
         final cells = [
           DataCell(
             Text(vehicle.vehicle_number),
-          ),
-          DataCell(
-            Text(vehicle.sts_id.toString()),
           ),
           DataCell(
             Text(vehicle.capacity.toString()),

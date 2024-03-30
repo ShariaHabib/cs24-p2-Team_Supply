@@ -1,4 +1,5 @@
 import 'package:ecosync/constants/constants.dart';
+import 'package:ecosync/features/manage_sts/controller/get_sts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +32,7 @@ class _CustomDialogState extends State<CustomDialog> {
   @override
   Widget build(BuildContext context) {
     GetUsersByRoleController ctr = context.watch<GetUsersByRoleController>();
+    RegistSTSController ctr2 = context.watch<RegistSTSController>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -88,25 +90,43 @@ class _CustomDialogState extends State<CustomDialog> {
             Row(
               children: [
                 const Spacer(),
-                Expanded(
-                  flex: 2,
-                  child: CustomFilledButton(
-                    onPressed: () {
-                      context.read<RegistSTSController>().registData(
-                            context,
-                            stsId: int.tryParse(_wardNo.text) ?? 0,
-                            ward_no: int.tryParse(_wardNo.text) ?? 0,
-                            capacity: int.tryParse(_capacity.text) ?? 0,
-                            latitude: double.tryParse(_latitude.text) ?? 0,
-                            longitude: double.tryParse(_longitude.text) ?? 0,
-                            manager: _manager.text,
-                          );
-                    },
-                    buttonText: "Register",
-                    filledColor: Theme.of(context).colorScheme.primary,
-                    buttonTextColor: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
+                ctr2.loading
+                    ? CircularProgressIndicator()
+                    : Expanded(
+                        flex: 2,
+                        child: CustomFilledButton(
+                          onPressed: () async {
+                            var man = ctr.data.entries
+                                .firstWhere(
+                                    (element) => element.value == _manager.text)
+                                .key;
+                            await context
+                                .read<RegistSTSController>()
+                                .registData(context,
+                                    stsId: int.tryParse(_wardNo.text) ?? 0,
+                                    ward_no: int.tryParse(_wardNo.text) ?? 0,
+                                    capacity: int.tryParse(_capacity.text) ?? 0,
+                                    latitude:
+                                        double.tryParse(_latitude.text) ?? 0,
+                                    longitude:
+                                        double.tryParse(_longitude.text) ?? 0,
+                                    manager: man);
+                            if (!ctr2.loading &&
+                                ctr2.success &&
+                                context.mounted) {
+                              customResponseDialog(context,
+                                      "STS Registration Successful", "")
+                                  .then((value) => context
+                                      .read<GetSTScontroller>()
+                                      .getData(context));
+                            }
+                          },
+                          buttonText: "Register",
+                          filledColor: Theme.of(context).colorScheme.primary,
+                          buttonTextColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
                 const Spacer(),
               ],
             )

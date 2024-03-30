@@ -22,7 +22,6 @@ class _CustomDialogState extends State<CustomDialog> {
   final TextEditingController _loadedFuelCost = TextEditingController();
   final TextEditingController _unloadedFuelCost = TextEditingController();
   final TextEditingController _vehicleType = TextEditingController();
-  final TextEditingController _sts_id = TextEditingController();
 
   Map<String, String> data = {
     "Open Truck": "Open Truck",
@@ -80,12 +79,6 @@ class _CustomDialogState extends State<CustomDialog> {
                 hintText: "Enter Unloaded Fuel Cost"),
             const SizedBox(height: kDefaultPadding),
             DialogFormFiled(
-              controller: _sts_id,
-              prefixText: "STS ID",
-              data: data,
-            ),
-            const SizedBox(height: kDefaultPadding),
-            DialogFormFiled(
               controller: _vehicleType,
               prefixText: "Vechicle Type",
               isDropDown: true,
@@ -95,34 +88,38 @@ class _CustomDialogState extends State<CustomDialog> {
             Row(
               children: [
                 const Spacer(),
-                Expanded(
-                  flex: 2,
-                  child: CustomFilledButton(
-                    onPressed: () async {
-                      await context.read<RegistVehicleController>().registData(
-                            context,
-                            _vehicleNumber.text,
-                            _vehicleCapacity.text,
-                            _loadedFuelCost.text,
-                            _unloadedFuelCost.text,
-                            _vehicleType.text,
-                            _sts_id.text,
-                          );
-                      if (!ctrRegist.loading &&
-                          ctrRegist.success &&
-                          context.mounted) {
-                        customResponseDialog(
-                                context, "Vehicle Registration Successful", "")
-                            .then((value) => context
-                                .read<GetVehiclesController>()
-                                .getData(context));
-                      }
-                    },
-                    buttonText: "Register",
-                    filledColor: Theme.of(context).colorScheme.primary,
-                    buttonTextColor: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
+                ctrRegist.loading
+                    ? const CircularProgressIndicator()
+                    : Expanded(
+                        flex: 2,
+                        child: CustomFilledButton(
+                          onPressed: () async {
+                            await context
+                                .read<RegistVehicleController>()
+                                .registData(
+                                  context,
+                                  _vehicleNumber.text,
+                                  _vehicleCapacity.text,
+                                  _loadedFuelCost.text,
+                                  _unloadedFuelCost.text,
+                                  _vehicleType.text,
+                                );
+                            if (!ctrRegist.loading &&
+                                ctrRegist.success &&
+                                context.mounted) {
+                              customResponseDialog(context,
+                                      "Vehicle Registration Successful", "")
+                                  .then((value) => context
+                                      .read<GetVehiclesController>()
+                                      .getData(context));
+                            }
+                          },
+                          buttonText: "Register",
+                          filledColor: Theme.of(context).colorScheme.primary,
+                          buttonTextColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
                 const Spacer(),
               ],
             )

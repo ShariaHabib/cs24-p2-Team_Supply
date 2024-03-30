@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 class Vehicle {
@@ -6,14 +8,12 @@ class Vehicle {
   final int capacity;
   final int fuel_cost_loaded;
   final int fuel_cost_unloaded;
-  final int sts_id;
   Vehicle({
     required this.vehicle_number,
     required this.vehicle_type,
     required this.capacity,
     required this.fuel_cost_loaded,
     required this.fuel_cost_unloaded,
-    required this.sts_id,
   });
 
   Vehicle copyWith({
@@ -22,7 +22,6 @@ class Vehicle {
     int? capacity,
     int? fuel_cost_loaded,
     int? fuel_cost_unloaded,
-    int? sts_id,
   }) {
     return Vehicle(
       vehicle_number: vehicle_number ?? this.vehicle_number,
@@ -30,7 +29,6 @@ class Vehicle {
       capacity: capacity ?? this.capacity,
       fuel_cost_loaded: fuel_cost_loaded ?? this.fuel_cost_loaded,
       fuel_cost_unloaded: fuel_cost_unloaded ?? this.fuel_cost_unloaded,
-      sts_id: sts_id ?? this.sts_id,
     );
   }
 
@@ -41,7 +39,6 @@ class Vehicle {
       'capacity': capacity,
       'fuel_cost_loaded': fuel_cost_loaded,
       'fuel_cost_unloaded': fuel_cost_unloaded,
-      'sts_id': sts_id,
     };
   }
 
@@ -52,7 +49,6 @@ class Vehicle {
       capacity: map['capacity'] as int,
       fuel_cost_loaded: map['fuel_cost_loaded'] as int,
       fuel_cost_unloaded: map['fuel_cost_unloaded'] as int,
-      sts_id: map['sts_id'] as int,
     );
   }
 
@@ -63,7 +59,7 @@ class Vehicle {
 
   @override
   String toString() {
-    return 'Vehicle(vehicle_number: $vehicle_number, vehicle_type: $vehicle_type, capacity: $capacity, fuel_cost_loaded: $fuel_cost_loaded, fuel_cost_unloaded: $fuel_cost_unloaded, sts_id: $sts_id)';
+    return 'Vehicle(vehicle_number: $vehicle_number, vehicle_type: $vehicle_type, capacity: $capacity, fuel_cost_loaded: $fuel_cost_loaded, fuel_cost_unloaded: $fuel_cost_unloaded)';
   }
 
   @override
@@ -74,8 +70,7 @@ class Vehicle {
         other.vehicle_type == vehicle_type &&
         other.capacity == capacity &&
         other.fuel_cost_loaded == fuel_cost_loaded &&
-        other.fuel_cost_unloaded == fuel_cost_unloaded &&
-        other.sts_id == sts_id;
+        other.fuel_cost_unloaded == fuel_cost_unloaded;
   }
 
   @override
@@ -84,7 +79,6 @@ class Vehicle {
         vehicle_type.hashCode ^
         capacity.hashCode ^
         fuel_cost_loaded.hashCode ^
-        fuel_cost_unloaded.hashCode ^
-        sts_id.hashCode;
+        fuel_cost_unloaded.hashCode;
   }
 }

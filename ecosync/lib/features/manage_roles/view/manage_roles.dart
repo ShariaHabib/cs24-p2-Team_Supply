@@ -103,7 +103,9 @@ class _ManageRolesState extends State<ManageRoles> {
                     flex: 1,
                     child: CustomFilledButton(
                       onPressed: () {
-                        setState(() {});
+                        context
+                            .read<RbacRoleController>()
+                            .getRbacRoles(context);
                       },
                       buttonText: "Update",
                       filledColor: Theme.of(context).colorScheme.primary,

@@ -37,6 +37,7 @@ class RegistSTSLogic {
         headers: headers,
         body: body,
       );
+      print(resp.body);
       data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {
       print(e);

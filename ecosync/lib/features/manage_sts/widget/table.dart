@@ -87,7 +87,9 @@ class _STSTableViewState extends State<STSTableView> {
       sts.map((STS sts) {
         final cells = [
           DataCell(
-            Text(sts.ward_no.toString(), style: const TextStyle(fontSize: 10)),
+            Text(
+              sts.ward_no.toString(),
+            ),
           ),
           DataCell(
             Text(sts.sts_id.toString()),
