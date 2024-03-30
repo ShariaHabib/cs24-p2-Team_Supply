@@ -1,7 +1,10 @@
 import 'package:ecosync/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
+import '../controller/create_sts_controller.dart';
+import '../controller/get_user_by_role_controller.dart';
 
 class CustomDialog extends StatefulWidget {
   const CustomDialog({
@@ -13,6 +16,12 @@ class CustomDialog extends StatefulWidget {
 }
 
 class _CustomDialogState extends State<CustomDialog> {
+  @override
+  void initState() {
+    context.read<GetUsersByRoleController>().getData(context, "2");
+    super.initState();
+  }
+
   final TextEditingController _wardNo = TextEditingController();
   final TextEditingController _capacity = TextEditingController();
   final TextEditingController _latitude = TextEditingController();
@@ -21,6 +30,7 @@ class _CustomDialogState extends State<CustomDialog> {
 
   @override
   Widget build(BuildContext context) {
+    GetUsersByRoleController ctr = context.watch<GetUsersByRoleController>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -66,11 +76,14 @@ class _CustomDialogState extends State<CustomDialog> {
                 prefixText: "Longitude",
                 hintText: "Enter Longitude"),
             const SizedBox(height: kDefaultPadding),
-            DialogFormFiled(
-              controller: _manager,
-              prefixText: "Select Manager",
-              isDropDown: true,
-            ),
+            ctr.loading
+                ? const CircularProgressIndicator()
+                : DialogFormFiled(
+                    controller: _manager,
+                    data: ctr.data,
+                    prefixText: "Select Manager",
+                    isDropDown: true,
+                  ),
             const SizedBox(height: kDefaultPadding * 2),
             Row(
               children: [
@@ -79,14 +92,15 @@ class _CustomDialogState extends State<CustomDialog> {
                   flex: 2,
                   child: CustomFilledButton(
                     onPressed: () {
-                      // context.read<>().addSTS(
-                      //       context,
-                      //       wardNo: int.tryParse(_wardNo.text),
-                      //       capacity: int.tryParse(_capacity.text),
-                      //       latitude: double.tryParse(_latitude.text),
-                      //       longitude: double.tryParse(_longitude.text),
-                      //       manager: _manager.text,
-                      //     );
+                      context.read<RegistSTSController>().registData(
+                            context,
+                            stsId: int.tryParse(_wardNo.text) ?? 0,
+                            ward_no: int.tryParse(_wardNo.text) ?? 0,
+                            capacity: int.tryParse(_capacity.text) ?? 0,
+                            latitude: double.tryParse(_latitude.text) ?? 0,
+                            longitude: double.tryParse(_longitude.text) ?? 0,
+                            manager: _manager.text,
+                          );
                     },
                     buttonText: "Register",
                     filledColor: Theme.of(context).colorScheme.primary,

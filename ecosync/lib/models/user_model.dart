@@ -3,13 +3,13 @@ import 'dart:convert';
 class User {
   final String? userId;
   final String? email;
-  final String userName;
+  final String? userName;
   final String? userRole;
   final String? password;
   User({
     this.userId,
     this.email,
-    required this.userName,
+    this.userName,
     this.userRole,
     this.password,
   });
@@ -43,9 +43,9 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       userId: map['user_id'] != null ? map['user_id'] as String : null,
-      email: map['email'] as String,
-      userName: map['user_name'] as String,
-      userRole: map['user_role'] as String,
+      email: map['email'] != null ? map['email'] as String : null,
+      userName: map['user_name'] != null ? map['user_name'] as String : null,
+      userRole: map['user_role'] != null ? map['user_role'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
     );
   }

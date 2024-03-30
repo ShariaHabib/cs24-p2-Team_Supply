@@ -40,7 +40,7 @@ class _UserTableViewState extends State<UserTableView> {
   List<User> getFilteredUsers() {
     final query = widget.search.text.toLowerCase();
     return widget.users.where((user) {
-      return user.userName.toLowerCase().contains(query) ||
+      return user.userName!.toLowerCase().contains(query) ||
           user.email!.toLowerCase().contains(query) ||
           user.userId.toString().contains(query);
     }).toList();
@@ -87,7 +87,7 @@ class _UserTableViewState extends State<UserTableView> {
             Text(user.userId.toString(), style: const TextStyle(fontSize: 10)),
           ),
           DataCell(
-            Text(user.userName),
+            Text(user.userName ?? ""),
           ),
           DataCell(
             Text(user.email ?? ""),
@@ -125,7 +125,7 @@ class _UserTableViewState extends State<UserTableView> {
                   return EditUser(
                     email: user.email ?? "",
                     userId: user.userId ?? "",
-                    userName: user.userName,
+                    userName: user.userName ?? "",
                   );
                 });
           },
@@ -160,7 +160,7 @@ class _UserTableViewState extends State<UserTableView> {
           ascending, user1.userId.toString(), user2.userId.toString()));
     } else if (columnIndex == 1) {
       widget.users.sort((user1, user2) =>
-          compareString(ascending, user1.userName, user2.userName));
+          compareString(ascending, user1.userName ?? "", user2.userName ?? ""));
     } else if (columnIndex == 2) {
       widget.users.sort((user1, user2) =>
           compareString(ascending, user1.email ?? "", user2.email ?? ""));

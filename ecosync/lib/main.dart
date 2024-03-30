@@ -18,6 +18,7 @@ import 'features/login/controller/login_data_store.dart';
 import 'features/login/view/login.dart';
 import 'features/manage_roles/controller/get_permission_by_role.dart';
 import 'features/manage_roles/controller/get_permission_controller.dart';
+import 'features/manage_sts/controller/get_user_by_role_controller.dart';
 import 'features/manage_users/controller/controller.dart';
 import 'features/manage_vehicles/controller/delete_vehicle_controller.dart';
 import 'features/manage_vehicles/controller/regist_vehicle.dart';
@@ -93,6 +94,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => LoginDataSave(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetUsersByRoleController(),
         ),
       ],
       child: const MyApp(),
