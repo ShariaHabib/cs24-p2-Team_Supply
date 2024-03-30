@@ -75,8 +75,8 @@ class _LoginState extends State<Login> {
                                   ),
                                 );
                               } else {
-                                customResponseDialog(
-                                    context, "Login Failed", ctl.data.message,
+                                customResponseDialog(context, "Login Failed",
+                                    "User ID or Password is incorrect",
                                     isError: true);
                               }
                             },

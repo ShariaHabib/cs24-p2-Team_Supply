@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ecosync/features/login/view/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../login/controller/login_data_store.dart';
@@ -20,8 +21,17 @@ class SideMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          const DrawerHeader(
-            child: Text("EcoSync"),
+          DrawerHeader(
+            child: Container(
+              alignment: Alignment.center,
+              height: 20,
+              width: 20,
+              padding: EdgeInsets.all(20),
+              child: Image.asset(
+                "assets/images/logo.png",
+                alignment: Alignment.center,
+              ),
+            ),
           ),
           if (roleId == 1)
             DrawerListTile(
