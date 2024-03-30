@@ -36,7 +36,7 @@ class SideMenu extends StatelessWidget {
               title: "Manage User",
               icon: Icons.home,
               press: () {
-                context.watch<MenuAppController>().controlSelection(1);
+                context.read<MenuAppController>().controlSelection(1);
               },
             ),
           if (roleId == 1)
