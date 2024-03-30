@@ -7,6 +7,8 @@ import 'package:ecosync/features/manage_sts/controller/update_sts_controller.dar
 import 'package:ecosync/features/manage_users/controller/update_user_controller.dart';
 import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:ecosync/features/dashboard/controller/logout_controller.dart';
+import 'package:ecosync/features/waste_dispose/controller/get_waste_dispose_controller.dart';
+import 'package:ecosync/features/waste_dispose/controller/regist_waste_dispose_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -99,6 +101,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => GetUsersByRoleController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetWaasteDisposeController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RegistWasteDisposeController(),
         ),
         ChangeNotifierProvider(
           create: (context) => WasteCollectionController(),

@@ -19,6 +19,8 @@ const String API_REGIST_VEHICLE = "http://127.0.0.1:8000/vehicle";
 const String API_DELETE_VEHICLE = "http://127.0.0.1:8000/vehicle/";
 const String API_DELETE_USER = "http://127.0.0.1:8000/users/";
 const String API_UPDATE_USER = "http://127.0.0.1:8000/users/";
+const String API_WASTE_DISPOSE = "http://127.0.0.1:8000/waste/disposal";
+
 const String API_GET_WASTE_COLLECTION =
     "http://127.0.0.1:8000/waste/collection";
 

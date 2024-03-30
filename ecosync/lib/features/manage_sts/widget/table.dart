@@ -1,8 +1,5 @@
 import 'package:ecosync/features/manage_sts/controller/delete_sts_controller.dart';
 import 'package:ecosync/features/manage_sts/widget/edit_sts_popup.dart';
-import 'package:ecosync/features/manage_users/controller/user_controller.dart';
-import 'package:ecosync/features/manage_users/widget/edit_user_popup.dart';
-import 'package:ecosync/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -159,6 +156,13 @@ class _STSTableViewState extends State<STSTableView> {
                 customResponseDialog(context, "STS Deleted Successfully", "")
                     .then((value) =>
                         context.read<GetSTScontroller>().getData(context));
+              } else {
+                customResponseDialog(
+                  context,
+                  "STS Delete Failed",
+                  ctr.data.message,
+                  isError: true,
+                );
               }
             });
           },

@@ -75,7 +75,11 @@ class _LoginState extends State<Login> {
                                         userName: ctl.data.userInfo.user_name),
                                   ),
                                 );
-                              } else {}
+                              } else {
+                                customResponseDialog(
+                                    context, "Login Failed", ctl.data.message,
+                                    isError: true);
+                              }
                             },
                           ),
                     const SizedBox(height: kDefaultPadding),

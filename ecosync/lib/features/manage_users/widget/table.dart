@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecosync/common/common.dart';
 import 'package:ecosync/features/manage_users/widget/edit_user_popup.dart';
 import 'package:flutter/material.dart';
@@ -141,6 +143,10 @@ class _UserTableViewState extends State<UserTableView> {
 
               if (!ctr.loading && ctr.success && context.mounted) {
                 customResponseDialog(context, "User Deleted Successfully", "");
+              } else {
+                customResponseDialog(
+                    context, "User Delete Failed", ctr.data.message,
+                    isError: true);
               }
             });
           },
