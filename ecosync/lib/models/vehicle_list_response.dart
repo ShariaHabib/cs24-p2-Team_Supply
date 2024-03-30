@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:ecosync/models/vehicle_model.dart';
 
 class VehicleListResponse {

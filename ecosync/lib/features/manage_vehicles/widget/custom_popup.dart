@@ -22,6 +22,7 @@ class _CustomDialogState extends State<CustomDialog> {
   final TextEditingController _loadedFuelCost = TextEditingController();
   final TextEditingController _unloadedFuelCost = TextEditingController();
   final TextEditingController _vehicleType = TextEditingController();
+  final TextEditingController _sts_id = TextEditingController();
 
   Map<String, String> data = {
     "Open Truck": "Open Truck",
@@ -79,6 +80,12 @@ class _CustomDialogState extends State<CustomDialog> {
                 hintText: "Enter Unloaded Fuel Cost"),
             const SizedBox(height: kDefaultPadding),
             DialogFormFiled(
+              controller: _sts_id,
+              prefixText: "STS ID",
+              data: data,
+            ),
+            const SizedBox(height: kDefaultPadding),
+            DialogFormFiled(
               controller: _vehicleType,
               prefixText: "Vechicle Type",
               isDropDown: true,
@@ -93,12 +100,14 @@ class _CustomDialogState extends State<CustomDialog> {
                   child: CustomFilledButton(
                     onPressed: () async {
                       await context.read<RegistVehicleController>().registData(
-                          context,
-                          _vehicleNumber.text,
-                          _vehicleCapacity.text,
-                          _loadedFuelCost.text,
-                          _unloadedFuelCost.text,
-                          _vehicleType.text);
+                            context,
+                            _vehicleNumber.text,
+                            _vehicleCapacity.text,
+                            _loadedFuelCost.text,
+                            _unloadedFuelCost.text,
+                            _vehicleType.text,
+                            _sts_id.text,
+                          );
                       if (!ctrRegist.loading &&
                           ctrRegist.success &&
                           context.mounted) {

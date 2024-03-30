@@ -11,7 +11,8 @@ class RegisterVehicleLogic {
       required String vechileNumber,
       required String vehicleType,
       required String fuelCapacityLoaded,
-      required String fuelCapacityUnloaded}) async {
+      required String fuelCapacityUnloaded,
+      required String sts_id}) async {
     late RegistGeneralResponse data;
     try {
       Map<String, String> headers = {
@@ -27,6 +28,7 @@ class RegisterVehicleLogic {
         capacity: int.parse(capacity),
         fuel_cost_loaded: int.parse(fuelCapacityLoaded),
         fuel_cost_unloaded: int.parse(fuelCapacityUnloaded),
+        sts_id: int.parse(sts_id),
       ).toJson();
 
       print(body);

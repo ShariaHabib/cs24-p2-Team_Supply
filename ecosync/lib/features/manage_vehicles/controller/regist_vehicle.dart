@@ -10,7 +10,7 @@ class RegistVehicleController with ChangeNotifier {
   bool loading = false;
 
   registData(context, vehicleNumber, capacity, fuelCostLoaded, fuelCostUnloaded,
-      vechicleType) async {
+      vechicleType, sts_id) async {
     loading = true;
     notifyListeners();
     String? token = await const FlutterSecureStorage().read(key: 'token');
@@ -20,7 +20,8 @@ class RegistVehicleController with ChangeNotifier {
         fuelCapacityUnloaded: fuelCostUnloaded,
         token: token ?? '',
         vechileNumber: vehicleNumber,
-        vehicleType: vechicleType);
+        vehicleType: vechicleType,
+        sts_id: sts_id);
     success = data.success;
     loading = false;
     notifyListeners();
