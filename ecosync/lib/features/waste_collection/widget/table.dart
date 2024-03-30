@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/waste_collection_model.dart';
+
 class UserTableView extends StatefulWidget {
-  const UserTableView({super.key});
+  const UserTableView(
+      {super.key, required this.wasteCollection, required this.search});
+  final List<WasteCollectionModel> wasteCollection;
+  final TextEditingController search;
 
   @override
   State<UserTableView> createState() => _UserTableViewState();
 }
 
 class _UserTableViewState extends State<UserTableView> {
-  // late List<User> users;
   int? sortColumnIndex;
   bool isAscending = false;
 
@@ -17,39 +21,31 @@ class _UserTableViewState extends State<UserTableView> {
     super.initState();
   }
 
-  final columns = ['User Id', 'User Name', 'Email', 'Role', ''];
+  final columns = [
+    'STS Id',
+    'Vehicle Number',
+    'Waste Volume',
+    'Arrival Time',
+    'Depertutre Time'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
-          border: TableBorder.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          ),
-          dividerThickness: 0.5,
-          sortAscending: isAscending,
-          sortColumnIndex: sortColumnIndex,
-          headingRowHeight: 40,
-          headingRowColor: MaterialStatePropertyAll(
-              Theme.of(context).colorScheme.surfaceVariant),
-          columns: getColumns(columns),
-          rows: const [
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ]),
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ])
-          ]),
+        border: TableBorder.all(
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+        ),
+        dividerThickness: 0.5,
+        sortAscending: isAscending,
+        sortColumnIndex: sortColumnIndex,
+        headingRowHeight: 40,
+        headingRowColor: MaterialStatePropertyAll(
+            Theme.of(context).colorScheme.surfaceVariant),
+        columns: getColumns(columns),
+        rows: getRows(widget.wasteCollection),
+      ),
     );
   }
 
@@ -60,11 +56,28 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  // List<DataRow> getRows(List<User> users) => users.map((User user) {
-  //       final cells = [user.firstName, user.lastName, user.age];
+  List<DataRow> getRows(List<WasteCollectionModel> wasteCollection) =>
+      wasteCollection.map((WasteCollectionModel waste) {
+        final cells = [
+          DataCell(
+            Text(waste.sts_id.toString()),
+          ),
+          DataCell(
+            Text(waste.vehicle_number),
+          ),
+          DataCell(
+            Text(waste.volume_waste.toString()),
+          ),
+          DataCell(
+            Text(waste.arrival_time),
+          ),
+          DataCell(
+            Text(waste.departure_time),
+          )
+        ];
 
-  //       return DataRow(cells: getCells(cells));
-  //     }).toList();
+        return DataRow(cells: cells);
+      }).toList();
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();

@@ -65,6 +65,7 @@ class _RoleTableViewState extends State<RoleTableView> {
             Text(role.role_name),
           ),
           DataCell(SingleChildScrollView(
+              primary: false,
               child: SizedBox(
                   width: 350,
                   child: Text(role.permissions

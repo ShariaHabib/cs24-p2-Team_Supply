@@ -1,7 +1,10 @@
 import 'package:ecosync/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
+import '../controller/regist_waste_collection_controller.dart';
+import '../controller/waste_collection_controller.dart';
 
 class CustomDialog extends StatefulWidget {
   const CustomDialog({
@@ -13,7 +16,6 @@ class CustomDialog extends StatefulWidget {
 }
 
 class _CustomDialogState extends State<CustomDialog> {
-  final TextEditingController _stsId = TextEditingController();
   final TextEditingController _vehicleNumber = TextEditingController();
   final TextEditingController _arrivalTime = TextEditingController();
   final TextEditingController _departureTime = TextEditingController();
@@ -21,6 +23,8 @@ class _CustomDialogState extends State<CustomDialog> {
 
   @override
   Widget build(BuildContext context) {
+    RegistWasteCollectionController ctr =
+        context.watch<RegistWasteCollectionController>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
@@ -47,11 +51,6 @@ class _CustomDialogState extends State<CustomDialog> {
             ),
             const SizedBox(height: kDefaultPadding * 2),
             DialogFormFiled(
-                controller: _stsId,
-                prefixText: "STS ID",
-                hintText: "Enter STS ID"),
-            const SizedBox(height: kDefaultPadding),
-            DialogFormFiled(
                 controller: _vehicleNumber,
                 prefixText: "Vehicle Number",
                 hintText: "Enter Vehicle Number"),
@@ -71,21 +70,42 @@ class _CustomDialogState extends State<CustomDialog> {
             const SizedBox(height: kDefaultPadding),
             DialogFormFiled(
               controller: _volume,
-              prefixText: "Enter Volume of Waste Collected",
+              prefixText: "Volume",
             ),
             const SizedBox(height: kDefaultPadding * 2),
             Row(
               children: [
                 const Spacer(),
-                Expanded(
-                  flex: 2,
-                  child: CustomFilledButton(
-                    onPressed: () {},
-                    buttonText: "Register",
-                    filledColor: Theme.of(context).colorScheme.primary,
-                    buttonTextColor: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
+                ctr.loading
+                    ? const CircularProgressIndicator()
+                    : Expanded(
+                        flex: 2,
+                        child: CustomFilledButton(
+                          onPressed: () async {
+                            await context
+                                .read<RegistWasteCollectionController>()
+                                .registData(
+                                    context,
+                                    _vehicleNumber.text,
+                                    int.parse(_volume.text),
+                                    _arrivalTime.text,
+                                    _departureTime.text);
+                            if (!ctr.loading &&
+                                ctr.success &&
+                                context.mounted) {
+                              customResponseDialog(
+                                      context, "Data Added Successfully", "")
+                                  .then((value) => context
+                                      .read<WasteCollectionController>()
+                                      .getData(context));
+                            } else {}
+                          },
+                          buttonText: "Register",
+                          filledColor: Theme.of(context).colorScheme.primary,
+                          buttonTextColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
                 const Spacer(),
               ],
             )
