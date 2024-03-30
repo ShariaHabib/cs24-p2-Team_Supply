@@ -16,11 +16,6 @@ class _UserTableViewState extends State<UserTableView> {
   int? sortColumnIndex;
   bool isAscending = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   final columns = [
     'STS Id',
     'Vehicle Number',
@@ -28,9 +23,36 @@ class _UserTableViewState extends State<UserTableView> {
     'Arrival Time',
     'Depertutre Time'
   ];
+  @override
+  void initState() {
+    super.initState();
+    widget.search.addListener(_onSearchTextChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.search.removeListener(_onSearchTextChanged);
+    super.dispose();
+  }
+
+  void _onSearchTextChanged() {
+    setState(() {});
+  }
+
+  List<WasteCollectionModel> getFilteredWasteCollection() {
+    final query = widget.search.text.toLowerCase();
+    return widget.wasteCollection.where((waste) {
+      return waste.sts_id.toString().toLowerCase().contains(query) ||
+          waste.vehicle_number.toLowerCase().contains(query) ||
+          waste.volume_waste.toString().toLowerCase().contains(query) ||
+          waste.arrival_time.toLowerCase().contains(query) ||
+          waste.departure_time.toLowerCase().contains(query);
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final filteredWasteCollection = getFilteredWasteCollection();
     return SizedBox(
       width: double.infinity,
       child: DataTable(
@@ -44,7 +66,7 @@ class _UserTableViewState extends State<UserTableView> {
         headingRowColor: MaterialStatePropertyAll(
             Theme.of(context).colorScheme.surfaceVariant),
         columns: getColumns(columns),
-        rows: getRows(widget.wasteCollection),
+        rows: getRows(filteredWasteCollection),
       ),
     );
   }

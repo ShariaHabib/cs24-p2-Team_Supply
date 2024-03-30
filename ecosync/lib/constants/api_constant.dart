@@ -23,3 +23,8 @@ const String API_WASTE_DISPOSE = "http://127.0.0.1:8000/waste/disposal";
 
 const String API_GET_WASTE_COLLECTION =
     "http://127.0.0.1:8000/waste/collection";
+
+const String API_RESET_INIT =
+    "http://127.0.0.1:8000/auth/reset-password/initiate";
+const String API_RESET_CONFIRM =
+    "http://127.0.0.1:8000/auth/reset-password/confirm";
