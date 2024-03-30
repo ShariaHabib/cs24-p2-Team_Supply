@@ -11,6 +11,8 @@ import '../../../common/custom_dropdown_button.dart';
 import '../../../common/custom_response_dialog.dart';
 import '../../../models/sts_model.dart';
 import '../controller/get_sts_controller.dart';
+import '../controller/get_user_by_role_controller.dart';
+import '../controller/update_sts_controller.dart';
 
 class STSTableView extends StatefulWidget {
   STSTableView({super.key, required this.sts});
@@ -28,7 +30,7 @@ class _STSTableViewState extends State<STSTableView> {
   void initState() {
     super.initState();
     context.read<GetSTScontroller>().getData(context);
-    context.read<GetUsersController>().getData(context);
+    context.read<GetUsersByRoleController>().getData(context, "2");
   }
 
   final columns = [
@@ -52,7 +54,7 @@ class _STSTableViewState extends State<STSTableView> {
   @override
   Widget build(BuildContext context) {
     DeleteSTSController ctr = context.watch<DeleteSTSController>();
-    GetSTScontroller ctr2 = context.watch<GetSTScontroller>();
+    GetUsersByRoleController ctr2 = context.watch<GetUsersByRoleController>();
 
     return SizedBox(
       width: double.infinity,
@@ -80,8 +82,8 @@ class _STSTableViewState extends State<STSTableView> {
           ))
       .toList();
 
-  List<DataRow> getRows(
-          List<STS> sts, DeleteSTSController ctr, GetSTScontroller ctr2) =>
+  List<DataRow> getRows(List<STS> sts, DeleteSTSController ctr,
+          GetUsersByRoleController ctr2) =>
       sts.map((STS sts) {
         final cells = [
           DataCell(
@@ -103,13 +105,16 @@ class _STSTableViewState extends State<STSTableView> {
               ? const CircularProgressIndicator()
               : CustomDropDownButton(
                   controller: controller,
-                  data: convert(ctr2.data),
-                  initialentry: convert(ctr2.data)
-                      .entries
-                      .firstWhere((element) => element.value == sts.manager)
-                      .key,
-                  onChange: (userId) async {
-                    print(userId);
+                  data: ctr2.data,
+                  initialentry: sts.manager,
+                  onChange: (managerId) async {
+                    context.read<UpdateSTSController>().updateData(context,
+                        ward_no: sts.ward_no,
+                        stsId: sts.ward_no,
+                        capacity: sts.capacity,
+                        latitude: sts.latitude,
+                        longitude: sts.longitude,
+                        manager: managerId);
                   },
                 )),
           DataCell(

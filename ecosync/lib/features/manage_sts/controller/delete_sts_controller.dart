@@ -13,7 +13,7 @@ class DeleteSTSController with ChangeNotifier {
     loading = true;
     notifyListeners();
     String? token = await const FlutterSecureStorage().read(key: 'token');
-    data = await DeleteSTSLogic.deleteSTS(token ?? '', wardNo);
+    data = await DeleteSTSLogic.deleteSTS(token ?? '', wardNo.toString());
     success = data.success;
     loading = false;
     notifyListeners();

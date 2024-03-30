@@ -1,11 +1,11 @@
-import 'package:ecosync/models/get_sts_response_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/constants.dart';
+import '../models/models.dart';
 
-class GetSTSlogic {
-  static Future<GetSTSResponse> getSTS(String token) async {
-    late GetSTSResponse data;
+class GetUserByRoleLogic {
+  static Future<UserListResponse> getUser(String token, String roleId) async {
+    late UserListResponse data;
     try {
       Map<String, String> headers = {
         'Content-Type': 'application/json',
@@ -14,15 +14,14 @@ class GetSTSlogic {
         'Authorization': token
       };
       http.Response resp = await http.get(
-        Uri.parse(API_GET_STS),
+        Uri.parse('$API_GET_USERS/$roleId'),
         headers: headers,
       );
       print(resp.body);
-      print("ASSAS");
-      data = GetSTSResponse.fromJson(resp.body);
+      data = UserListResponse.fromJson(resp.body);
     } catch (e) {
       print(e);
-      data = GetSTSResponse(stsList: [], success: false);
+      data = UserListResponse(userList: [], success: false);
     }
     return data;
   }
