@@ -30,8 +30,14 @@ class Dashboard extends StatelessWidget {
               flex: 4,
               child: Builder(
                 builder: (context) {
-                  final currentSelection =
+                  int currentSelection =
                       context.watch<MenuAppController>().currentSelection;
+                  if (roleId == 2 && currentSelection == 0) {
+                    currentSelection = 5;
+                  }
+                  if (roleId == 3 && currentSelection == 0) {
+                    currentSelection = 6;
+                  }
                   Widget selectedWidget;
                   switch (currentSelection) {
                     case 0:

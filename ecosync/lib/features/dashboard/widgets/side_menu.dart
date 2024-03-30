@@ -94,8 +94,8 @@ class SideMenu extends StatelessWidget {
           //     context.read<MenuAppController>().controlSelection(8);
           //   },
           // ),
-          const SizedBox(
-            height: 100,
+          SizedBox(
+            height: roleId == 1 ? 100 : 450,
           ),
           DrawerListTile(
             title: "Logout",
