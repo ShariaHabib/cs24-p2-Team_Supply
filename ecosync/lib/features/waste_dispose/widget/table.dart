@@ -1,13 +1,14 @@
+import 'package:ecosync/models/waste_dispose_model.dart';
 import 'package:flutter/material.dart';
 
-class UserTableView extends StatefulWidget {
-  const UserTableView({super.key});
-
+class WasteDisposeTable extends StatefulWidget {
+  WasteDisposeTable({super.key, required this.wasteDispose});
+  final List<WasteDisposeModel> wasteDispose;
   @override
-  State<UserTableView> createState() => _UserTableViewState();
+  State<WasteDisposeTable> createState() => _UserTableViewState();
 }
 
-class _UserTableViewState extends State<UserTableView> {
+class _UserTableViewState extends State<WasteDisposeTable> {
   // late List<User> users;
   int? sortColumnIndex;
   bool isAscending = false;
@@ -17,13 +18,19 @@ class _UserTableViewState extends State<UserTableView> {
     super.initState();
   }
 
-  final columns = ['User Id', 'User Name', 'Email', 'Role', ''];
+  final columns = [
+    'WasteDisposeModel Number',
+    'Waste Volume',
+    'Arrival Time',
+    'Departure Time'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
+          columnSpacing: 20,
           border: TableBorder.all(
             color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
           ),
@@ -34,22 +41,7 @@ class _UserTableViewState extends State<UserTableView> {
           headingRowColor: MaterialStatePropertyAll(
               Theme.of(context).colorScheme.surfaceVariant),
           columns: getColumns(columns),
-          rows: const [
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ]),
-            DataRow(cells: [
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-              DataCell(Text("HASI")),
-            ])
-          ]),
+          rows: getRows(widget.wasteDispose)),
     );
   }
 
@@ -60,11 +52,56 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  // List<DataRow> getRows(List<User> users) => users.map((User user) {
-  //       final cells = [user.firstName, user.lastName, user.age];
+  List<DataRow> getRows(List<WasteDisposeModel> vehicles) =>
+      vehicles.map((WasteDisposeModel waste) {
+        final cells = [
+          DataCell(
+            Text(waste.vehicle_number),
+          ),
+          DataCell(
+            Text(waste.volume_waste.toString()),
+          ),
+          DataCell(
+            Text(waste.arrival_time.toString()),
+          ),
+          DataCell(
+            Text(waste.departure_time.toString()),
+          ),
+          // DataCell(
+          //   _buildActionButtons(waste.vehicle_number, ctr),
+          // ),
+        ];
 
-  //       return DataRow(cells: getCells(cells));
-  //     }).toList();
+        return DataRow(cells: cells);
+      }).toList();
+
+  // Widget _buildActionButtons(vechicleNumber) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //     children: [
+  //       IconButton(
+  //         onPressed: () {},
+  //         icon: const Icon(Icons.edit),
+  //         color: Theme.of(context).colorScheme.primary,
+  //       ),
+  //       IconButton(
+  //         onPressed: () {
+  //           customDeleteDialog(context, () async {
+  //             await context
+  //                 .read<DeleteVehicleController>()
+  //                 .deleteData(context, vechicleNumber);
+
+  //             if (!ctr.loading && ctr.success && context.mounted) {
+  //               customResponseDialog(context, "User Deleted Successfully", "");
+  //             }
+  //           });
+  //         },
+  //         icon: const Icon(Icons.delete_forever),
+  //         color: Theme.of(context).colorScheme.primary,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();

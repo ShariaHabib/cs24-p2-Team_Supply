@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
+import '../controller/get_waste_dispose_controller.dart';
 import '../widget/widgets.dart';
 
 class WasteDispose extends StatefulWidget {
@@ -15,6 +17,12 @@ class WasteDispose extends StatefulWidget {
 
 class _WasteDisposeState extends State<WasteDispose> {
   final TextEditingController _search = TextEditingController();
+
+  @override
+  void initState() {
+    context.read<GetWaasteDisposeController>().getData(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,9 @@ class _WasteDisposeState extends State<WasteDispose> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            const UserTableView()
+            WasteDisposeTable(
+              wasteDispose: context.watch<GetWaasteDisposeController>().data,
+            )
           ],
         ),
       ),
