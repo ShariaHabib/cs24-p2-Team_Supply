@@ -16,9 +16,10 @@ class DeleteSTSLogic {
       };
       print(token);
       http.Response resp = await http.delete(
-        Uri.parse(API_DELETE_STS + wardNo),
+        Uri.parse('$API_DELETE_STS$wardNo'),
         headers: headers,
       );
+      print('$API_DELETE_STS$wardNo');
       print(resp.body);
       data = RegistGeneralResponse.fromJson(resp.body);
     } catch (e) {

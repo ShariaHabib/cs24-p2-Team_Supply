@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
+import '../controller/waste_collection_controller.dart';
 import '../widget/widgets.dart';
 
 class WasteCollection extends StatefulWidget {
@@ -15,9 +17,15 @@ class WasteCollection extends StatefulWidget {
 
 class _WasteCollectionState extends State<WasteCollection> {
   final TextEditingController _search = TextEditingController();
+  @override
+  void initState() {
+    context.read<WasteCollectionController>().getData(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    WasteCollectionController ctr = context.watch<WasteCollectionController>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -37,7 +45,12 @@ class _WasteCollectionState extends State<WasteCollection> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            const UserTableView()
+            ctr.loading
+                ? const CircularProgressIndicator()
+                : UserTableView(
+                    search: _search,
+                    wasteCollection: ctr.data,
+                  )
           ],
         ),
       ),
