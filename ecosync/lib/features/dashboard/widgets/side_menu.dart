@@ -61,20 +61,24 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(4);
               },
             ),
-          DrawerListTile(
-            title: "Waste Collection",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(5);
-            },
-          ),
-          DrawerListTile(
-            title: "Waste Disposal",
-            icon: Icons.home,
-            press: () {
-              context.read<MenuAppController>().controlSelection(6);
-            },
-          ),
+          if (context.read<LoginDataSave>().getData.role_id == 1 ||
+              context.read<LoginDataSave>().getData.role_id == 2)
+            DrawerListTile(
+              title: "Waste Collection",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(5);
+              },
+            ),
+          if (context.read<LoginDataSave>().getData.role_id == 1 ||
+              context.read<LoginDataSave>().getData.role_id == 3)
+            DrawerListTile(
+              title: "Waste Disposal",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(6);
+              },
+            ),
           if (context.read<LoginDataSave>().getData.role_id == 1)
             DrawerListTile(
               title: "Billings",
