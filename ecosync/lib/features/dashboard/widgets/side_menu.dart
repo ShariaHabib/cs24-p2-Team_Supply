@@ -33,7 +33,7 @@ class SideMenu extends StatelessWidget {
               ),
             ),
           ),
-          if (roleId == 1)
+          if (roleId == 1 || roleId == 2)
             DrawerListTile(
               title: "Home",
               icon: Icons.home,
@@ -44,7 +44,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1)
             DrawerListTile(
               title: "Manage User",
-              icon: Icons.home,
+              icon: Icons.supervised_user_circle_rounded,
               press: () {
                 context.read<MenuAppController>().controlSelection(1);
               },
@@ -52,7 +52,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1)
             DrawerListTile(
               title: "Manage Roles",
-              icon: Icons.home,
+              icon: Icons.manage_accounts,
               press: () {
                 context.read<MenuAppController>().controlSelection(2);
               },
@@ -60,7 +60,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1)
             DrawerListTile(
               title: "Manage Vehicles",
-              icon: Icons.home,
+              icon: Icons.fire_truck_rounded,
               press: () {
                 context.read<MenuAppController>().controlSelection(3);
               },
@@ -68,7 +68,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1)
             DrawerListTile(
               title: "Manage STS",
-              icon: Icons.home,
+              icon: Icons.home_work_rounded,
               press: () {
                 context.read<MenuAppController>().controlSelection(4);
               },
@@ -84,7 +84,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1 || roleId == 2)
             DrawerListTile(
               title: "Waste Collection",
-              icon: Icons.home,
+              icon: Icons.wb_shade_outlined,
               press: () {
                 context.read<MenuAppController>().controlSelection(5);
               },
@@ -92,7 +92,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1 || roleId == 3)
             DrawerListTile(
               title: "Waste Disposal",
-              icon: Icons.home,
+              icon: Icons.delete_sweep_outlined,
               press: () {
                 context.read<MenuAppController>().controlSelection(6);
               },
@@ -100,7 +100,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 1)
             DrawerListTile(
               title: "Billings",
-              icon: Icons.home,
+              icon: Icons.monetization_on_rounded,
               press: () {
                 context.read<MenuAppController>().controlSelection(7);
               },
