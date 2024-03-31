@@ -1,0 +1,22 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    # Add any additional configuration for the backend service
+
+  ecosync:
+    image: caddy:2.7-alpine # Ensures the latest Caddy image
+    restart: always 
+    ports:
+      - "8200:8200" # Maps port 8200 of the host to Caddy's default port 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile  # Mounts your Caddyfile
+      - ./ecosync/build/web:/usr/share/caddy/  # Mounts your static content
+
+    # Add any additional configuration for the ecosync service
+
+# Add any additional services or configurations as needed

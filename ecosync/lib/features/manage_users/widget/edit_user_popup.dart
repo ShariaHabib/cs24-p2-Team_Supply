@@ -1,4 +1,5 @@
 import 'package:ecosync/constants/constants.dart';
+import 'package:ecosync/features/manage_users/controller/controller.dart';
 import 'package:ecosync/features/manage_users/controller/update_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,10 @@ class _EditUserState extends State<EditUser> {
                           .read<UpdateUsersController>()
                           .updateData(context, _userName.text, _userId.text);
                       if (!ctrRegist.loading && context.mounted) {
-                        customResponseDialog(context, "Update Successful", "");
+                        customResponseDialog(context, "Update Successful", "")
+                            .then((value) => context
+                                .read<GetUsersController>()
+                                .getData(context));
                       }
                     },
                     buttonText: "Update",
