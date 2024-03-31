@@ -1,3 +1,4 @@
+import 'package:ecosync/features/billings/view/billings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +73,11 @@ class Dashboard extends StatelessWidget {
                       break;
                     case 6:
                       selectedWidget = WasteDispose(
+                        userName: userName,
+                      );
+                      break;
+                    case 7:
+                      selectedWidget = Billings(
                         userName: userName,
                       );
                       break;
