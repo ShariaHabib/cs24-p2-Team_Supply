@@ -43,7 +43,7 @@ class _UserTableViewState extends State<WasteDisposeTable> {
   }
 
   final columns = [
-    'WasteDisposeModel Number',
+    'Vehicle Number',
     'Waste Volume',
     'Arrival Time',
     'Departure Time'

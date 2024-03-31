@@ -19,7 +19,7 @@ class _UserTableViewState extends State<UserTableView> {
   final columns = [
     'STS Id',
     'Vehicle Number',
-    'Waste Volume',
+    'Waste Volume(Tons)',
     'Arrival Time',
     'Depertutre Time'
   ];
