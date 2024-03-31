@@ -5,14 +5,14 @@ import '../constants/constants.dart';
 import '../models/models.dart';
 
 class RegisterVehicleLogic {
-  static Future<RegistGeneralResponse> registerVehicle({
-    required String token,
-    required String capacity,
-    required String vechileNumber,
-    required String vehicleType,
-    required String fuelCapacityLoaded,
-    required String fuelCapacityUnloaded,
-  }) async {
+  static Future<RegistGeneralResponse> registerVehicle(
+      {required String token,
+      required String capacity,
+      required String vechileNumber,
+      required String vehicleType,
+      required String fuelCapacityLoaded,
+      required String fuelCapacityUnloaded,
+      required String stsId}) async {
     late RegistGeneralResponse data;
     try {
       Map<String, String> headers = {
@@ -23,12 +23,13 @@ class RegisterVehicleLogic {
       };
 
       String body = Vehicle(
-        vehicle_number: vechileNumber,
-        vehicle_type: vehicleType,
-        capacity: int.parse(capacity),
-        fuel_cost_loaded: int.parse(fuelCapacityLoaded),
-        fuel_cost_unloaded: int.parse(fuelCapacityUnloaded),
-      ).toJson();
+              vehicle_number: vechileNumber,
+              vehicle_type: vehicleType,
+              capacity: int.parse(capacity),
+              fuel_cost_loaded: int.parse(fuelCapacityLoaded),
+              fuel_cost_unloaded: int.parse(fuelCapacityUnloaded),
+              sts_id: int.parse(stsId))
+          .toJson();
 
       print(body);
 

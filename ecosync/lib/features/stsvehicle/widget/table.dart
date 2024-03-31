@@ -1,21 +1,17 @@
-import 'package:ecosync/features/manage_vehicles/controller/delete_vehicle_controller.dart';
 import 'package:ecosync/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../common/common.dart';
-
-class UserTableView extends StatefulWidget {
-  const UserTableView(
+class STSVehicleView extends StatefulWidget {
+  const STSVehicleView(
       {super.key, required this.vehicles, required this.search});
   final List<Vehicle> vehicles;
   final TextEditingController search;
 
   @override
-  State<UserTableView> createState() => _UserTableViewState();
+  State<STSVehicleView> createState() => _STSVehicleViewState();
 }
 
-class _UserTableViewState extends State<UserTableView> {
+class _STSVehicleViewState extends State<STSVehicleView> {
   int? sortColumnIndex;
   bool isAscending = false;
 
@@ -37,12 +33,10 @@ class _UserTableViewState extends State<UserTableView> {
 
   final columns = [
     'Vehicle Number',
-    'STS Id',
     'Vehicle Capacity',
     'Fuel Capacity Loaded',
     'Fuel Capacity Unloaded',
-    'Vehicle Type',
-    ''
+    'Vehicle Type'
   ];
   List<Vehicle> getFilteredVehicles() {
     final query = widget.search.text.toLowerCase();
@@ -65,7 +59,6 @@ class _UserTableViewState extends State<UserTableView> {
   @override
   Widget build(BuildContext context) {
     final filteredVehicles = getFilteredVehicles();
-    DeleteVehicleController ctr = context.watch<DeleteVehicleController>();
     return SizedBox(
       width: double.infinity,
       child: DataTable(
@@ -80,7 +73,7 @@ class _UserTableViewState extends State<UserTableView> {
           headingRowColor: MaterialStatePropertyAll(
               Theme.of(context).colorScheme.surfaceVariant),
           columns: getColumns(columns),
-          rows: getRows(filteredVehicles, ctr)),
+          rows: getRows(filteredVehicles)),
     );
   }
 
@@ -91,14 +84,11 @@ class _UserTableViewState extends State<UserTableView> {
           ))
       .toList();
 
-  List<DataRow> getRows(List<Vehicle> vehicles, DeleteVehicleController ctr) =>
+  List<DataRow> getRows(List<Vehicle> vehicles) =>
       vehicles.map((Vehicle vehicle) {
         final cells = [
           DataCell(
             Text(vehicle.vehicle_number),
-          ),
-          DataCell(
-            Text(vehicle.sts_id.toString()),
           ),
           DataCell(
             Text(vehicle.capacity.toString()),
@@ -112,43 +102,10 @@ class _UserTableViewState extends State<UserTableView> {
           DataCell(
             Text(vehicle.vehicle_type),
           ),
-          DataCell(
-            _buildActionButtons(vehicle.vehicle_number, ctr),
-          ),
         ];
 
         return DataRow(cells: cells);
       }).toList();
-
-  Widget _buildActionButtons(vechicleNumber, DeleteVehicleController ctr) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.edit),
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        IconButton(
-          onPressed: () {
-            customDeleteDialog(context, () async {
-              await context
-                  .read<DeleteVehicleController>()
-                  .deleteData(context, vechicleNumber);
-
-              if (!ctr.loading && ctr.success && context.mounted) {
-                customResponseDialog(context, "User Deleted Successfully", "");
-              } else {
-                customResponseDialog(context, "User Deleted Successfully", "");
-              }
-            });
-          },
-          icon: const Icon(Icons.delete_forever),
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ],
-    );
-  }
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();

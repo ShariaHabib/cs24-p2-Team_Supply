@@ -1,4 +1,5 @@
 import 'package:ecosync/features/billings/view/billings.dart';
+import 'package:ecosync/features/stsvehicle/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class Dashboard extends StatelessWidget {
                   int currentSelection =
                       context.watch<MenuAppController>().currentSelection;
                   if (roleId == 2 && currentSelection == 0) {
-                    currentSelection = 5;
+                    currentSelection = 9;
                   }
                   if (roleId == 3 && currentSelection == 0) {
                     currentSelection = 6;
@@ -83,6 +84,11 @@ class Dashboard extends StatelessWidget {
                       break;
                     case 8:
                       selectedWidget = const UserProfile();
+                      break;
+                    case 9:
+                      selectedWidget = STSVehicle(
+                        userName: userName,
+                      );
                       break;
                     default:
                       selectedWidget = Container();
