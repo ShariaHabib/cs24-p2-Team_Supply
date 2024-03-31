@@ -72,7 +72,7 @@ class _CustomDialogState extends State<CustomDialog> {
             DialogFormFiled(
               controller: _volumeDispose,
               prefixText: "Waste Disosed",
-              hintText: "Enter Volume of Waste Disposed",
+              hintText: "Enter Volume in Tons",
             ),
             const SizedBox(height: kDefaultPadding * 2),
             Row(

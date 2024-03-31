@@ -71,6 +71,7 @@ class _CustomDialogState extends State<CustomDialog> {
             DialogFormFiled(
               controller: _volume,
               prefixText: "Volume",
+              hintText: "Enter Volume in Tons",
             ),
             const SizedBox(height: kDefaultPadding * 2),
             Row(

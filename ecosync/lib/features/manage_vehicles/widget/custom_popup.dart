@@ -74,7 +74,7 @@ class _CustomDialogState extends State<CustomDialog> {
             DialogFormFiled(
                 controller: _vehicleCapacity,
                 prefixText: "Vechicle Capacity",
-                hintText: "Enter Vehicle Capacity"),
+                hintText: "3 / 5 / 7 / 15 Tons"),
             const SizedBox(height: kDefaultPadding),
             DialogFormFiled(
                 controller: _loadedFuelCost,
