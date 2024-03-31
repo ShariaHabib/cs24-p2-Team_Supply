@@ -1,3 +1,4 @@
+import 'package:ecosync/features/billings/controller/get_bills_controller.dart';
 import 'package:ecosync/features/manage_roles/controller/delete_rbac_roles_controller.dart';
 import 'package:ecosync/features/manage_roles/controller/rbac_roles_controller.dart';
 import 'package:ecosync/features/manage_sts/controller/create_sts_controller.dart';
@@ -113,6 +114,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => RegistWasteCollectionController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetBillsController(),
         ),
       ],
       child: const MyApp(),
