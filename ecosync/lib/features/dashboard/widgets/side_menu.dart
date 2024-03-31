@@ -33,7 +33,7 @@ class SideMenu extends StatelessWidget {
               ),
             ),
           ),
-          if (roleId == 1 || roleId == 2)
+          if (roleId == 1)
             DrawerListTile(
               title: "Home",
               icon: Icons.home,
@@ -76,7 +76,7 @@ class SideMenu extends StatelessWidget {
           if (roleId == 2)
             DrawerListTile(
               title: "Vehicles",
-              icon: Icons.home,
+              icon: Icons.fire_truck_rounded,
               press: () {
                 context.read<MenuAppController>().controlSelection(9);
               },
@@ -106,7 +106,11 @@ class SideMenu extends StatelessWidget {
               },
             ),
           SizedBox(
-            height: roleId == 1 ? 100 : 450,
+            height: roleId == 1
+                ? 100
+                : roleId == 2
+                    ? 400
+                    : 450,
           ),
           DrawerListTile(
             title: "Logout",

@@ -48,6 +48,7 @@ dependencies:
   printing: ^5.12.0
   pdf: ^3.10.8
   syncfusion_flutter_pdf: ^25.1.37
+  unique_simple_bar_chart: ^0.0.4
 
 dev_dependencies:
   flutter_test:

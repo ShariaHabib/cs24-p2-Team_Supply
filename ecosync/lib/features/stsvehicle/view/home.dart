@@ -36,12 +36,14 @@ class _STSVehicleState extends State<STSVehicle> {
             const SizedBox(height: kDefaultPadding),
             Row(
               children: [
-                SizedBox(
-                    width: 400,
+                Expanded(
+                    flex: 1,
                     child: ctr.loading
                         ? const Center(child: CircularProgressIndicator())
                         : STSVehicleView(search: _search, vehicles: ctr.data)),
-                Container(height: 300, width: 300, child: const MapScreen()),
+                Expanded(
+                    flex: 2,
+                    child: SizedBox(height: 750, child: const MapScreen())),
               ],
             ),
           ],

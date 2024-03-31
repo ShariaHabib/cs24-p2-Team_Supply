@@ -1,4 +1,3 @@
-import 'package:ecosync/models/get_sts_response_model.dart';
 import 'package:ecosync/models/stats_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +20,6 @@ class GetStat {
       print(resp.body);
       data = StatModel.fromJson(resp.body);
     } catch (e) {
-      print(e);
       data = StatModel(
           success: false,
           weekly_bills: 0,

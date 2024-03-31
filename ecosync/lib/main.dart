@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'features/dashboard/controller/menu_controller.dart';
 import 'features/dashboard/map_view.dart';
 import 'features/dashboard/view/dashboard.dart';
+import 'features/home/controller/stat_controller.dart';
 import 'features/login/controller/login_controller.dart';
 import 'features/login/controller/login_data_store.dart';
 import 'features/login/view/login.dart';
@@ -126,6 +127,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => MapInit(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => StatController(),
         ),
       ],
       child: const MyApp(),

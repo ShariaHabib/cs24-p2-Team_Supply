@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:unique_simple_bar_chart/data_models.dart';
+import 'package:unique_simple_bar_chart/simple_bar_chart.dart';
 import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
 import '../../dashboard/map_view.dart';
@@ -15,7 +15,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    // const FlutterSecureStorage().deleteAll();
     super.initState();
   }
 
@@ -32,7 +31,17 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 50,
             ),
-            Container(height: 500, width: 500, child: MapScreen()),
+            SimpleBarChart(
+              verticalInterval: 0,
+              listOfHorizontalBarData: [
+                HorizontalDetailsModel(
+                  name: '1',
+                  color: const Color(0xFFEB7735),
+                  size: 73,
+                ),
+              ],
+            ),
+            Container(height: 500, width: 500, child: const MapScreen()),
           ],
         ),
       ),
