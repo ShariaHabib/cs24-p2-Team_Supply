@@ -29,3 +29,5 @@ const String API_RESET_INIT =
     "http://127.0.0.1:8000/auth/reset-password/initiate";
 const String API_RESET_CONFIRM =
     "http://127.0.0.1:8000/auth/reset-password/confirm";
+
+const String API_GET_STS_VEHICLE = "http://127.0.0.1:8000/sts_vehicle";

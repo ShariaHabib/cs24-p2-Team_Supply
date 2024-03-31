@@ -48,8 +48,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        width: 500,
-        height: 500,
+        width: 300,
+        height: 300,
         child: FlutterMap(
           options: const MapOptions(
               initialZoom: 15,

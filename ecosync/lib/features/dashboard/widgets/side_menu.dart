@@ -75,6 +75,14 @@ class SideMenu extends StatelessWidget {
             ),
           if (roleId == 1 || roleId == 2)
             DrawerListTile(
+              title: "Vehicles",
+              icon: Icons.home,
+              press: () {
+                context.read<MenuAppController>().controlSelection(9);
+              },
+            ),
+          if (roleId == 1 || roleId == 2)
+            DrawerListTile(
               title: "Waste Collection",
               icon: Icons.home,
               press: () {
@@ -97,13 +105,6 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(7);
               },
             ),
-          // DrawerListTile(
-          //   title: "Profile",
-          //   icon: Icons.home,
-          //   press: () {
-          //     context.read<MenuAppController>().controlSelection(8);
-          //   },
-          // ),
           SizedBox(
             height: roleId == 1 ? 100 : 450,
           ),
@@ -112,8 +113,9 @@ class SideMenu extends StatelessWidget {
             icon: Icons.logout,
             press: () {
               context.read<LogoutController>().logout(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Login()));
+              context.read<MenuAppController>().controlSelection(0);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Login()));
             },
           ),
         ],

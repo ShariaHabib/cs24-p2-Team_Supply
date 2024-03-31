@@ -20,6 +20,7 @@ class CustomDialog extends StatefulWidget {
 
 class _CustomDialogState extends State<CustomDialog> {
   final TextEditingController _vehicleNumber = TextEditingController();
+  final TextEditingController _sts = TextEditingController();
   final TextEditingController _vehicleCapacity = TextEditingController();
   final TextEditingController _loadedFuelCost = TextEditingController();
   final TextEditingController _unloadedFuelCost = TextEditingController();
@@ -39,7 +40,7 @@ class _CustomDialogState extends State<CustomDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(19)),
       surfaceTintColor: Colors.white,
       child: Container(
-        height: 600,
+        height: 640,
         width: 450,
         padding: const EdgeInsets.all(kDefaultPadding * 1.5),
         child: Column(
@@ -64,6 +65,11 @@ class _CustomDialogState extends State<CustomDialog> {
                 controller: _vehicleNumber,
                 prefixText: "Vehicle Number",
                 hintText: "Enter Vehicle Number"),
+            const SizedBox(height: kDefaultPadding),
+            DialogFormFiled(
+                controller: _sts,
+                prefixText: "STS Id",
+                hintText: "Enter STS Id"),
             const SizedBox(height: kDefaultPadding),
             DialogFormFiled(
                 controller: _vehicleCapacity,
@@ -99,13 +105,13 @@ class _CustomDialogState extends State<CustomDialog> {
                             await context
                                 .read<RegistVehicleController>()
                                 .registData(
-                                  context,
-                                  _vehicleNumber.text,
-                                  _vehicleCapacity.text,
-                                  _loadedFuelCost.text,
-                                  _unloadedFuelCost.text,
-                                  _vehicleType.text,
-                                );
+                                    context,
+                                    _vehicleNumber.text,
+                                    _vehicleCapacity.text,
+                                    _loadedFuelCost.text,
+                                    _unloadedFuelCost.text,
+                                    _vehicleType.text,
+                                    _sts.text);
                             if (!ctrRegist.loading &&
                                 ctrRegist.success &&
                                 context.mounted) {
