@@ -27,6 +27,7 @@ import 'features/manage_users/controller/controller.dart';
 import 'features/manage_vehicles/controller/delete_vehicle_controller.dart';
 import 'features/manage_vehicles/controller/regist_vehicle.dart';
 import 'features/profile/controller/get_user_profile_controller.dart';
+import 'features/stsvehicle/controller/sts_vehicle_controller.dart';
 import 'features/waste_collection/controller/regist_waste_collection_controller.dart';
 import 'features/waste_collection/controller/waste_collection_controller.dart';
 import 'themes/theme.dart';
@@ -118,6 +119,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => GetBillsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => STSVehicleController(),
         ),
       ],
       child: const MyApp(),

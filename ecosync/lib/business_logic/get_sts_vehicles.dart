@@ -16,7 +16,9 @@ class GetSTSVehicleListLogic {
         Uri.parse(API_GET_STS_VEHICLE),
         headers: headers,
       );
+      print("object");
       print(resp.body);
+      print("object");
       data = VehicleListResponse.fromJson(resp.body);
     } catch (e) {
       print(e);

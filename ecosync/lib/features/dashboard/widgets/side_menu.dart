@@ -73,7 +73,7 @@ class SideMenu extends StatelessWidget {
                 context.read<MenuAppController>().controlSelection(4);
               },
             ),
-          if (roleId == 1 || roleId == 2)
+          if (roleId == 2)
             DrawerListTile(
               title: "Vehicles",
               icon: Icons.home,

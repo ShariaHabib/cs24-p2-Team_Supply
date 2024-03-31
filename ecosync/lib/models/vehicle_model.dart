@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
@@ -9,14 +8,14 @@ class Vehicle {
   final int capacity;
   final int fuel_cost_loaded;
   final int fuel_cost_unloaded;
-  final int sts_id;
+  final int? sts_id;
   Vehicle({
     required this.vehicle_number,
     required this.vehicle_type,
     required this.capacity,
     required this.fuel_cost_loaded,
     required this.fuel_cost_unloaded,
-    required this.sts_id,
+    this.sts_id,
   });
 
   Vehicle copyWith({
@@ -55,7 +54,7 @@ class Vehicle {
       capacity: map['capacity'] as int,
       fuel_cost_loaded: map['fuel_cost_loaded'] as int,
       fuel_cost_unloaded: map['fuel_cost_unloaded'] as int,
-      sts_id: map['sts_id'] as int,
+      sts_id: map['sts_id'] != null ? map['sts_id'] as int : null,
     );
   }
 

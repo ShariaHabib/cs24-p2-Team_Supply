@@ -1,5 +1,5 @@
-import 'package:ecosync/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:ecosync/models/models.dart';
 
 class STSVehicleView extends StatefulWidget {
   const STSVehicleView(
@@ -12,9 +12,6 @@ class STSVehicleView extends StatefulWidget {
 }
 
 class _STSVehicleViewState extends State<STSVehicleView> {
-  int? sortColumnIndex;
-  bool isAscending = false;
-
   @override
   void initState() {
     super.initState();
@@ -31,13 +28,6 @@ class _STSVehicleViewState extends State<STSVehicleView> {
     setState(() {});
   }
 
-  final columns = [
-    'Vehicle Number',
-    'Vehicle Capacity',
-    'Fuel Capacity Loaded',
-    'Fuel Capacity Unloaded',
-    'Vehicle Type'
-  ];
   List<Vehicle> getFilteredVehicles() {
     final query = widget.search.text.toLowerCase();
     return widget.vehicles.where((vehicle) {
@@ -60,73 +50,33 @@ class _STSVehicleViewState extends State<STSVehicleView> {
   Widget build(BuildContext context) {
     final filteredVehicles = getFilteredVehicles();
     return SizedBox(
-      width: double.infinity,
-      child: DataTable(
-          columnSpacing: 20,
-          border: TableBorder.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          ),
-          dividerThickness: 0.5,
-          sortAscending: isAscending,
-          sortColumnIndex: sortColumnIndex,
-          headingRowHeight: 40,
-          headingRowColor: MaterialStatePropertyAll(
-              Theme.of(context).colorScheme.surfaceVariant),
-          columns: getColumns(columns),
-          rows: getRows(filteredVehicles)),
+      height: MediaQuery.of(context).size.height,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: filteredVehicles.length,
+        itemBuilder: (context, index) {
+          final vehicle = filteredVehicles[index];
+          return Card(
+            child: ExpansionTile(
+              title: Text(
+                  'Vehicle Number : ${vehicle.vehicle_number}    -     Capacity: ${vehicle.capacity}'),
+              children: <Widget>[
+                ListTile(
+                  title:
+                      Text('Fuel Capacity Loaded: ${vehicle.fuel_cost_loaded}'),
+                ),
+                ListTile(
+                  title: Text(
+                      'Fuel Capacity Unloaded: ${vehicle.fuel_cost_unloaded}'),
+                ),
+                ListTile(
+                  title: Text('Vehicle Type: ${vehicle.vehicle_type}'),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
-  }
-
-  List<DataColumn> getColumns(List<String> columns) => columns
-      .map((String column) => DataColumn(
-            label: Text(column),
-            onSort: onSort,
-          ))
-      .toList();
-
-  List<DataRow> getRows(List<Vehicle> vehicles) =>
-      vehicles.map((Vehicle vehicle) {
-        final cells = [
-          DataCell(
-            Text(vehicle.vehicle_number),
-          ),
-          DataCell(
-            Text(vehicle.capacity.toString()),
-          ),
-          DataCell(
-            Text(vehicle.fuel_cost_loaded.toString()),
-          ),
-          DataCell(
-            Text(vehicle.fuel_cost_unloaded.toString()),
-          ),
-          DataCell(
-            Text(vehicle.vehicle_type),
-          ),
-        ];
-
-        return DataRow(cells: cells);
-      }).toList();
-
-  List<DataCell> getCells(List<dynamic> cells) =>
-      cells.map((data) => DataCell(Text('$data'))).toList();
-
-  int compareString(bool ascending, String value1, String value2) =>
-      ascending ? value1.compareTo(value2) : value2.compareTo(value1);
-
-  void onSort(int columnIndex, bool ascending) {
-    if (columnIndex == 0) {
-      // users.sort((user1, user2) =>
-      // compareString(ascending, user1.firstName, user2.firstName));
-    } else if (columnIndex == 1) {
-      // users.sort((user1, user2) =>
-      //     compareString(ascending, user1.lastName, user2.lastName));
-    } else if (columnIndex == 2) {
-      // users.sort((user1, user2) =>
-      //     compareString(ascending, '${user1.age}', '${user2.age}'));
-    }
-    setState(() {
-      sortColumnIndex = columnIndex;
-      isAscending = ascending;
-    });
   }
 }
