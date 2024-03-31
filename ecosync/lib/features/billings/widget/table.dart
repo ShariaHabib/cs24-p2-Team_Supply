@@ -1,3 +1,4 @@
+import 'package:ecosync/features/billings/widget/pdf_service.dart';
 import 'package:ecosync/models/billings_model.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class _UserTableViewState extends State<BillingsTable> {
     'Weight of Waste',
     'Fuel Cost',
     'Generated Timestamp',
+    ''
   ];
 
   @override
@@ -68,6 +70,12 @@ class _UserTableViewState extends State<BillingsTable> {
           DataCell(
             Text(bill.generated_timestamp),
           ),
+          DataCell(IconButton(
+            icon: const Icon(Icons.download),
+            onPressed: () {
+              PdfService().printCustomersPdf(bill);
+            },
+          ))
         ];
 
         return DataRow(cells: cells);

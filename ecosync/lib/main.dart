@@ -147,33 +147,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF92D1C3)),
-          useMaterial3: true,
-          drawerTheme: drawerTheme,
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: 'login',
-        home: MapScreen()
-        // FutureBuilder(
-        //   future: getall(),
-        //   builder: (BuildContext context,
-        //       AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-        //     print(snapshot.data);
-        //     if (snapshot.connectionState == ConnectionState.done) {
-        //       return snapshot.hasData && snapshot.data != null
-        //           ? Dashboard(
-        //               roleId: snapshot.data!['role_id'] ?? '',
-        //               userName: snapshot.data!['user_name'] ?? '',
-        //             )
-        //           : const Login();
-        //     } else {
-        //       return const LinearProgressIndicator();
-        //     }
-        //   },
-        // ),
-        );
+      navigatorKey: navigatorKey,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF92D1C3)),
+        useMaterial3: true,
+        drawerTheme: drawerTheme,
+      ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'login',
+      home: // MapScreen()
+          FutureBuilder(
+        future: getall(),
+        builder: (BuildContext context,
+            AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+          print(snapshot.data);
+          if (snapshot.connectionState == ConnectionState.done) {
+            return snapshot.hasData && snapshot.data != null
+                ? Dashboard(
+                    roleId: snapshot.data!['role_id'] ?? '',
+                    userName: snapshot.data!['user_name'] ?? '',
+                  )
+                : const Login();
+          } else {
+            return const LinearProgressIndicator();
+          }
+        },
+      ),
+    );
   }
 }
