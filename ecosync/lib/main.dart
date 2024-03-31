@@ -156,8 +156,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
-      home: // MapScreen()
-          FutureBuilder(
+      home: FutureBuilder(
         future: getall(),
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, dynamic>?> snapshot) {

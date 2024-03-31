@@ -26,6 +26,8 @@ class _WasteDisposeState extends State<WasteDispose> {
 
   @override
   Widget build(BuildContext context) {
+    GetWaasteDisposeController ctr =
+        context.watch<GetWaasteDisposeController>();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -45,9 +47,14 @@ class _WasteDisposeState extends State<WasteDispose> {
                   });
             }),
             const SizedBox(height: kDefaultPadding),
-            WasteDisposeTable(
-              wasteDispose: context.watch<GetWaasteDisposeController>().data,
-            )
+            ctr.loading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : WasteDisposeTable(
+                    search: _search,
+                    wasteDispose: ctr.data,
+                  )
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../common/profile_card.dart';
 import '../../../constants/constants.dart';
+import '../../dashboard/map_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.userName});
@@ -24,9 +25,14 @@ class _HomeState extends State<Home> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ProfileCard(userName: widget.userName),
-            Text("Home"),
+            const SizedBox(
+              height: 50,
+            ),
+            Container(height: 500, width: 500, child: MapScreen()),
           ],
         ),
       ),

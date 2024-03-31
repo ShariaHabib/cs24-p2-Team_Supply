@@ -46,7 +46,7 @@ class _WasteCollectionState extends State<WasteCollection> {
             }),
             const SizedBox(height: kDefaultPadding),
             ctr.loading
-                ? const CircularProgressIndicator()
+                ? const Center(child: CircularProgressIndicator())
                 : UserTableView(
                     search: _search,
                     wasteCollection: ctr.data,

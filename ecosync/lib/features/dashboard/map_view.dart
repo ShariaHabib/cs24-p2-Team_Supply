@@ -28,11 +28,12 @@ class _MapScreenState extends State<MapScreen> {
 
   getCoordinates() async {
     var response = await http.get(getRouteUrl(
-        "1.243344,6.145332", '1.2160116523406839,6.125231015668568'));
+        "90.4154939718578, 23.802413983791226",
+        '90.40856646565196, 23.79326586279359'));
+
     setState(() {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        // summary = data['features'][0]['properties']['summary'];
         summary = data['features'][0]['properties']['summary'];
         listOfPoints = data['features'][0]['geometry']['coordinates'];
 
@@ -46,11 +47,13 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: 500,
         height: 500,
         child: FlutterMap(
-          options: MapOptions(zoom: 15, center: LatLng(6.131015, 1.223898)),
+          options: const MapOptions(
+              initialZoom: 15,
+              initialCenter: LatLng(23.802413983791226, 90.4154939718578)),
           children: [
             TileLayer(
               urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -59,38 +62,44 @@ class _MapScreenState extends State<MapScreen> {
             MarkerLayer(
               markers: [
                 Marker(
-                  point: const LatLng(6.145332, 1.243344),
+                  point: const LatLng(23.802413983791226, 90.4154939718578),
                   width: 80,
                   height: 80,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.location_on),
-                    color: Colors.green,
-                    iconSize: 45,
+                  child: Tooltip(
+                    message: "Landfill",
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.location_on),
+                      color: Colors.yellow,
+                      iconSize: 45,
+                    ),
                   ),
                 ),
                 Marker(
-                  point: const LatLng(6.125231015668568, 1.2160116523406839),
+                  point: const LatLng(23.79326586279359, 90.40856646565196),
                   width: 80,
                   height: 80,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.location_on),
-                    color: Colors.red,
-                    iconSize: 45,
+                  child: Tooltip(
+                    message: "STS",
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.location_on),
+                      color: Colors.red,
+                      iconSize: 45,
+                    ),
                   ),
                 ),
               ],
             ),
             Tooltip(
-              message: "Distance ${summary['distance']}",
+              message: "Distance ${summary['distance'] / 1000}",
               child: PolylineLayer(
                 polylineCulling: false,
                 polylines: [
                   Polyline(
                     points: points,
                     color: Colors.green,
-                    strokeWidth: 15,
+                    strokeWidth: 10,
                     isDotted: true,
                   ),
                 ],

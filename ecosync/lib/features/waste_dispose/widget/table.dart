@@ -2,20 +2,44 @@ import 'package:ecosync/models/waste_dispose_model.dart';
 import 'package:flutter/material.dart';
 
 class WasteDisposeTable extends StatefulWidget {
-  WasteDisposeTable({super.key, required this.wasteDispose});
+  const WasteDisposeTable(
+      {super.key, required this.wasteDispose, required this.search});
   final List<WasteDisposeModel> wasteDispose;
+  final TextEditingController search;
   @override
   State<WasteDisposeTable> createState() => _UserTableViewState();
 }
 
 class _UserTableViewState extends State<WasteDisposeTable> {
-  // late List<User> users;
   int? sortColumnIndex;
   bool isAscending = false;
 
   @override
   void initState() {
     super.initState();
+    widget.search.addListener(_onSearchTextChanged); // Add listener to search
+  }
+
+  @override
+  void dispose() {
+    widget.search.removeListener(
+        _onSearchTextChanged); // Remove listener to avoid memory leaks
+    super.dispose();
+  }
+
+  void _onSearchTextChanged() {
+    setState(() {}); // Trigger rebuild when search text changes
+  }
+
+  List<WasteDisposeModel> getFilteredWasteDispose() {
+    final query = widget.search.text.toLowerCase();
+    return widget.wasteDispose.where((waste) {
+      // Perform filtering based on waste disposal attributes
+      return waste.vehicle_number.toLowerCase().contains(query) ||
+          waste.volume_waste.toString().toLowerCase().contains(query) ||
+          waste.arrival_time.toLowerCase().contains(query) ||
+          waste.departure_time.toLowerCase().contains(query);
+    }).toList();
   }
 
   final columns = [
@@ -41,7 +65,7 @@ class _UserTableViewState extends State<WasteDisposeTable> {
           headingRowColor: MaterialStatePropertyAll(
               Theme.of(context).colorScheme.surfaceVariant),
           columns: getColumns(columns),
-          rows: getRows(widget.wasteDispose)),
+          rows: getRows(getFilteredWasteDispose())),
     );
   }
 

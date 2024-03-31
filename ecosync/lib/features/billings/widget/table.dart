@@ -3,8 +3,10 @@ import 'package:ecosync/models/billings_model.dart';
 import 'package:flutter/material.dart';
 
 class BillingsTable extends StatefulWidget {
-  BillingsTable({super.key, required this.billings});
+  const BillingsTable(
+      {super.key, required this.billings, required this.search});
   final List<BillingsModel> billings;
+  final TextEditingController search;
   @override
   State<BillingsTable> createState() => _UserTableViewState();
 }
@@ -16,6 +18,28 @@ class _UserTableViewState extends State<BillingsTable> {
   @override
   void initState() {
     super.initState();
+    widget.search.addListener(_onSearchTextChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.search.removeListener(_onSearchTextChanged);
+    super.dispose();
+  }
+
+  void _onSearchTextChanged() {
+    setState(() {});
+  }
+
+  List<BillingsModel> getFilteredBillings() {
+    final query = widget.search.text.toLowerCase();
+    return widget.billings.where((billing) {
+      return billing.billing_slip_id.toString().toLowerCase().contains(query) ||
+          billing.landfill_entry_id.toString().toLowerCase().contains(query) ||
+          billing.weight_of_waste.toString().toLowerCase().contains(query) ||
+          billing.fuel_cost.toString().toLowerCase().contains(query) ||
+          billing.generated_timestamp.toLowerCase().contains(query);
+    }).toList();
   }
 
   final columns = [
@@ -43,7 +67,7 @@ class _UserTableViewState extends State<BillingsTable> {
           headingRowColor: MaterialStatePropertyAll(
               Theme.of(context).colorScheme.surfaceVariant),
           columns: getColumns(columns),
-          rows: getRows(widget.billings)),
+          rows: getRows(getFilteredBillings())),
     );
   }
 
