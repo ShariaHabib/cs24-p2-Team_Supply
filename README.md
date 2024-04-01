@@ -6,8 +6,16 @@
 * Go to the link ```http://127.0.0.1:8200/```
 * <span style="color:red">**To see the maps please disable the CORS of your browser.**</span>
 
-
-
+### Deafult admin password for logging in
+```
+email : admin@gmail.com
+password : admin@123
+```
+### Deafult landfill manager password for logging in
+```
+email : Hasibul@gmail.com
+password : newPassword
+```
 
 **To run this application in your local machine please follow the instructions:**
 
