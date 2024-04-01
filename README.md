@@ -2,7 +2,7 @@
 
 **Run using docker compose**
 * Clone the repository
-* Run the command ```docker compose --build```
+* Run the command ```docker compose up --build```
 * Go to the link ```http://127.0.0.1:8200/```
 * <span style="color:red">**To see the maps please disable the CORS of your browser.**</span>
 
