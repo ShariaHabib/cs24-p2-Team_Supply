@@ -15,7 +15,7 @@ class StatController with ChangeNotifier {
     String? token = await const FlutterSecureStorage().read(key: 'token');
     data = await GetStat.getStat(token ?? '');
     // success = data.success;
-    print(data.sts_waste_collected);
+    print(data.stsWasteCollected);
     loading = false;
     notifyListeners();
   }

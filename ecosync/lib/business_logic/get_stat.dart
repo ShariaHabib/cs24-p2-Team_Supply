@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ecosync/models/stats_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,16 +20,16 @@ class GetStat {
         headers: headers,
       );
       print(resp.body);
-      data = StatModel.fromJson(resp.body);
+      data = StatModel.fromJson(json.decode(resp.body));
     } catch (e) {
       data = StatModel(
           success: false,
-          weekly_bills: 0,
-          monthly_bills: 0,
-          daily_bills: 0,
-          total_waste_collected: 0,
-          total_waste_disposed: 0,
-          sts_waste_collected: []);
+          weeklyBills: 0,
+          monthlyBills: 0,
+          dailyBills: 0,
+          totalWasteCollected: 0,
+          totalWasteDisposed: 0,
+          stsWasteCollected: []);
     }
     return data;
   }
