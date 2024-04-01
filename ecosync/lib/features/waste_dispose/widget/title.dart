@@ -5,7 +5,7 @@ class BodyTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Wase Dispose",
+    return Text("Waste Disposal",
         style: Theme.of(context).textTheme.displaySmall);
   }
 }
