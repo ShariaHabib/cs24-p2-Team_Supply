@@ -6,7 +6,7 @@ import '../../../models/stats_model.dart';
 
 class StatController with ChangeNotifier {
   late StatModel data;
-  late bool success;
+  // late bool success;
 
   bool loading = false;
 
@@ -14,7 +14,8 @@ class StatController with ChangeNotifier {
     loading = true;
     String? token = await const FlutterSecureStorage().read(key: 'token');
     data = await GetStat.getStat(token ?? '');
-    success = data.success;
+    // success = data.success;
+    print(data.sts_waste_collected);
     loading = false;
     notifyListeners();
   }

@@ -26,7 +26,8 @@ class GetStat {
           monthly_bills: 0,
           daily_bills: 0,
           total_waste_collected: 0,
-          total_waste_disposed: 0);
+          total_waste_disposed: 0,
+          sts_waste_collected: []);
     }
     return data;
   }
