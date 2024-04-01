@@ -655,7 +655,7 @@ def get_vehicles(user):
             return jsonify({"success": False,"message":"Unauthorozied Access"}), 401
         db = sqlite3.connect("sqlite.db")
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM VEHICLE")
+        cursor.execute("SELECT VEHICLE.*, STS_VEHICLE.sts_id FROM VEHICLE JOIN STS_VEHICLE ON VEHICLE.vehicle_number = STS_VEHICLE.vehicle_number")
         vehicles = cursor.fetchall()
         vehiclesList = [{
             "vehicle_number": vehicle[0],
@@ -663,6 +663,7 @@ def get_vehicles(user):
             "capacity" : vehicle[2],
             "fuel_cost_loaded":vehicle[3],
             "fuel_cost_unloaded":vehicle[4],
+            "sts_id":vehicle[5]
         } for vehicle in vehicles]
         print(vehicles)
         return jsonify({"success": True,'vehiclesList': vehiclesList}), 200
@@ -676,6 +677,7 @@ def get_vehicles(user):
 def add_vehicle(user):
     try:
         data = request.get_json()
+        sts_id = data['sts_id']
         vehicle_number = data["vehicle_number"]
         vehicle_type = data["vehicle_type"]
         capacity = data['capacity']
@@ -687,12 +689,14 @@ def add_vehicle(user):
         db = sqlite3.connect("sqlite.db")
         cursor = db.cursor()
         cursor.execute("INSERT INTO VEHICLE (vehicle_number, vehicle_type, capacity,fuel_cost_loaded,fuel_cost_unloaded) VALUES(?,?,?,?,?)",(vehicle_number,vehicle_type,capacity,fuel_cost_loaded,fuel_cost_unloaded))
+        cursor.execute("INSERT INTO STS_VEHICLE (sts_id,vehicle_number) VALUES (?,?)",(sts_id,vehicle_number,))
         db.commit()
         return jsonify({"success": True,'message': "Vehicle added sucessfully"}), 201
 
     except Exception as e:
         return jsonify({"success": False,'message': str(e)}), 400
-    
+
+
 @app.route("/vehicle/<vehicleNumber>", methods=["DELETE"])
 @login_required
 def delete_vehicle(user,vehicleNumber):
@@ -703,6 +707,7 @@ def delete_vehicle(user,vehicleNumber):
         db = sqlite3.connect("sqlite.db")
         cursor = db.cursor()
         cursor.execute("DELETE FROM VEHICLE WHERE vehicle_number = ?",(vehicleNumber,))
+        cursor.execute("DELETE FROM STS_VEHICLE WHERE vehicle_number = ?",(vehicleNumber,))
         db.commit()
         return jsonify({"success": True,'message': "Vehicle deleted sucessfully"}), 200
 
@@ -897,24 +902,20 @@ def get_waste_collection(user):
         return jsonify({"success": False, 'message': str(e)}), 400
     
 
-# I want to add bill here. So when a vehicle arrives disposal from a waste collection then
-# calculate the distance between waste collection and disposal point using latitude langitude
-# of the waste collection and waste disposal then the bills using the capacity of the vehicle 
-# and oil capacity loaded multipy by 1 +oil capacity unloaded multiply by .5 * distance and store it to billings entry table
-
-
 
 @app.route("/waste/disposal", methods=["POST"])
 @login_required
 def add_waste_disposal(user):
     try:
         uid = user['users'][0]['localId']
+        print(uid)
         db = sqlite3.connect("sqlite.db")
         cursor = db.cursor()
         data = request.get_json()
         cursor.execute("SELECT landfill_id FROM LANDFILL_MANAGER WHERE user_id = ?", (uid,))
             
         landfill_id = cursor.fetchone()[0]
+        print(landfill_id)
         if landfill_id == None:
                 return jsonify({"success": False, 'message': "User is not assigned as a Manager of any Landfill"}), 400
         vehicle_number = data["vehicle_number"]
@@ -967,17 +968,6 @@ def add_waste_disposal(user):
         # Calculate and store bills in billing entry table
     
     
-# check if the user role == 1 select all data else get landfill id from landfill manager table matching the user id with user id in landfill manager table
-
-# -- CREATE TABLE BILLING_SLIP (
-# --     billing_slip_id INTEGER PRIMARY KEY AUTOINCREMENT,
-# --     landfill_entry_id INT,
-# --     weight_of_waste INT,
-# --     fuel_cost DOUBLE,
-# --     generated_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-# --     FOREIGN KEY (landfill_entry_id) REFERENCES LANDFILL_ENTRY(landfill_entry_id)
-# -- );
-
 @app.route("/billings", methods=["GET"])
 @login_required
 def get_waste_disposal_slip(user):
@@ -1045,29 +1035,7 @@ def get_waste_disposal(user):
 
     except Exception as e:
         return jsonify({"success": False, 'message': str(e)}), 400
-    
-# CREATE TABLE STS_VEHICLE (
-#     sts_id INT,
-#     vehicle_number VARCHAR,
-#     FOREIGN KEY (sts_id) REFERENCES STS(sts_id),
-#     FOREIGN KEY (vehicle_number) REFERENCES VEHICLE(vehicle_number),
-#     PRIMARY KEY (sts_id, vehicle_number)
-# );
-# -- -- CREATE TABLE VEHICLE (
-# -- --     vehicle_number VARCHAR PRIMARY KEY,
-# -- --     vehicle_type VARCHAR,
-# -- --     capacity INTEGER,
-# -- --     fuel_cost_loaded INTEGER,
-# -- --     fuel_cost_unloaded INTEGER
-# -- -- );
 
-#     -- CREATE TABLE STS_MANAGER (
-# --     sts_manager_id VARCHAR PRIMARY KEY,
-# --     sts_id INT,
-# --     user_id VARCHAR UNIQUE,
-# --     FOREIGN KEY (sts_id) REFERENCES STS(sts_id),
-# --     FOREIGN KEY (user_id) REFERENCES USER(user_id)
-# -- );
 
 @app.route('/sts_vehicle', methods=['GET'])
 @login_required
@@ -1087,121 +1055,66 @@ def get_vehicle_sts(user):
             "fuel_cost_loaded": vehicle[3],
             "fuel_cost_unloaded" : vehicle[4]
         } for vehicle in sts_vehicke_list]
-        return jsonify({"success": True, "stsVehicleList": stsVehicleList}), 200
+        return jsonify({"success": True, "vehiclesList": stsVehicleList}), 200
     except Exception as e:
         return jsonify({"success": False, 'message': str(e)}), 400
 
-# @app.route("/show/stat", methods=["GET"])
-# @login_required
-# def show_statistics(user):
-#     cursor.execute("SELECT COUNT(*) AS total_vehicles FROM VEHICLE;")
-#     total_vehicles_row = cursor.fetchone()
-#     total_vehicles = total_vehicles_row['total_vehicles'] if total_vehicles_row else 0
 
-#     cursor.execute("SELECT vehicle_type, COUNT(*) AS vehicle_count FROM VEHICLE GROUP BY vehicle_type;")
-#     vehicle_types_rows = cursor.fetchall()
-#     vehicle_types = {row['vehicle_type']: row['vehicle_count'] for row in vehicle_types_rows}
 
-#     cursor.execute("SELECT AVG(capacity) AS average_capacity FROM VEHICLE;")
-#     average_capacity_row = cursor.fetchone()
-#     average_capacity = average_capacity_row['average_capacity'] if average_capacity_row['average_capacity'] else 0
+@app.route('/stats', methods=['GET'])
+@login_required
+def get_stats(user):
+    try:
+        db = sqlite3.connect("sqlite.db")
+        cursor = db.cursor()
+        uid = user['users'][0]['localId']
+        cursor.execute("SELECT role_id FROM USER_ROLE WHERE user_id = ?",(uid,))
+        cursor.execute("SELECT SUM(fuel_cost) FROM BILLING_SLIP WHERE generated_timestamp BETWEEN datetime('now', '-7 days') AND datetime('now')")
+        weekly_bills = cursor.fetchone()[0]
+        print("HI")
+        cursor.execute("SELECT SUM(fuel_cost) FROM BILLING_SLIP WHERE generated_timestamp BETWEEN datetime('now', '-30 days') AND datetime('now')")
+        monthly_bills = cursor.fetchone()[0]
+        cursor.execute("SELECT SUM(fuel_cost) FROM BILLING_SLIP WHERE generated_timestamp BETWEEN datetime('now', '-1 days') AND datetime('now')")
+        daily_bills = cursor.fetchone()[0]
+        cursor.execute("SELECT SUM(volume_waste) FROM STS_ENTRY")
+        total_waste_collected = cursor.fetchone()[0]
+        cursor.execute("SELECT SUM(volume_waste) FROM LANDFILL_ENTRY")
+        total_waste_disposed = cursor.fetchone()[0]
 
-#     # STS Statistics
-#     cursor.execute("SELECT COUNT(*) AS total_sts FROM STS;")
-#     total_sts_row = cursor.fetchone()
-#     total_sts = total_sts_row['total_sts'] if total_sts_row else 0
+        cursor.execute("SELECT STS.sts_id, SUM(STS_ENTRY.volume_waste) AS total_volume_collected FROM STS LEFT JOIN STS_ENTRY ON STS.sts_id = STS_ENTRY.sts_id GROUP BY STS.sts_id")
+        sts_waste_collected = cursor.fetchall()
+        sts_waste_collected = [{
+            "sts_id": sts[0],
+            "total_volume_collected": sts[1]
+        } for sts in sts_waste_collected]
+        
+                
+        return jsonify({"success": True, "weekly_bills": weekly_bills, "monthly_bills":monthly_bills, "daily_bills":daily_bills, "total_waste_collected":total_waste_collected,"total_waste_disposed":total_waste_disposed, "sts_waste_collected":sts_waste_collected }), 200
+    except Exception as e:
+        return jsonify({"success": False, 'message': str(e)}), 400
+    
 
-#     cursor.execute("SELECT sts_id, (SUM(volume_waste) / capacity) * 100 AS utilization_percentage FROM STS_ENTRY GROUP BY sts_id;")
-#     sts_utilization_rows = cursor.fetchall()
-#     sts_utilization = {row['sts_id']: row['utilization_percentage'] for row in sts_utilization_rows}
+#  Calculate the distance from all the STS to the Landfill and store it in the distance table with the STS id and Landfill id and return the distance
 
-#     cursor.execute("SELECT sts_id, COUNT(*) AS vehicle_count FROM STS_VEHICLE GROUP BY sts_id;")
-#     sts_vehicle_count_rows = cursor.fetchall()
-#     sts_vehicle_count = {row['sts_id']: row['vehicle_count'] for row in sts_vehicle_count_rows}
-
-#     # Landfill Statistics
-#     cursor.execute("SELECT COUNT(*) AS total_landfills FROM LANDFILL;")
-#     total_landfills_row = cursor.fetchone()
-#     total_landfills = total_landfills_row['total_landfills'] if total_landfills_row else 0
-
-#     cursor.execute("SELECT landfill_id, (SUM(volume_waste) / capacity) * 100 AS utilization_percentage FROM LANDFILL_ENTRY GROUP BY landfill_id;")
-#     landfill_utilization_rows = cursor.fetchall()
-#     landfill_utilization = {row['landfill_id']: row['utilization_percentage'] for row in landfill_utilization_rows}
-
-#     cursor.execute("SELECT landfill_id, operational_timespan FROM LANDFILL;")
-#     landfill_timespan_rows = cursor.fetchall()
-#     landfill_timespan = {row['landfill_id']: row['operational_timespan'] for row in landfill_timespan_rows}
-
-#     # Entry Statistics
-#     cursor.execute("SELECT COUNT(*) AS total_sts_entries FROM STS_ENTRY;")
-#     total_sts_entries_row = cursor.fetchone()
-#     total_sts_entries = total_sts_entries_row['total_sts_entries'] if total_sts_entries_row else 0
-
-#     cursor.execute("SELECT COUNT(*) AS total_landfill_entries FROM LANDFILL_ENTRY;")
-#     total_landfill_entries_row = cursor.fetchone()
-#     total_landfill_entries = total_landfill_entries_row['total_landfill_entries'] if total_landfill_entries_row else 0
-
-#     cursor.execute("SELECT sts_id, volume_waste FROM STS_ENTRY;")
-#     sts_entry_volume_rows = cursor.fetchall()
-#     sts_entry_volume = {row['sts_id']: row['volume_waste'] for row in sts_entry_volume_rows}
-
-#     cursor.execute("SELECT landfill_id, volume_waste FROM LANDFILL_ENTRY;")
-#     landfill_entry_volume_rows = cursor.fetchall()
-#     landfill_entry_volume = {row['landfill_id']: row['volume_waste'] for row in landfill_entry_volume_rows}
-
-#     cursor.execute("SELECT AVG(arrival_time) AS average_sts_arrival_time FROM STS_ENTRY;")
-#     average_sts_arrival_time_row = cursor.fetchone()
-#     average_sts_arrival_time = average_sts_arrival_time_row['average_sts_arrival_time'] if average_sts_arrival_time_row['average_sts_arrival_time'] else 0
-
-#     cursor.execute("SELECT AVG(departure_time) AS average_sts_departure_time FROM STS_ENTRY;")
-#     average_sts_departure_time_row = cursor.fetchone()
-#     average_sts_departure_time = average_sts_departure_time_row['average_sts_departure_time'] if average_sts_departure_time_row['average_sts_departure_time'] else 0
-
-#     cursor.execute("SELECT AVG(arrival_time) AS average_landfill_arrival_time FROM LANDFILL_ENTRY;")
-#     average_landfill_arrival_time_row = cursor.fetchone()
-#     average_landfill_arrival_time = average_landfill_arrival_time_row['average_landfill_arrival_time'] if average_landfill_arrival_time_row['average_landfill_arrival_time'] else 0
-
-#     cursor.execute("SELECT AVG(departure_time) AS average_landfill_departure_time FROM LANDFILL_ENTRY;")
-#     average_landfill_departure_time_row = cursor.fetchone()
-#     average_landfill_departure_time = average_landfill_departure_time_row['average_landfill_departure_time'] if average_landfill_departure_time_row['average_landfill_departure_time'] else 0
-
-#     conn.close()
-
-#     statistics = {
-#         'vehicle_statistics': {
-#             'total_vehicles': total_vehicles,
-#             'vehicle_types': vehicle_types,
-#             'average_capacity': average_capacity
-#         },
-#         'sts_statistics': {
-#             'total_sts': total_sts,
-#             'sts_utilization': sts_utilization,
-#             'sts_vehicle_count': sts_vehicle_count
-#         },
-#         'landfill_statistics': {
-#             'total_landfills': total_landfills,
-#             'landfill_utilization': landfill_utilization,
-#             'landfill_timespan': landfill_timespan
-#         },
-#         'entry_statistics': {
-#             'total_sts_entries': total_sts_entries,
-#             'total_landfill_entries': total_landfill_entries,
-#             'sts_entry_volume': sts_entry_volume,
-#             'landfill_entry_volume': landfill_entry_volume,
-#             'average_sts_arrival_time': average_sts_arrival_time,
-#             'average_sts_departure_time': average_sts_departure_time,
-#             'average_landfill_arrival_time': average_landfill_arrival_time,
-#             'average_landfill_departure_time': average_landfill_departure_time
-#         }
-# }
-
-# -- -- CREATE TABLE STS_VEHICLE (
-# -- --     sts_id INT,
-# -- --     vehicle_number VARCHAR,
-# -- --     FOREIGN KEY (sts_id) REFERENCES STS(sts_id),
-# -- --     FOREIGN KEY (vehicle_number) REFERENCES VEHICLE(vehicle_number),
-# -- --     PRIMARY KEY (sts_id, vehicle_number)
-# -- -- );
+@app.route('/distance', methods=['GET'])
+@login_required
+def get_distance(user):
+    try:
+        db = sqlite3.connect("sqlite.db")
+        cursor = db.cursor()
+        cursor.execute("SELECT sts_id,latitude,longitude FROM STS")
+        sts = cursor.fetchall()
+        cursor.execute("SELECT latitude,longitude FROM LANDFILL")
+        landfill = cursor.fetchone()
+        distanceList = []
+        for st in sts:
+            distance = geopy.distance.distance(st[1:], landfill).km
+            distanceList.append({"sts_id": st[0], "distance": distance})
+        return jsonify({"success": True, "distanceList": distanceList}), 200
+    except Exception as e:
+        return jsonify({"success": False, 'message': str(e)}), 400
+    
+    
 
 
 
