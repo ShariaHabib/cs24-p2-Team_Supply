@@ -142,7 +142,9 @@ class _UserTableViewState extends State<UserTableView> {
                   .deleteData(context, user.userId);
 
               if (!ctr.loading && ctr.success && context.mounted) {
-                customResponseDialog(context, "User Deleted Successfully", "");
+                customResponseDialog(context, "User Deleted Successfully", "")
+                    .then((value) =>
+                        context.read<GetUsersController>().getData(context));
               } else {
                 customResponseDialog(
                     context, "User Delete Failed", ctr.data.message,

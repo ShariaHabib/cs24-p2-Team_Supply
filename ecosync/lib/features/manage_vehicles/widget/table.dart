@@ -1,4 +1,5 @@
 import 'package:ecosync/features/manage_vehicles/controller/delete_vehicle_controller.dart';
+import 'package:ecosync/features/manage_vehicles/controller/vehicle_controller.dart';
 import 'package:ecosync/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -137,9 +138,11 @@ class _UserTableViewState extends State<UserTableView> {
                   .deleteData(context, vechicleNumber);
 
               if (!ctr.loading && ctr.success && context.mounted) {
-                customResponseDialog(context, "User Deleted Successfully", "");
+                customResponseDialog(context, "User Deleted Successfully", "")
+                    .then((value) =>
+                        context.read<GetVehiclesController>().getData(context));
               } else {
-                customResponseDialog(context, "User Deleted Successfully", "");
+                customResponseDialog(context, "User Deleted Failed", "");
               }
             });
           },
